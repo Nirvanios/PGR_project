@@ -10,7 +10,23 @@ enum SimulatedObjectType {
 };
 
 class SimulatedObject {
+private:
+    float mass;
+    SimulatedObjectType objectType;
 
+protected:
+    //vec3 currentPosition;
+    //vec3 previousPosition;
+    //vec3 velocity;
+public:
+
+    void setMass(float newMass) {
+        mass = newMass;
+    }
+
+    float getMass() {
+        return mass;
+    }
 };
 
 
