@@ -3,4 +3,4 @@ project(PGR_project)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(PGR_project main.cpp)
+add_executable(PGR_project main.cpp SimulatedObject.cpp SimulatedObject.h)
