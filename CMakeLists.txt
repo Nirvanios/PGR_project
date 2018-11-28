@@ -14,8 +14,6 @@ find_package (OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIRS})
 
 
-set(CMAKE_PREFIX_PATH "C:\\Users\\Petr\\CLionProjects\\PGR project\\libs\\GLEW")
-set(CMAKE_LIBRARY_PATH "C:\\Users\\Petr\\CLionProjects\\PGR project\\libs\\GLEW\\lib\\Release\\Win32")
 
 
 find_package(GLEW REQUIRED)
@@ -24,5 +22,5 @@ include_directories(${GLEW_INCLUDE_DIRS})
 find_package(glm REQUIRED)
 include_directories(${GLM_INCLUDE_DIRS})
 
-add_executable(PGR_project main.cpp simulation/SimulatedObject.h simulation/Constraint.cpp simulation/Constraint.h simulation/common.h simulation/SimulatedModel.cpp simulation/SimulatedModel.h simulation/ForceGenerator.cpp simulation/ForceGenerator.h)
+add_executable(PGR_project main.cpp simulation/base/SimulatedObject.h simulation/Constraint.cpp simulation/Constraint.h simulation/common/common.h simulation/SimulatedModel.cpp simulation/SimulatedModel.h simulation/base/ForceGenerator.h)
 target_link_libraries(PGR_project mingw32 SDL2main SDL2 ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES}  ${GLM_LIBRARIES})

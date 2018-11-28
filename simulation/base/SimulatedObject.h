@@ -5,10 +5,10 @@
 #ifndef PGR_PROJECT_SIMULATEDOBJECT_H
 #define PGR_PROJECT_SIMULATEDOBJECT_H
 
-#include <GL/gl.h>
 #include <GL/glew.h>
+#include <GL/gl.h>
 #include <glm/vec3.hpp>
-#include "common.h"
+#include "../common/common.h"
 
 enum SimulatedObjectType {
     Passive, Active

@@ -6,7 +6,7 @@
 #define PGR_PROJECT_SIMULATEDMODEL_H
 
 
-#include "SimulatedObject.h"
+#include "base/SimulatedObject.h"
 
 class SimulatedModel: public SimulatedObject {
 private:
