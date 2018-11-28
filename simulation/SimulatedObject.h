@@ -22,6 +22,7 @@ protected:
     glm::vec3 currentPosition;
     glm::vec3 previousPosition;
     glm::vec3 velocity;
+    glm::vec3 resultantForce;
 public:
     SimulatedObject(float mass, SimulatedObjectType objectType) : mass(mass), objectType(objectType) {
         currentPosition = glm::vec3(0, 0, 0);
@@ -67,6 +68,14 @@ public:
 
     glm::vec3 getVelocity() {
         return velocity;
+    }
+
+    void setResultantForce(glm::vec3 force) {
+        this->resultantForce = force;
+    }
+
+    glm::vec3 getResultantForce() {
+        return resultantForce;
     }
 };
 
