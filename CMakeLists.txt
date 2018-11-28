@@ -1,18 +1,22 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.12)
 project(PGR_project)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 set(SDL2_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}\\libs\\win64-SDL2\\include)
+set(SDL2_PATH ${PROJECT_SOURCE_DIR}\\libs\\win64-SDL2)
 
+set(GLEW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}\\libs\\GLEW\\include)
+set(GLEW_LIBRARY ${PROJECT_SOURCE_DIR}\\libs\\GLEW)
+
+message(${PROJECT_SOURCE_DIR})
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 link_directories(${PROJECT_SOURCE_DIR}\\libs\\win64-SDL2\\lib)
 
 find_package (OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIRS})
-
 
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIRS})
