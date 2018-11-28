@@ -8,6 +8,7 @@
 #include <GL/gl.h>
 #include <GL/glew.h>
 #include <glm/vec3.hpp>
+#include "common.h"
 
 enum SimulatedObjectType {
     Passive, Active
@@ -77,6 +78,12 @@ public:
     glm::vec3 getResultantForce() {
         return resultantForce;
     }
+
+    void resetForces() {
+        resultantForce = glm::vec3(0, 0, 0);
+    }
+
+    virtual void Update(SimulationTime time) = 0;
 };
 
 
