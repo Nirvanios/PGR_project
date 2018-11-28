@@ -6,12 +6,19 @@
 #define PGR_PROJECT_GRAVITYFORCE_H
 
 
-#include "base/ForceGenerator.h"
+#include "../base/ForceGenerator.h"
 
 class GravityForce : public ForceGenerator {
+private:
+    glm::vec3 acceleration;
 public:
+    GravityForce();
+
     void applyForce(SimulatedObject* object) override;
 
+    glm::vec3 getAcceleration() {
+        return acceleration;
+    }
 };
 
 
