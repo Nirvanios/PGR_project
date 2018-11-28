@@ -12,7 +12,7 @@ class ForceGenerator {
 private:
 protected:
 public:
-    virtual void applyForce(SimulatedObject object) = 0;
+    virtual void applyForce(SimulatedObject* object) = 0;
 };
 
 
