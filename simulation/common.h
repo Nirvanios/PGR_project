@@ -7,4 +7,6 @@
 
 typedef int SimulationTime;
 
+typedef void* ObjectModel;
+
 #endif //PGR_PROJECT_COMMON_H
