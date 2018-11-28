@@ -5,7 +5,10 @@
 #ifndef PGR_PROJECT_GRAVITYFORCE_H
 #define PGR_PROJECT_GRAVITYFORCE_H
 
+#define GLM_ENABLE_EXPERIMENTAL
 
+#include <glm/glm.hpp>
+#include <glm/gtx/scalar_multiplication.hpp>
 #include "../base/ForceGenerator.h"
 
 class GravityForce : public ForceGenerator {
