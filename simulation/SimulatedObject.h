@@ -23,6 +23,11 @@ protected:
     glm::vec3 previousPosition;
     glm::vec3 velocity;
 public:
+    SimulatedObject(float mass, SimulatedObjectType objectType) : mass(mass), objectType(objectType) {
+        currentPosition = glm::vec3(0, 0, 0);
+        previousPosition = currentPosition;
+        velocity = glm::vec3(0, 0, 0);
+    }
 
     void setMass(float newMass) {
         mass = newMass;
@@ -30,6 +35,38 @@ public:
 
     float getMass() {
         return mass;
+    }
+
+    void setSimulatedObjectType(SimulatedObjectType type) {
+        this->objectType = type;
+    }
+
+    SimulatedObjectType getSimulatedObjectType() {
+        return objectType;
+    }
+
+    void setCurrentPosition(glm::vec3 position) {
+        this->currentPosition = position;
+    }
+
+    glm::vec3 getCurrectPosition() {
+        return currentPosition;
+    }
+
+    void setPreviousPosition(glm::vec3 position) {
+        this->previousPosition = position;
+    }
+
+    glm::vec3 getPreviousPosition() {
+        return previousPosition;
+    }
+
+    void setVelocity(glm::vec3 velocity) {
+        this->velocity = velocity;
+    }
+
+    glm::vec3 getVelocity() {
+        return velocity;
     }
 };
 
