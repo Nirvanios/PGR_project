@@ -21,5 +21,8 @@ set(CMAKE_LIBRARY_PATH "C:\\Users\\Petr\\CLionProjects\\PGR project\\libs\\GLEW\
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIRS})
 
+find_package(glm REQUIRED)
+include_directories(${GLM_INCLUDE_DIRS})
+
 add_executable(PGR_project main.cpp simulation/SimulatedObject.cpp simulation/SimulatedObject.h simulation/Constraint.cpp simulation/Constraint.h)
-target_link_libraries(PGR_project mingw32 SDL2main SDL2 ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
+target_link_libraries(PGR_project mingw32 SDL2main SDL2 ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES}  ${GLM_LIBRARIES})

@@ -5,6 +5,10 @@
 #ifndef PGR_PROJECT_SIMULATEDOBJECT_H
 #define PGR_PROJECT_SIMULATEDOBJECT_H
 
+#include <GL/gl.h>
+#include <GL/glew.h>
+#include <glm/vec3.hpp>
+
 enum SimulatedObjectType {
     Passive, Active
 };
@@ -15,9 +19,9 @@ private:
     SimulatedObjectType objectType;
 
 protected:
-    //vec3 currentPosition;
-    //vec3 previousPosition;
-    //vec3 velocity;
+    glm::vec3 currentPosition;
+    glm::vec3 previousPosition;
+    glm::vec3 velocity;
 public:
 
     void setMass(float newMass) {
