@@ -6,7 +6,11 @@
 #define PGR_PROJECT_SIMULATEDOBJECT_H
 
 #include <GL/glew.h>
+#ifdef _WIN32
 #include <GL/gl.h>
+#elif __APPLE__
+#include <Opengl/gl.h>
+#endif
 #include <glm/vec3.hpp>
 #include "../common/common.h"
 
