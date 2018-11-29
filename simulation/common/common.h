@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_COMMON_H
 #define PGR_PROJECT_COMMON_H
 
-typedef int SimulationTime;
+typedef float SimulationTime;
 
 typedef void* ObjectModel;
 

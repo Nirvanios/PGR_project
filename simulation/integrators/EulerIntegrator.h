@@ -12,6 +12,8 @@ class EulerIntegrator : public Integrator {
 private:
 protected:
 public:
+    EulerIntegrator(float timeStep);
+
     void integrate(glm::vec3 acceleration, SimulatedObject *object) override;
 
 };

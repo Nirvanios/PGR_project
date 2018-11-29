@@ -83,7 +83,7 @@ public:
         resultantForce = glm::vec3(0, 0, 0);
     }
 
-    virtual void Update(SimulationTime time) = 0;
+    virtual void update(SimulationTime time) = 0;
 };
 
 

@@ -9,3 +9,5 @@ void EulerIntegrator::integrate(glm::vec3 acceleration, SimulatedObject *object)
 
     object->setVelocity(object->getVelocity() + acceleration * timeStep);
 }
+
+EulerIntegrator::EulerIntegrator(float timeStep) : Integrator(timeStep) {}
