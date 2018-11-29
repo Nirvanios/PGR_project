@@ -9,8 +9,8 @@ add_definitions(-DGLEW_STATIC)
 set(SDL2_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}\\libs\\win64-SDL2\\include)
 set(SDL2_PATH ${PROJECT_SOURCE_DIR}\\libs\\win64-SDL2)
 
-set(GLEW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}\\libs\\glew\\include)
-set(GLEW_LIBRARY ${PROJECT_SOURCE_DIR}\\libs\\glew\\lib\\libglew32.a)
+#set(GLEW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}\\libs\\glew\\include)
+#set(GLEW_LIBRARY ${PROJECT_SOURCE_DIR}\\libs\\glew\\lib\\libglew32.a)
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
@@ -21,11 +21,28 @@ endif()
 find_package (OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
+set(GLEW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}\\libs\\glew\\include)
+set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}\\libs\\glew")
+set(CMAKE_LIBRARY_PATH "${CMAKE_SOURCE_DIR}\\libs\\glew\\lib")
 find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIRS})
-if(WIN32)
-    link_directories(${PROJECT_SOURCE_DIR}\\libs\\glew\\lib)
-endif()
+
+if(GLEW_FOUND)
+
+    message("GLEW Found!")
+
+    include_directories(${GLEW_INCLUDE_DIRS})
+
+    link_libraries(${GLEW_LIBRARIES})
+
+    add_definitions(${GLEW_DEFINITIONS})
+
+else(GLEW_FOUND)
+
+    message(FATAL_ERROR "GLEW NOT Found")
+
+endif(GLEW_FOUND)
+link_libraries(${GLEW_LIBRARIES})
+
 
 find_package(glm REQUIRED)
 include_directories(${GLM_INCLUDE_DIRS})
