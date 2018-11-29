@@ -29,5 +29,5 @@ add_executable(PGR_project main.cpp simulation/base/SimulatedObject.h simulation
         simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
         simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/Spring.cpp
         simulation/forces/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
-        simulation/integrators/EulerIntegrator.h)
+        simulation/integrators/EulerIntegrator.h simulation/Simulation.cpp simulation/Simulation.h)
 target_link_libraries(PGR_project mingw32 SDL2main SDL2 ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES}  ${GLM_LIBRARIES})
