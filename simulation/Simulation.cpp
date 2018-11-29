@@ -8,7 +8,7 @@ Simulation::Simulation() {
     integrator = new EulerIntegrator(1.0f / 60.0f);
 }
 
-void Simulation::addSpring(float stiffness, float damping, float restLength, SimulatedObject objectA, SimulatedObject objectB) {
+void Simulation::addSpring(float stiffness, float damping, float restLength, SimulatedObject* objectA, SimulatedObject* objectB) {
     springs.emplace_back(new Spring(stiffness, damping, restLength, objectA, objectB));
 }
 

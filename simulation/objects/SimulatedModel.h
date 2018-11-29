@@ -22,7 +22,7 @@ public:
         return model;
     }
 
-    void Update(SimulationTime time) override;
+    void update(SimulationTime time) override;
 };
 
 

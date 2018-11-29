@@ -11,6 +11,6 @@ SimulatedModel::SimulatedModel(float mass, SimulatedObjectType objectType, Objec
     previousPosition = currentPosition;
 }
 
-void SimulatedModel::Update(SimulationTime time) {
+void SimulatedModel::update(SimulationTime time) {
     // TODO: posun model do current position
 }
