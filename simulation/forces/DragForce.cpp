@@ -5,5 +5,5 @@
 #include "DragForce.h"
 
 void DragForce::applyForce(SimulatedObject *object) {
-    object->setResultantForce(object->getResultantForce() + dragCoefficient * object->getVelocity());
+    object->setResultantForce(object->getResultantForce() - dragCoefficient * object->getVelocity());
 }

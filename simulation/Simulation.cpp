@@ -8,8 +8,8 @@ Simulation::Simulation() {
     integrator = new EulerIntegrator(1.0f / 60.0f);
 }
 
-void Simulation::addSpring(float stiffness, float damping, float restLength, SimulatedObject* objectA, SimulatedObject* objectB) {
-    springs.emplace_back(new Spring(stiffness, damping, restLength, objectA, objectB));
+void Simulation::addSpring(float stiffness, float damping, SimulatedObject* objectA, SimulatedObject* objectB) {
+    springs.emplace_back(new Spring(stiffness, damping, objectA, objectB));
 }
 
 void Simulation::addObject(SimulatedObject *object)  {
@@ -28,6 +28,10 @@ void Simulation::update(SimulationTime time) {
     glm::vec3 acceleration;
     for (auto object : objects) {
         if (object->getSimulatedObjectType() == Active) {
+            for (auto forceGenerator : forces) {
+                forceGenerator->applyForce(object);
+            }
+
             acceleration = object->getResultantForce() / object->getMass();
 
             integrator->integrate(acceleration, object);

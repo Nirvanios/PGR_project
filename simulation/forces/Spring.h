@@ -22,7 +22,7 @@ private:
     float currentLength;
 protected:
 public:
-    Spring(float stiffness, float damping, float restLength, SimulatedObject *simulatedObjectA,
+    Spring(float stiffness, float damping, SimulatedObject *simulatedObjectA,
            SimulatedObject *simulatedObjectB);
 
     void setStiffness(float stiffness) {

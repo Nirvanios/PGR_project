@@ -23,7 +23,7 @@ protected:
 public:
     Simulation();
 
-    void addSpring(float stiffness, float damping, float restLength, SimulatedObject* objectA, SimulatedObject* objectB);
+    void addSpring(float stiffness, float damping, SimulatedObject* objectA, SimulatedObject* objectB);
 
     void addObject(SimulatedObject* object);
 

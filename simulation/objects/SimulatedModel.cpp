@@ -4,11 +4,14 @@
 
 #include "SimulatedModel.h"
 
+float temp = 10;
+
 SimulatedModel::SimulatedModel(float mass, SimulatedObjectType objectType, ObjectModel model) : SimulatedObject(mass,
                                                                                                                 objectType),
                                                                                                 model(model) {
-    // TODO: nastaveni currentPosition na pozici modelu
-    previousPosition = currentPosition;
+  currentPosition = glm::vec3(temp, 0, temp);
+  temp += 5;
+  previousPosition = currentPosition;
 }
 
 void SimulatedModel::update(SimulationTime time) {
