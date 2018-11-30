@@ -1,21 +1,11 @@
 cmake_minimum_required(VERSION 3.12)
 project(PGR_project)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-
-
-set(SDL2_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}\\libs\\win64-SDL2\\include)
-set(SDL2_PATH ${PROJECT_SOURCE_DIR}\\libs\\win64-SDL2)
-
-set(GLEW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}\\libs\\GLEW\\include)
-set(GLEW_LIBRARY ${PROJECT_SOURCE_DIR}\\libs\\GLEW)
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
-if(WIN32)
-    link_directories(${PROJECT_SOURCE_DIR}\\libs\\win64-SDL2\\lib)
-endif()
 
 find_package (OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIRS})
@@ -33,8 +23,4 @@ add_executable(PGR_project main.cpp simulation/base/SimulatedObject.h simulation
         simulation/forces/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
         simulation/integrators/EulerIntegrator.h simulation/Simulation.cpp simulation/Simulation.h)
 
-if(APPLE)
-    target_link_libraries(PGR_project SDL2main SDL2 ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES}  ${GLM_LIBRARIES})
-elseif(WIN32)
-    target_link_libraries(PGR_project mingw32 SDL2main SDL2 ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES}  ${GLM_LIBRARIES})
-endif()
+target_link_libraries(PGR_project SDL2main SDL2 ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES}  ${GLM_LIBRARIES})
