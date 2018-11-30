@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 project(PGR_project)
 
+#set(SDL2_Flags "-mwindows -Wl,--no-undefined -static-libgcc -lmingw32 -lSDLmain -lSDL")
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
