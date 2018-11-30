@@ -56,7 +56,7 @@ endif(GLEW_FOUND)
 find_package(glm REQUIRED)
 include_directories(${GLM_INCLUDE_DIRS})
 
-add_executable(PGR_project main.cpp simulation/base/SimulatedObject.h simulation/objects/Constraint.cpp simulation/objects/Constraint.h
+add_executable(PGR_project test.cpp simulation/base/SimulatedObject.h simulation/objects/Constraint.cpp simulation/objects/Constraint.h
         simulation/common/common.h simulation/objects/SimulatedModel.cpp simulation/objects/SimulatedModel.h
         simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
         simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/Spring.cpp
