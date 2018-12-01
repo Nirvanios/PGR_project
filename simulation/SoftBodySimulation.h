@@ -6,7 +6,7 @@
 #define PGR_PROJECT_SOFTBODYSIMULATION_H
 
 #include "Simulation.h"
-#include "objects/SimulatedVertex.h"
+#include "SimulatedVertex.h"
 class SoftBodySimulation : public Simulation {
  private:
  protected:

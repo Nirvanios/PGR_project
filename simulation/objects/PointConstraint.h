@@ -7,7 +7,7 @@
 
 #include <glm/glm.hpp>
 #include "Constraint.h"
-#include "../base/SimulatedObject.h"
+#include "SimulatedObject.h"
 
 class PointConstraint : public Constraint {
  private:

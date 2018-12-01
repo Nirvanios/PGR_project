@@ -6,7 +6,7 @@
 #define PGR_PROJECT_DRAGFORCE_H
 
 
-#include "../base/ForceGenerator.h"
+#include "ForceGenerator.h"
 
 class DragForce : public ForceGenerator {
 private:

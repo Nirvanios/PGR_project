@@ -6,13 +6,13 @@
 #define PGR_PROJECT_SIMULATION_H
 
 #include <vector>
-#include "base/SimulatedObject.h"
-#include "base/ForceGenerator.h"
-#include "forces/Spring.h"
-#include "base/Integrator.h"
-#include "integrators/EulerIntegrator.h"
-#include "integrators/VerletIntegrator.h"
-#include "objects/Constraint.h"
+#include "SimulatedObject.h"
+#include "ForceGenerator.h"
+#include "Spring.h"
+#include "Integrator.h"
+#include "EulerIntegrator.h"
+#include "VerletIntegrator.h"
+#include "Constraint.h"
 
 class Simulation {
 private:

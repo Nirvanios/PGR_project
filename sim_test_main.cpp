@@ -45,6 +45,8 @@ int main(int argc, char** argv) {
   ofstream1.open("/Users/petr/Desktop/log1.txt");
   std::ofstream ofstream2;
   ofstream2.open("/Users/petr/Desktop/log2.txt");
+  std::ofstream ofstream3;
+  ofstream3.open("/Users/petr/Desktop/log3.txt");
   size_t time = 0;
   while(true) {
     simulation.update(time);
@@ -55,25 +57,31 @@ int main(int argc, char** argv) {
         + ";"
         + std::to_string(simulation.getVertices()[0]->getCurrectPosition().z)
         + "\n";
+    ofstream.write(tosave.c_str(), tosave.size());
 
-    auto toSave2 = std::to_string(simulation.getVertices()[4]->getCurrectPosition().x)
+    tosave = std::to_string(simulation.getVertices()[4]->getCurrectPosition().x)
         + ";"
         + std::to_string(simulation.getVertices()[4]->getCurrectPosition().y)
         + ";"
         + std::to_string(simulation.getVertices()[4]->getCurrectPosition().z)
         + "\n";
+    ofstream1.write(tosave.c_str(), tosave.size());
 
-    auto toSave3 = std::to_string(simulation.getVertices()[2]->getCurrectPosition().x)
+    tosave = std::to_string(simulation.getVertices()[2]->getCurrectPosition().x)
         + ";"
         + std::to_string(simulation.getVertices()[2]->getCurrectPosition().y)
         + ";"
         + std::to_string(simulation.getVertices()[2]->getCurrectPosition().z)
         + "\n";
+    ofstream2.write(tosave.c_str(), tosave.size());
 
-    ofstream.write(tosave.c_str(), tosave.size());
-    ofstream1.write(toSave2.c_str(), toSave2.size());
-    ofstream2.write(toSave3.c_str(), toSave3.size());
-
+    tosave = std::to_string(simulation.getVertices()[6]->getCurrectPosition().x)
+        + ";"
+        + std::to_string(simulation.getVertices()[6]->getCurrectPosition().y)
+        + ";"
+        + std::to_string(simulation.getVertices()[6]->getCurrectPosition().z)
+        + "\n";
+    ofstream3.write(tosave.c_str(), tosave.size());
     time += 1;
     if (time == 1000) {
       break;
@@ -83,6 +91,7 @@ int main(int argc, char** argv) {
   ofstream.close();
   ofstream1.close();
   ofstream2.close();
+  ofstream3.close();
 
 #endif
 
@@ -129,8 +138,6 @@ int main(int argc, char** argv) {
   air->setDragCoefficient(dragCoefficient);
   simulation.addGlobalForce(air);
 
-  auto wind = new ConstantForce(glm::vec3(0.1f, 0, 0.2f));
-  simulation.addGlobalForce(wind);
 
 #ifdef LOG
   std::ofstream ofstream;

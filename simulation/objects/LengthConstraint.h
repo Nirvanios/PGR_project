@@ -6,7 +6,7 @@
 #define PGR_PROJECT_LENGTHCONSTRAINT_H
 
 #include "Constraint.h"
-#include "../base/SimulatedObject.h"
+#include "SimulatedObject.h"
 
 class LengthConstraint : public Constraint {
  private:

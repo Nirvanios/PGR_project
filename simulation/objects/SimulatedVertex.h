@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_SIMULATEDVERTEX_H
 #define PGR_PROJECT_SIMULATEDVERTEX_H
 
-#include "../base/SimulatedObject.h"
+#include "SimulatedObject.h"
 
 class SimulatedVertex : public SimulatedObject {
  private:

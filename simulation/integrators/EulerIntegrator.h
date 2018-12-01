@@ -6,7 +6,7 @@
 #define PGR_PROJECT_EULERINTEGRATOR_H
 
 
-#include "../base/Integrator.h"
+#include "Integrator.h"
 
 class EulerIntegrator : public Integrator {
 private:

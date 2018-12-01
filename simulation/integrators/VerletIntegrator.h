@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_VERLETINTEGRATOR_H
 #define PGR_PROJECT_VERLETINTEGRATOR_H
 
-#include "../base/Integrator.h"
+#include "Integrator.h"
 class VerletIntegrator : public Integrator {
  private:
   glm::vec3 newPosition;

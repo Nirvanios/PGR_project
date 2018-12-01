@@ -12,7 +12,7 @@
 #include <Opengl/gl.h>
 #endif
 #include <glm/vec3.hpp>
-#include "../common/common.h"
+#include "common.h"
 
 enum SimulatedObjectType {
     Passive, Active

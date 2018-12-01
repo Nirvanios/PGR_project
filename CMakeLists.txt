@@ -16,6 +16,8 @@ include_directories(${GLEW_INCLUDE_DIRS})
 find_package(glm REQUIRED)
 include_directories(${GLM_INCLUDE_DIRS})
 
+include_directories(simulation/base simulation/common simulation/forces simulation/integrators simulation/objects simulation)
+
 add_executable(sim_test sim_test_main.cpp simulation/base/SimulatedObject.h simulation/objects/Constraint.h
         simulation/common/common.h simulation/objects/SimulatedModel.cpp simulation/objects/SimulatedModel.h
         simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h

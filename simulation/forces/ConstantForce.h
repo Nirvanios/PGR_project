@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_CONSTANTFORCE_H
 #define PGR_PROJECT_CONSTANTFORCE_H
 
-#include "../base/ForceGenerator.h"
+#include "ForceGenerator.h"
 
 class ConstantForce : public ForceGenerator {
  private:
