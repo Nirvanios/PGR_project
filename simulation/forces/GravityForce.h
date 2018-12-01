@@ -9,7 +9,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/scalar_multiplication.hpp>
-#include "../base/ForceGenerator.h"
+#include "ForceGenerator.h"
 
 class GravityForce : public ForceGenerator {
 private:

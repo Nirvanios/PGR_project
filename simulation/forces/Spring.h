@@ -6,7 +6,7 @@
 #define PGR_PROJECT_SPRING_H
 
 #include <glm/geometric.hpp>
-#include "../base/ForceGenerator.h"
+#include "ForceGenerator.h"
 
 class Spring : public ForceGenerator {
 private:

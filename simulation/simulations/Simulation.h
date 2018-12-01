@@ -6,11 +6,13 @@
 #define PGR_PROJECT_SIMULATION_H
 
 #include <vector>
-#include "base/SimulatedObject.h"
-#include "base/ForceGenerator.h"
-#include "forces/Spring.h"
-#include "base/Integrator.h"
-#include "integrators/EulerIntegrator.h"
+#include "SimulatedObject.h"
+#include "ForceGenerator.h"
+#include "Spring.h"
+#include "Integrator.h"
+#include "EulerIntegrator.h"
+#include "VerletIntegrator.h"
+#include "Constraint.h"
 
 class Simulation {
 private:
@@ -18,6 +20,8 @@ protected:
     std::vector<SimulatedObject*> objects;
     std::vector<ForceGenerator*> forces;
     std::vector<Spring*> springs;
+    std::vector<Constraint*> constraints;
+    int constraintIterations;
 
     Integrator* integrator;
 public:
@@ -28,6 +32,20 @@ public:
     void addObject(SimulatedObject* object);
 
     void addGlobalForce(ForceGenerator* force);
+
+    void addConstraint(Constraint* constraint);
+
+    void setConstraintIterations(int value) {
+      constraintIterations = value;
+    }
+
+    int getConstraintIterations() {
+      return constraintIterations;
+    }
+
+    void setIntegrator(Integrator* integrator) {
+      this->integrator = integrator;
+    }
 
     virtual void update(SimulationTime time);
 };

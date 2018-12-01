@@ -12,7 +12,7 @@
 #include <Opengl/gl.h>
 #endif
 #include <glm/vec3.hpp>
-#include "../common/common.h"
+#include "common.h"
 
 enum SimulatedObjectType {
     Passive, Active
@@ -33,6 +33,7 @@ public:
         currentPosition = glm::vec3(0, 0, 0);
         previousPosition = currentPosition;
         velocity = glm::vec3(0, 0, 0);
+        resultantForce = glm::vec3(0, 0, 0);
     }
 
     void setMass(float newMass) {
