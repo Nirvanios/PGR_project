@@ -11,9 +11,10 @@
 #include "simulation/objects/SimulatedModel.h"
 #include "simulation/ClothSimulation.h"
 #include "simulation/objects/PointConstraint.h"
+#include "simulation/forces/ConstantForce.h"
 
 #define SPRING
-#define NLOG
+#define LOG
 
 int main(int argc, char** argv) {
 
@@ -128,6 +129,9 @@ int main(int argc, char** argv) {
   air->setDragCoefficient(dragCoefficient);
   simulation.addGlobalForce(air);
 
+  auto wind = new ConstantForce(glm::vec3(0.1f, 0, 0.2f));
+  simulation.addGlobalForce(wind);
+
 #ifdef LOG
   std::ofstream ofstream;
   ofstream.open("/Users/petr/Desktop/log.txt");
@@ -197,7 +201,7 @@ int main(int argc, char** argv) {
 #endif
 
     time += 1;
-    if (time == 10000) {
+    if (time == 50000) {
       break;
     }
   }
