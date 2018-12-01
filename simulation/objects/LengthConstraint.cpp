@@ -8,7 +8,7 @@
 LengthConstraint::LengthConstraint(SimulatedObject *objectA, SimulatedObject *objectB, float length)
     : objectA(objectA), objectB(objectB), length(length) {}
 
-void LengthConstraint::satisfyContraint() {
+void LengthConstraint::satisfyConstraint() {
   direction = objectB->getCurrectPosition() - objectA->getCurrectPosition();
 
   currentLength = glm::length(direction);

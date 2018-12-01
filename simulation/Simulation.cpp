@@ -31,16 +31,32 @@ void Simulation::update(SimulationTime time) {
             for (auto forceGenerator : forces) {
                 forceGenerator->applyForce(object);
             }
+        }
+    }
 
+    for (auto object : objects) {
+        if (object->getSimulatedObjectType() == Active) {
             acceleration = object->getResultantForce() / object->getMass();
 
             integrator->integrate(acceleration, object);
         }
+    }
 
+    for (int i = 0; i < constraintIterations; i++) {
+        for (auto constraint : constraints) {
+            constraint->satisfyConstraint();
+        }
+    }
+
+
+    for (auto object : objects) {
         object->update(time);
 
         if (object->getSimulatedObjectType() == Active) {
             object->resetForces();
         }
     }
+}
+void Simulation::addConstraint(Constraint *constraint) {
+    constraints.emplace_back(constraint);
 }

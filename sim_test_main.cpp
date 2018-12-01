@@ -54,10 +54,10 @@ int main(int argc, char** argv) {
   size_t time = 0;
   while(true) {
     simulation.update(time);
-    stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0.1f, 0, 0));
+    stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0.01f, 0, 0));
 
     if (time > 1000) {
-      stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0, 0.1f, 0));
+      //stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0, 0.1f, 0));
     }
     auto tosave = std::to_string(movingSphereSimObj->getCurrectPosition().x)
         + ";"
@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
     ofstream2.write(toSave3.c_str(), toSave3.size());
 
     time += 1;
-    if (time == 10000) {
+    if (time == 100000) {
       break;
     }
   }

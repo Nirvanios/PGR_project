@@ -25,7 +25,7 @@ class PointConstraint : public Constraint {
    return position;
  }
 
-  void satisfyContraint() override;
+  void satisfyConstraint() override;
 };
 
 #endif //PGR_PROJECT_POINTCONSTRAINT_H

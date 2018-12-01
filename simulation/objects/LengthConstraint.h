@@ -22,7 +22,7 @@ class LengthConstraint : public Constraint {
  public:
   LengthConstraint(SimulatedObject *objectA, SimulatedObject *objectB, float length);
 
-  void satisfyContraint() override;
+  void satisfyConstraint() override;
 };
 
 #endif //PGR_PROJECT_LENGTHCONSTRAINT_H

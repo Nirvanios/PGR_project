@@ -7,7 +7,8 @@
 
 
 class Constraint {
-  virtual void satisfyContraint() = 0;
+ public:
+  virtual void satisfyConstraint() = 0;
 };
 
 

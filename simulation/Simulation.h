@@ -11,6 +11,7 @@
 #include "forces/Spring.h"
 #include "base/Integrator.h"
 #include "integrators/EulerIntegrator.h"
+#include "objects/Constraint.h"
 
 class Simulation {
 private:
@@ -18,6 +19,8 @@ protected:
     std::vector<SimulatedObject*> objects;
     std::vector<ForceGenerator*> forces;
     std::vector<Spring*> springs;
+    std::vector<Constraint*> constraints;
+    int constraintIterations;
 
     Integrator* integrator;
 public:
@@ -28,6 +31,16 @@ public:
     void addObject(SimulatedObject* object);
 
     void addGlobalForce(ForceGenerator* force);
+
+    void addConstraint(Constraint* constraint);
+
+    void setConstraintIterations(int value) {
+      constraintIterations = value;
+    }
+
+    int getConstraintIterations() {
+      return constraintIterations;
+    }
 
     virtual void update(SimulationTime time);
 };

@@ -5,6 +5,6 @@
 #include "PointConstraint.h"
 PointConstraint::PointConstraint(const glm::vec3 &position, SimulatedObject *object) : position(position), object(object) {}
 
-void PointConstraint::satisfyContraint() {
+void PointConstraint::satisfyConstraint() {
   object->setCurrentPosition(position);
 }
