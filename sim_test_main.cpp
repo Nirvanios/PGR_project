@@ -104,6 +104,11 @@ int main(int argc, char** argv) {
                                       Passive, new GraphicsSimpleObject(cubePos, nullptr, nullptr));
   simulation.addObject(stationaryCubeSimObj);
 
+  auto sphereCPos = glm::vec3(10.0f, 0, 0);
+  auto movingSphereSimObj3 = new SimulatedModel(sphereMass,
+                                                Active, new GraphicsSimpleObject(sphereCPos, nullptr, nullptr));
+  simulation.addObject(movingSphereSimObj3);
+
   float stiffness = 8.0f;
   float damping = 0.1f;
   simulation.addSpring(stiffness, damping, stationaryCubeSimObj,
@@ -111,6 +116,9 @@ int main(int argc, char** argv) {
 
   simulation.addSpring(stiffness, damping, movingSphereSimObj2,
                        movingSphereSimObj);
+
+  simulation.addSpring(stiffness, damping, movingSphereSimObj3,
+                       stationaryCubeSimObj);
 
   auto gravity = new GravityForce();
   simulation.addGlobalForce(gravity);
@@ -127,6 +135,8 @@ int main(int argc, char** argv) {
   ofstream1.open("/Users/petr/Desktop/log1.txt");
   std::ofstream ofstream2;
   ofstream2.open("/Users/petr/Desktop/log2.txt");
+  std::ofstream ofstream3;
+  ofstream3.open("/Users/petr/Desktop/log3.txt");
 #endif
 
   simulation.setConstraintIterations(0);
@@ -135,9 +145,18 @@ int main(int argc, char** argv) {
   while(true) {
     simulation.update(time);
 
-    // z movingSphereSimObj2 a movingSphereSimObj stačí vytáhnout getCurrentPosition a na to vykreslit třeba krychličku
+
+    // z movingSphereSimObj movingSphereSimObj2 movingSphereSimObj3 stačí vytáhnout getCurrentPosition a na to vykreslit třeba krychličku
     // z stationaryCubeSimObj taky
-    // mezi tyto ziskane objekty muzes vykreslit lajnu
+    // ty krychličky nějak rozumně velký, 0.1f třeba?
+
+    // lajny mezi:
+    //  - stationaryCubeSimObj - movingSphereSimObj
+    //  - stationaryCubeSimObj - movingSphereSimObj3
+    //  - movingSphereSimObj2  - movingSphereSimObj
+    // presneji mezi jejich getCurrentPosition()
+
+
     // každé opakování tohoto cyklu je 1/60 sekundy simulace
 
 
@@ -167,6 +186,14 @@ int main(int argc, char** argv) {
         + "\n";
     ofstream2.write(tosave.c_str(), tosave.size());
 
+    tosave = std::to_string(movingSphereSimObj3->getCurrectPosition().x)
+        + ";"
+        + std::to_string(movingSphereSimObj3->getCurrectPosition().y)
+        + ";"
+        + std::to_string(movingSphereSimObj3->getCurrectPosition().z)
+        + "\n";
+    ofstream3.write(tosave.c_str(), tosave.size());
+
 #endif
 
     time += 1;
@@ -179,6 +206,7 @@ int main(int argc, char** argv) {
   ofstream.close();
   ofstream1.close();
   ofstream2.close();
+  ofstream3.close();
 #endif
 
 
