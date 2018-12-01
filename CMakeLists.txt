@@ -34,6 +34,6 @@ add_executable(PGR_project test.cpp simulation/base/SimulatedObject.h simulation
         simulation/forces/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
         simulation/integrators/EulerIntegrator.h simulation/Simulation.cpp simulation/Simulation.h sim_test_main.cpp
         simulation/objects/PointConstraint.cpp simulation/objects/PointConstraint.h simulation/objects/LengthConstraint.cpp
-        simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h simulation/objects/SimulatedVertex.cpp simulation/objects/SimulatedVertex.h)
+        simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h simulation/objects/SimulatedVertex.cpp simulation/objects/SimulatedVertex.h simulation/SoftBodySimulation.cpp simulation/SoftBodySimulation.h)
 
 target_link_libraries(PGR_project ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})

@@ -5,8 +5,7 @@
 #include "Simulation.h"
 
 Simulation::Simulation() {
-    //integrator = new EulerIntegrator(1.0f / 60.0f);
-    integrator = new VerletIntegrator(1.0f / 60.0f);
+    integrator = new EulerIntegrator(1.0f / 60.0f);
 }
 
 void Simulation::addSpring(float stiffness, float damping, SimulatedObject* objectA, SimulatedObject* objectB) {
