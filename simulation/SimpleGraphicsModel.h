@@ -10,12 +10,12 @@ class SimpleGraphicsModel {
  private:
   glm::vec3 position;
 
-  float* vertices;
+  glm::vec3 *vertices;
 
-  float* indices;
+  uint32_t *indices;
  protected:
  public:
-  SimpleGraphicsModel(const glm::vec3 &position, float *vertices, float *indices)
+  SimpleGraphicsModel(const glm::vec3 &position, glm::vec3 *vertices, uint32_t *indices)
       : position(position), vertices(vertices), indices(indices) {}
 
   void setPosition(glm::vec3 position) {
@@ -25,6 +25,14 @@ class SimpleGraphicsModel {
   glm::vec3 getPosition() {
     return position;
   }
+
+  glm::vec3 *getVertices() {
+   return vertices;
+  }
+
+  uint32_t *getIndices() {
+    return indices;
+ }
 };
 
 #endif //PGR_PROJECT_SIMPLEGRAPHICSMODEL_H
