@@ -25,8 +25,8 @@ SDL_Window* window;
 GLuint vertexShader, fragmentShader, pointsVBO, shaderProgram, positionAttrib;
 
 
-const char *vertexShaderSource = "#version 130 \n in vec2 position; void main() { gl_Position = vec4(position,0,1); }";
-const char *fragmentShaderSource = "#version 130 \n out vec4 fragColor; void main() { fragColor = vec4(1); }";
+const char *vertexShaderSource = "#version 120 \n attribute vec2 position; void main() { gl_Position = vec4(position,0,1); }";
+const char *fragmentShaderSource = "#version 120 \n  vec4 fragColor; void main() { fragColor = vec4(1); }";
 
 
 const float points[][2] = {
@@ -99,7 +99,49 @@ GLuint compileShader(GLenum type, char* source);
 void onInit() {
     // Compile shaders
     vertexShader = compileShader(GL_VERTEX_SHADER, (char*) vertexShaderSource);
+    GLint isCompiled = 0;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
+    if(isCompiled == GL_FALSE)
+    {
+        GLint maxLength = 0;
+        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+
+        // The maxLength includes the NULL character
+        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &errorLog[0]);
+
+        for (auto ch : errorLog) {
+            std::cerr << ch;
+        }
+        std::cerr << std::endl;
+        // Provide the infolog in whatever manor you deem best.
+        // Exit with failure.
+        glDeleteShader(vertexShader); // Don't leak the shader.
+        return;
+    }
+
+
     fragmentShader = compileShader(GL_FRAGMENT_SHADER, (char*) fragmentShaderSource);
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled);
+    if(isCompiled == GL_FALSE)
+    {
+        GLint maxLength = 0;
+        glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
+
+        // The maxLength includes the NULL character
+        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &errorLog[0]);
+
+
+        for (auto ch : errorLog) {
+            std::cerr << ch;
+        }
+        std::cerr << std::endl;
+        // Provide the infolog in whatever manor you deem best.
+        // Exit with failure.
+        glDeleteShader(fragmentShader); // Don't leak the shader.
+        return;
+    }
 
     // Link shaders
     vector<GLuint> *shaders = new vector<GLuint>(vertexShader, fragmentShader);
@@ -184,7 +226,7 @@ GLuint compileShader(GLenum type, char *source) {
 
     int compilationStatus;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &compilationStatus);
-    if(compilationStatus == GL_FALSE) throw runtime_error("Shader compilation error.");
+//    if(compilationStatus == GL_FALSE) throw runtime_error("Shader compilation error.");
 
     return shader;
 }

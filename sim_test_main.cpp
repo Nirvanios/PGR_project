@@ -156,6 +156,7 @@ int main(int argc, char** argv) {
   size_t time = 0;
   while(true) {
     simulation.update(time);
+    stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0.01f, 0, 0));
 
 
     // z movingSphereSimObj movingSphereSimObj2 movingSphereSimObj3 stačí vytáhnout getCurrentPosition a na to vykreslit třeba krychličku
@@ -209,7 +210,7 @@ int main(int argc, char** argv) {
 #endif
 
     time += 1;
-    if (time == 50000) {
+    if (time == 3000) {
       break;
     }
   }
