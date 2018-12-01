@@ -5,8 +5,27 @@
 #ifndef PGR_PROJECT_POINTCONSTRAINT_H
 #define PGR_PROJECT_POINTCONSTRAINT_H
 
-class PointConstraint {
+#include <glm/glm.hpp>
+#include "Constraint.h"
+#include "../base/SimulatedObject.h"
 
+class PointConstraint : public Constraint {
+ private:
+  glm::vec3 position;
+  SimulatedObject* object;
+ protected:
+ public:
+  PointConstraint(const glm::vec3 &position, SimulatedObject *object);
+
+  void setPosition(glm::vec3 pos) {
+   this->position = pos;
+ }
+
+ glm::vec3 getPosition() {
+   return position;
+ }
+
+  void satisfyContraint() override;
 };
 
 #endif //PGR_PROJECT_POINTCONSTRAINT_H
