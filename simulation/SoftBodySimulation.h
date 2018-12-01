@@ -14,6 +14,9 @@ class SoftBodySimulation : public Simulation {
  public:
   SoftBodySimulation();
 
+  std::vector<SimulatedVertex*> getVertices() {
+    return vertices;
+  }
 };
 
 #endif //PGR_PROJECT_SOFTBODYSIMULATION_H

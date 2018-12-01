@@ -9,10 +9,83 @@
 #include "simulation/forces/GravityForce.h"
 #include "simulation/forces/DragForce.h"
 #include "simulation/objects/SimulatedModel.h"
+#include "simulation/ClothSimulation.h"
+#include "simulation/objects/PointConstraint.h"
+
+#define SPRING
 
 int main(int argc, char** argv) {
-  Simulation simulation;
 
+#ifdef CLOTH
+
+  ClothSimulation simulation(2.0f, 2.0f, 0.02f, 2.0f, 0.02f, 2.0f, 0.02f);
+
+  simulation.setConstraintIterations(10);
+
+  auto gravity = new GravityForce();
+  simulation.addGlobalForce(gravity);
+
+  auto leftConstraint = new PointConstraint(simulation.getVertices()[0]->getCurrectPosition(),
+                                            simulation.getVertices()[0]);
+
+  auto rightConstraint = new PointConstraint(simulation.getVertices()[4]->getCurrectPosition(),
+                                            simulation.getVertices()[4]);
+
+  simulation.addConstraint(leftConstraint);
+  simulation.addConstraint(rightConstraint);
+
+  simulation.setIntegrator(new VerletIntegrator(1.0f / 60.0f));
+
+
+  std::ofstream ofstream;
+  ofstream.open("/Users/petr/Desktop/log.txt");
+  std::ofstream ofstream1;
+  ofstream1.open("/Users/petr/Desktop/log1.txt");
+  std::ofstream ofstream2;
+  ofstream2.open("/Users/petr/Desktop/log2.txt");
+  size_t time = 0;
+  while(true) {
+    simulation.update(time);
+
+    auto tosave = std::to_string(simulation.getVertices()[0]->getCurrectPosition().x)
+        + ";"
+        + std::to_string(simulation.getVertices()[0]->getCurrectPosition().y)
+        + ";"
+        + std::to_string(simulation.getVertices()[0]->getCurrectPosition().z)
+        + "\n";
+
+    auto toSave2 = std::to_string(simulation.getVertices()[4]->getCurrectPosition().x)
+        + ";"
+        + std::to_string(simulation.getVertices()[4]->getCurrectPosition().y)
+        + ";"
+        + std::to_string(simulation.getVertices()[4]->getCurrectPosition().z)
+        + "\n";
+
+    auto toSave3 = std::to_string(simulation.getVertices()[2]->getCurrectPosition().x)
+        + ";"
+        + std::to_string(simulation.getVertices()[2]->getCurrectPosition().y)
+        + ";"
+        + std::to_string(simulation.getVertices()[2]->getCurrectPosition().z)
+        + "\n";
+
+    ofstream.write(tosave.c_str(), tosave.size());
+    ofstream1.write(toSave2.c_str(), toSave2.size());
+    ofstream2.write(toSave3.c_str(), toSave3.size());
+
+    time += 1;
+    if (time == 1000) {
+      break;
+    }
+  }
+
+  ofstream.close();
+  ofstream1.close();
+  ofstream2.close();
+
+#endif
+
+#ifdef SPRING
+  Simulation simulation;
 
   float sphereMass = 1.0f;
   auto movingSphereSimObj = new SimulatedModel(sphereMass,
@@ -43,46 +116,14 @@ int main(int argc, char** argv) {
   air->setDragCoefficient(dragCoefficient);
   simulation.addGlobalForce(air);
 
-
-
-  std::ofstream ofstream;
-  ofstream.open("/Users/petr/Desktop/log.txt");
-  std::ofstream ofstream1;
-  ofstream1.open("/Users/petr/Desktop/log1.txt");
-  std::ofstream ofstream2;
-  ofstream2.open("/Users/petr/Desktop/log2.txt");
   size_t time = 0;
   while(true) {
     simulation.update(time);
-   // stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0.01f, 0, 0));
 
-    if (time > 1000) {
-      //stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0, 0.1f, 0));
-    }
-    auto tosave = std::to_string(movingSphereSimObj->getCurrectPosition().x)
-        + ";"
-        + std::to_string(movingSphereSimObj->getCurrectPosition().y)
-        + ";"
-        + std::to_string(movingSphereSimObj->getCurrectPosition().z)
-        + "\n";
-
-    auto toSave2 = std::to_string(stationaryCubeSimObj->getCurrectPosition().x)
-        + ";"
-        + std::to_string(stationaryCubeSimObj->getCurrectPosition().y)
-        + ";"
-        + std::to_string(stationaryCubeSimObj->getCurrectPosition().z)
-        + "\n";
-
-    auto toSave3 = std::to_string(movingSphereSimObj2->getCurrectPosition().x)
-        + ";"
-        + std::to_string(movingSphereSimObj2->getCurrectPosition().y)
-        + ";"
-        + std::to_string(movingSphereSimObj2->getCurrectPosition().z)
-        + "\n";
-
-    ofstream.write(tosave.c_str(), tosave.size());
-    ofstream1.write(toSave2.c_str(), toSave2.size());
-    ofstream2.write(toSave3.c_str(), toSave3.size());
+    // z movingSphereSimObj2 a movingSphereSimObj stačí vytáhnout getCurrentPosition a na to vykreslit třeba krychličku
+    // z stationaryCubeSimObj taky
+    // mezi tyto ziskane objekty muzes vykreslit lajnu
+    // každé opakování tohoto cyklu je 1/60 sekundy simulace
 
     time += 1;
     if (time == 100000) {
@@ -90,10 +131,7 @@ int main(int argc, char** argv) {
     }
   }
 
-  ofstream.close();
-  ofstream1.close();
-  ofstream2.close();
-
+#endif
 
 
 }

@@ -33,6 +33,7 @@ public:
         currentPosition = glm::vec3(0, 0, 0);
         previousPosition = currentPosition;
         velocity = glm::vec3(0, 0, 0);
+        resultantForce = glm::vec3(0, 0, 0);
     }
 
     void setMass(float newMass) {

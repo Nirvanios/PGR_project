@@ -43,6 +43,10 @@ public:
       return constraintIterations;
     }
 
+    void setIntegrator(Integrator* integrator) {
+      this->integrator = integrator;
+    }
+
     virtual void update(SimulationTime time);
 };
 
