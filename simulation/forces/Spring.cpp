@@ -20,7 +20,7 @@ void Spring::applyForce(SimulatedObject *object) {
         direction = glm::normalize(direction);
 
         force = -stiffness * ((currentLength - restLength) * direction);
-        force += damping * glm::dot(simulatedObjectA->getVelocity() - simulatedObjectB->getVelocity(), direction) * direction;
+        force += -damping * glm::dot(simulatedObjectA->getVelocity() - simulatedObjectB->getVelocity(), direction) * direction;
 
         simulatedObjectA->setResultantForce(simulatedObjectA->getResultantForce() + force);
         simulatedObjectB->setResultantForce(simulatedObjectB->getResultantForce() - force);

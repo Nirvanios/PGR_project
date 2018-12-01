@@ -13,6 +13,7 @@
 #include "simulation/objects/PointConstraint.h"
 
 #define SPRING
+#define NLOG
 
 int main(int argc, char** argv) {
 
@@ -87,17 +88,20 @@ int main(int argc, char** argv) {
 #ifdef SPRING
   Simulation simulation;
 
-  float sphereMass = 1.0f;
+  auto sphereMass = 1.0f;
+  auto sphereAPos = glm::vec3(0, 0, 0);
   auto movingSphereSimObj = new SimulatedModel(sphereMass,
-                                               Active, nullptr);
+                                               Active, new GraphicsSimpleObject(sphereAPos, nullptr, nullptr));
   simulation.addObject(movingSphereSimObj);
 
+  auto sphereBPos = glm::vec3(0.2f, 0, 0);
   auto movingSphereSimObj2 = new SimulatedModel(sphereMass,
-                                               Active, nullptr);
+                                               Active, new GraphicsSimpleObject(sphereBPos, nullptr, nullptr));
   simulation.addObject(movingSphereSimObj2);
 
+  auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
   auto stationaryCubeSimObj = new SimulatedModel(1000.0f,
-                                      Passive, nullptr);
+                                      Passive, new GraphicsSimpleObject(cubePos, nullptr, nullptr));
   simulation.addObject(stationaryCubeSimObj);
 
   float stiffness = 8.0f;
@@ -105,8 +109,8 @@ int main(int argc, char** argv) {
   simulation.addSpring(stiffness, damping, stationaryCubeSimObj,
                       movingSphereSimObj);
 
-  //simulation.addSpring(stiffness, damping, movingSphereSimObj2,
-  //                     movingSphereSimObj);
+  simulation.addSpring(stiffness, damping, movingSphereSimObj2,
+                       movingSphereSimObj);
 
   auto gravity = new GravityForce();
   simulation.addGlobalForce(gravity);
@@ -115,6 +119,17 @@ int main(int argc, char** argv) {
   auto air = new DragForce();
   air->setDragCoefficient(dragCoefficient);
   simulation.addGlobalForce(air);
+
+#ifdef LOG
+  std::ofstream ofstream;
+  ofstream.open("/Users/petr/Desktop/log.txt");
+  std::ofstream ofstream1;
+  ofstream1.open("/Users/petr/Desktop/log1.txt");
+  std::ofstream ofstream2;
+  ofstream2.open("/Users/petr/Desktop/log2.txt");
+#endif
+
+  simulation.setConstraintIterations(0);
 
   size_t time = 0;
   while(true) {
@@ -125,11 +140,48 @@ int main(int argc, char** argv) {
     // mezi tyto ziskane objekty muzes vykreslit lajnu
     // každé opakování tohoto cyklu je 1/60 sekundy simulace
 
+
+
+#ifdef LOG
+    auto tosave = std::to_string(movingSphereSimObj->getCurrectPosition().x)
+        + ";"
+        + std::to_string(movingSphereSimObj->getCurrectPosition().y)
+        + ";"
+        + std::to_string(movingSphereSimObj->getCurrectPosition().z)
+        + "\n";
+    ofstream.write(tosave.c_str(), tosave.size());
+
+    tosave = std::to_string(stationaryCubeSimObj->getCurrectPosition().x)
+        + ";"
+        + std::to_string(stationaryCubeSimObj->getCurrectPosition().y)
+        + ";"
+        + std::to_string(stationaryCubeSimObj->getCurrectPosition().z)
+        + "\n";
+    ofstream1.write(tosave.c_str(), tosave.size());
+
+    tosave = std::to_string(movingSphereSimObj2->getCurrectPosition().x)
+        + ";"
+        + std::to_string(movingSphereSimObj2->getCurrectPosition().y)
+        + ";"
+        + std::to_string(movingSphereSimObj2->getCurrectPosition().z)
+        + "\n";
+    ofstream2.write(tosave.c_str(), tosave.size());
+
+#endif
+
     time += 1;
-    if (time == 100000) {
+    if (time == 10000) {
       break;
     }
   }
+
+#ifdef LOG
+  ofstream.close();
+  ofstream1.close();
+  ofstream2.close();
+#endif
+
+
 
 #endif
 

@@ -10,15 +10,15 @@
 
 class SimulatedModel: public SimulatedObject {
 private:
-    ObjectModel model;
+  GraphicsSimpleObject* model;
 public:
-    SimulatedModel(float mass, SimulatedObjectType objectType, ObjectModel model);
+    SimulatedModel(float mass, SimulatedObjectType objectType, GraphicsSimpleObject* model);
 
-    void setObjectModel(ObjectModel model) {
+    void setObjectModel(GraphicsSimpleObject* model) {
         this->model = model;
     }
 
-    ObjectModel getObjectModel() {
+  GraphicsSimpleObject* getObjectModel() {
         return model;
     }
 
