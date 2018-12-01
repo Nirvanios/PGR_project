@@ -11,6 +11,7 @@
 #include "forces/Spring.h"
 #include "base/Integrator.h"
 #include "integrators/EulerIntegrator.h"
+#include "integrators/VerletIntegrator.h"
 #include "objects/Constraint.h"
 
 class Simulation {

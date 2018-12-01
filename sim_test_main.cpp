@@ -32,8 +32,8 @@ int main(int argc, char** argv) {
   simulation.addSpring(stiffness, damping, stationaryCubeSimObj,
                       movingSphereSimObj);
 
-  simulation.addSpring(stiffness, damping, movingSphereSimObj2,
-                       movingSphereSimObj);
+  //simulation.addSpring(stiffness, damping, movingSphereSimObj2,
+  //                     movingSphereSimObj);
 
   auto gravity = new GravityForce();
   simulation.addGlobalForce(gravity);
@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
   size_t time = 0;
   while(true) {
     simulation.update(time);
-    stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0.01f, 0, 0));
+   // stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0.01f, 0, 0));
 
     if (time > 1000) {
       //stationaryCubeSimObj->setCurrentPosition(stationaryCubeSimObj->getCurrectPosition() + glm::vec3(0, 0.1f, 0));
