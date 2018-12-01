@@ -15,7 +15,7 @@
 #include "ConstantForce.h"
 
 #define SPRING
-#define LOG
+#define NLOG
 
 int main(int argc, char** argv) {
 
