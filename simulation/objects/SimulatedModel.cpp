@@ -4,7 +4,7 @@
 
 #include "SimulatedModel.h"
 
-SimulatedModel::SimulatedModel(float mass, SimulatedObjectType objectType, GraphicsSimpleObject* model) : SimulatedObject(mass,
+SimulatedModel::SimulatedModel(float mass, SimulatedObjectType objectType, SimpleGraphicsModel* model) : SimulatedObject(mass,
                                                                                                                 objectType),
                                                                                                 model(model) {
   currentPosition = model->getPosition();

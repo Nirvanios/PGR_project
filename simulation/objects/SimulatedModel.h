@@ -5,20 +5,20 @@
 #ifndef PGR_PROJECT_SIMULATEDMODEL_H
 #define PGR_PROJECT_SIMULATEDMODEL_H
 
-
+#include <SimpleGraphicsModel.h>
 #include "SimulatedObject.h"
 
 class SimulatedModel: public SimulatedObject {
 private:
-  GraphicsSimpleObject* model;
+  SimpleGraphicsModel* model;
 public:
-    SimulatedModel(float mass, SimulatedObjectType objectType, GraphicsSimpleObject* model);
+    SimulatedModel(float mass, SimulatedObjectType objectType, SimpleGraphicsModel* model);
 
-    void setObjectModel(GraphicsSimpleObject* model) {
+    void setObjectModel(SimpleGraphicsModel* model) {
         this->model = model;
     }
 
-  GraphicsSimpleObject* getObjectModel() {
+  SimpleGraphicsModel* getObjectModel() {
         return model;
     }
 

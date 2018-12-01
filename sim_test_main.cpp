@@ -5,13 +5,14 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "simulation/Simulation.h"
-#include "simulation/forces/GravityForce.h"
-#include "simulation/forces/DragForce.h"
-#include "simulation/objects/SimulatedModel.h"
-#include "simulation/ClothSimulation.h"
-#include "simulation/objects/PointConstraint.h"
-#include "simulation/forces/ConstantForce.h"
+#include <SimpleGraphicsModel.h>
+#include "Simulation.h"
+#include "GravityForce.h"
+#include "DragForce.h"
+#include "SimulatedModel.h"
+#include "ClothSimulation.h"
+#include "PointConstraint.h"
+#include "ConstantForce.h"
 
 #define SPRING
 #define LOG
@@ -101,22 +102,22 @@ int main(int argc, char** argv) {
   auto sphereMass = 1.0f;
   auto sphereAPos = glm::vec3(0, 0, 0);
   auto movingSphereSimObj = new SimulatedModel(sphereMass,
-                                               Active, new GraphicsSimpleObject(sphereAPos, nullptr, nullptr));
+                                               Active, new SimpleGraphicsModel(sphereAPos, nullptr, nullptr));
   simulation.addObject(movingSphereSimObj);
 
   auto sphereBPos = glm::vec3(0.2f, 0, 0);
   auto movingSphereSimObj2 = new SimulatedModel(sphereMass,
-                                               Active, new GraphicsSimpleObject(sphereBPos, nullptr, nullptr));
+                                               Active, new SimpleGraphicsModel(sphereBPos, nullptr, nullptr));
   simulation.addObject(movingSphereSimObj2);
 
   auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
   auto stationaryCubeSimObj = new SimulatedModel(1000.0f,
-                                      Passive, new GraphicsSimpleObject(cubePos, nullptr, nullptr));
+                                      Passive, new SimpleGraphicsModel(cubePos, nullptr, nullptr));
   simulation.addObject(stationaryCubeSimObj);
 
   auto sphereCPos = glm::vec3(10.0f, 0, 0);
   auto movingSphereSimObj3 = new SimulatedModel(sphereMass,
-                                                Active, new GraphicsSimpleObject(sphereCPos, nullptr, nullptr));
+                                                Active, new SimpleGraphicsModel(sphereCPos, nullptr, nullptr));
   simulation.addObject(movingSphereSimObj3);
 
   float stiffness = 8.0f;
