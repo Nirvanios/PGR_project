@@ -430,6 +430,7 @@ int main(int argc, char *argv[]) {
   std::cout << "Rendering..." << std::endl;
 
   bool is_running = true;
+  bool is_simRunning = false;
   bool enableCameraMovement = false;
   bool gravityEnabled = true;
   SDL_Event event;
@@ -480,6 +481,8 @@ int main(int argc, char *argv[]) {
               air->setDragCoefficient(air->getDragCoefficient() + 0.05f);
               }
               break;
+            case SDLK_SPACE: is_simRunning = !is_simRunning;
+              break;
           }
           break;
         case SDL_MOUSEBUTTONDOWN:
@@ -499,41 +502,43 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    updateSimulation();
-    line1->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
-    line1->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
-    line1->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
-    line1->getVertices()[3] = simObjects[1]->getCurrectPosition().x;
-    line1->getVertices()[4] = simObjects[1]->getCurrectPosition().y;
-    line1->getVertices()[5] = simObjects[1]->getCurrectPosition().z;
+    if (is_simRunning) {
+      updateSimulation();
+      line1->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
+      line1->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
+      line1->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
+      line1->getVertices()[3] = simObjects[1]->getCurrectPosition().x;
+      line1->getVertices()[4] = simObjects[1]->getCurrectPosition().y;
+      line1->getVertices()[5] = simObjects[1]->getCurrectPosition().z;
 
-    line2->getVertices()[0] = simObjects[1]->getCurrectPosition().x;
-    line2->getVertices()[1] = simObjects[1]->getCurrectPosition().y;
-    line2->getVertices()[2] = simObjects[1]->getCurrectPosition().z;
-    line2->getVertices()[3] = simObjects[2]->getCurrectPosition().x;
-    line2->getVertices()[4] = simObjects[2]->getCurrectPosition().y;
-    line2->getVertices()[5] = simObjects[2]->getCurrectPosition().z;
+      line2->getVertices()[0] = simObjects[1]->getCurrectPosition().x;
+      line2->getVertices()[1] = simObjects[1]->getCurrectPosition().y;
+      line2->getVertices()[2] = simObjects[1]->getCurrectPosition().z;
+      line2->getVertices()[3] = simObjects[2]->getCurrectPosition().x;
+      line2->getVertices()[4] = simObjects[2]->getCurrectPosition().y;
+      line2->getVertices()[5] = simObjects[2]->getCurrectPosition().z;
 
-    line3->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
-    line3->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
-    line3->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
-    line3->getVertices()[3] = simObjects[3]->getCurrectPosition().x;
-    line3->getVertices()[4] = simObjects[3]->getCurrectPosition().y;
-    line3->getVertices()[5] = simObjects[3]->getCurrectPosition().z;
+      line3->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
+      line3->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
+      line3->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
+      line3->getVertices()[3] = simObjects[3]->getCurrectPosition().x;
+      line3->getVertices()[4] = simObjects[3]->getCurrectPosition().y;
+      line3->getVertices()[5] = simObjects[3]->getCurrectPosition().z;
 
-    line4->getVertices()[0] = simObjects[4]->getCurrectPosition().x;
-    line4->getVertices()[1] = simObjects[4]->getCurrectPosition().y;
-    line4->getVertices()[2] = simObjects[4]->getCurrectPosition().z;
-    line4->getVertices()[3] = simObjects[5]->getCurrectPosition().x;
-    line4->getVertices()[4] = simObjects[5]->getCurrectPosition().y;
-    line4->getVertices()[5] = simObjects[5]->getCurrectPosition().z;
+      line4->getVertices()[0] = simObjects[4]->getCurrectPosition().x;
+      line4->getVertices()[1] = simObjects[4]->getCurrectPosition().y;
+      line4->getVertices()[2] = simObjects[4]->getCurrectPosition().z;
+      line4->getVertices()[3] = simObjects[5]->getCurrectPosition().x;
+      line4->getVertices()[4] = simObjects[5]->getCurrectPosition().y;
+      line4->getVertices()[5] = simObjects[5]->getCurrectPosition().z;
 
-    line5->getVertices()[0] = simObjects[4]->getCurrectPosition().x;
-    line5->getVertices()[1] = simObjects[4]->getCurrectPosition().y;
-    line5->getVertices()[2] = simObjects[4]->getCurrectPosition().z;
-    line5->getVertices()[3] = simObjects[6]->getCurrectPosition().x;
-    line5->getVertices()[4] = simObjects[6]->getCurrectPosition().y;
-    line5->getVertices()[5] = simObjects[6]->getCurrectPosition().z;
+      line5->getVertices()[0] = simObjects[4]->getCurrectPosition().x;
+      line5->getVertices()[1] = simObjects[4]->getCurrectPosition().y;
+      line5->getVertices()[2] = simObjects[4]->getCurrectPosition().z;
+      line5->getVertices()[3] = simObjects[6]->getCurrectPosition().x;
+      line5->getVertices()[4] = simObjects[6]->getCurrectPosition().y;
+      line5->getVertices()[5] = simObjects[6]->getCurrectPosition().z;
+    }
 
     Render(objects);
     SDL_Delay(1000/60);
