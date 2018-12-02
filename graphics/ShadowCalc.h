@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_SHADOWCALC_H
 #define PGR_PROJECT_SHADOWCALC_H
 
-#include <gl/glew.h>
+//#include <gl/glew.h>
 #include <glm/glm.hpp>
 #include "../shader.h"
 

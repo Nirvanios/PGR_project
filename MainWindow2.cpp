@@ -19,7 +19,7 @@
 #include <SimModel.h>
 #include <GravityForce.h>
 #include <DragForce.h>
-#include <Camera.h>
+#include "graphics/camera/Camera.h"
 
 Camera camera;
 
@@ -39,6 +39,25 @@ const uint32_t points = 4;
 // Each color has 4 values ( red, green, blue, alpha )
 const uint32_t floatsPerColor = 4;
 
+const float sceneFloor[]={
+        -100, -30, 100,
+        -100, -30, -100,
+        100, -30, 100,
+        100, -30, -100
+};
+
+const unsigned char floorIndicies[] ={
+        0, 1, 2,
+        1, 2, 3
+};
+
+const float floorColor[] ={
+        0.0, 1.0, 0.0, 1.0,
+        0.0, 1.0, 0.0, 1.0,
+        0.0, 1.0, 0.0, 1.0,
+        0.0, 1.0, 0.0, 1.0
+};
+
 // This is the object we'll draw ( a simple square
 float colors[] = {
     0.0, 1.0, 0.0, 1.0, // Top left
@@ -50,6 +69,7 @@ float colors[] = {
 GLuint vao[1];
 
 std::vector<GLuint> *vbo = new std::vector<GLuint>();
+std::vector<GLuint> *vboC = new std::vector<GLuint>();
 std::vector<GLuint> *ebo = new std::vector<GLuint>();
 
 // The positons of the position and color data within the VAO
@@ -87,6 +107,7 @@ Uint32 Render(std::vector<SimpleGraphicsModel *> *objects) {
   GLuint MatrixID = shader.getUniformLocation("mvp");
   glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
+  glDisableVertexAttribArray(colorAttributeIndex);
 
   // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
   int i = 0;
@@ -114,6 +135,18 @@ Uint32 Render(std::vector<SimpleGraphicsModel *> *objects) {
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
   }
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo->back());
+    glEnableVertexAttribArray(positionAttributeIndex);
+    glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, vboC->back());
+    glEnableVertexAttribArray(colorAttributeIndex);
+    glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo->back());
+    GLuint transformID = shader.getUniformLocation("translate");
+    glUniformMatrix4fv(transformID, 1, GL_FALSE, &Model[0][0]);
+    glDrawElements(GL_TRIANGLES, sizeof(floorIndicies), GL_UNSIGNED_BYTE, NULL);
+
 
   // Swap our buffers to make our changes visible
   SDL_GL_SwapWindow(mainWindow);
@@ -193,26 +226,38 @@ bool SetupBufferObjects(std::vector<SimpleGraphicsModel *> *objects) {
 
   }
 
+    glGenBuffers(1, &tempVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
+    vbo->push_back(tempVBO);
+    // Copy the vertex data from diamond to our buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(sceneFloor), sceneFloor,
+                 GL_STATIC_DRAW);
+
   // Colors
   // =======================
   glGenBuffers(1, &tempVBO);
   glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-  vbo->push_back(tempVBO);
+  vboC->push_back(tempVBO);
 
   // Copy the vertex data from diamond to our buffer
-  glBufferData(GL_ARRAY_BUFFER, (points * floatsPerColor) * sizeof(GLfloat), colors, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(floorColor), floorColor, GL_STATIC_DRAW);
 
   // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
-  glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
+  //glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
-  // Note : We didn't enable the colors here!
+  GLuint tempEBO;
   for (auto item : *objects) {
-    GLuint tempEBO;
     glGenBuffers(1, &tempEBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, item->getIndiciesSize(), item->getIndices(), GL_STATIC_DRAW);
     ebo->push_back(tempEBO);
   }
+
+    glGenBuffers(1, &tempEBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
+    glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(floorIndicies), floorIndicies, GL_STATIC_DRAW);
+    ebo->push_back(tempEBO);
 
   // Set up shader ( will be covered in the next part )
   // ===================

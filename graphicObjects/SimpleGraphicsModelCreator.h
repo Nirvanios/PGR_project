@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <SimpleGraphicsModel.h>
+#include <SoftBodyGraphicsModel.h>
 
 class SimpleGraphicsModelCreator {
 
@@ -52,6 +53,20 @@ public:
             auto model = new SimpleGraphicsModel(position, vertices, 6, indicies, 6);
             model->setIsLine(true);
             return model;
+        }
+
+        static SoftBodyGraphicsModel* createCloth(float width, float height, int widthVertices, int heightVertices){
+            float *vertices = new float[widthVertices*heightVertices*3];
+            float yStep = width/(widthVertices-1);
+            float xStep = height/(heightVertices-1);
+            int pos =0;
+            for(float i = -(width/2); i < width; i+=yStep){
+                for (float j = (-width/2); j < height; j+=xStep){
+                    vertices[pos] = j;
+                    vertices[pos+1] = 0;
+                    vertices[pos+2] = i;
+                }
+            }
         }
 };
 
