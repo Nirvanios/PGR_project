@@ -20,6 +20,7 @@
 #include <GravityForce.h>
 #include <DragForce.h>
 #include "graphics/camera/Camera.h"
+#include <SnapableSpring.h>
 
 Camera camera;
 
@@ -224,8 +225,10 @@ void prepareSimulation() {
   simulation->addSpring(6.0f, 0.2f, active4_onPassive2Passive3,
                         passive2);
 
-  simulation->addSpring(4.5f, 0.3f, active4_onPassive2Passive3,
-                        passive3);
+  simulation->addSpring(new SnapableSpring(stiffness, damping, active4_onPassive2Passive3,
+                                   passive3, 7.0f));
+  //simulation->addSpring(4.5f, 0.3f, active4_onPassive2Passive3,
+  //                      passive3);
 
   simulation->addGlobalForce(gravity);
 
@@ -443,16 +446,16 @@ int main(int argc, char *argv[]) {
         case SDL_KEYDOWN:
           switch (event.key.keysym.sym) {
             case SDLK_LEFT:
-              simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
+              simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
               break;
             case SDLK_RIGHT:
-              simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
+              simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
               break;
             case SDLK_UP:
-              simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
+              simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
               break;
             case SDLK_DOWN:
-              simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
+              simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
               break;
             case SDLK_w:camera.ProcessKeyboard(FORWARD, 0.05);
               break;

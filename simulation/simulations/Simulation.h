@@ -29,6 +29,8 @@ public:
 
     void addSpring(float stiffness, float damping, SimObject* objectA, SimObject* objectB);
 
+    void addSpring(Spring* spring);
+
     void addObject(SimObject* object);
 
     const std::vector<SimObject*>& getObjects() {

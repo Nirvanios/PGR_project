@@ -12,6 +12,7 @@ void Simulation::addSpring(float stiffness, float damping, SimObject* objectA, S
     springs.emplace_back(new Spring(stiffness, damping, objectA, objectB));
 }
 
+
 void Simulation::addObject(SimObject *object)  {
     objects.emplace_back(object);
 }
@@ -57,6 +58,11 @@ void Simulation::update(SimTime time) {
         }
     }
 }
+
 void Simulation::addConstraint(Constraint *constraint) {
     constraints.emplace_back(constraint);
+}
+
+void Simulation::addSpring(Spring *spring) {
+    springs.emplace_back(spring);
 }

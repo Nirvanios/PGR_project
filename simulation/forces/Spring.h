@@ -9,56 +9,54 @@
 #include "ForceGenerator.h"
 
 class Spring : public ForceGenerator {
-private:
-    float stiffness;
-    float damping;
-    float restLength;
+ protected:
+  float stiffness;
+  float damping;
+  float restLength;
+  glm::vec3 direction;
+  glm::vec3 force;
 
-    SimObject* simulatedObjectA;
-    SimObject* simulatedObjectB;
+  float currentLength;
 
-    glm::vec3 direction;
-    glm::vec3 force;
-    float currentLength;
-protected:
-public:
-    Spring(float stiffness, float damping, SimObject *simulatedObjectA,
-           SimObject *simulatedObjectB);
+  SimObject *simulatedObjectA;
+  SimObject *simulatedObjectB;
+ public:
+  Spring(float stiffness, float damping, SimObject *simulatedObjectA,
+         SimObject *simulatedObjectB);
 
-    void setStiffness(float stiffness) {
-        this->stiffness = stiffness;
-    }
+  void setStiffness(float stiffness) {
+    this->stiffness = stiffness;
+  }
 
-    float getStiffness() {
-        return stiffness;
-    }
+  float getStiffness() {
+    return stiffness;
+  }
 
-    void setDamping(float damping) {
-        this->damping = damping;
-    }
+  void setDamping(float damping) {
+    this->damping = damping;
+  }
 
-    float getDamping() {
-        return stiffness;
-    }
+  float getDamping() {
+    return stiffness;
+  }
 
-    void setSimulatedObjectA(SimObject* object) {
-        this->simulatedObjectA = object;
-    }
+  void setSimulatedObjectA(SimObject *object) {
+    this->simulatedObjectA = object;
+  }
 
-    float getSimulatedObjectA() {
-        return stiffness;
-    }
+  float getSimulatedObjectA() {
+    return stiffness;
+  }
 
-    void setSimulatedObjectB(SimObject* object) {
-        this->simulatedObjectB = object;
-    }
+  void setSimulatedObjectB(SimObject *object) {
+    this->simulatedObjectB = object;
+  }
 
-    float getSimulatedObjectB() {
-        return stiffness;
-    }
+  float getSimulatedObjectB() {
+    return stiffness;
+  }
 
-    void applyForce(SimObject *object) override;
+  void applyForce(SimObject *object) override;
 };
-
 
 #endif //PGR_PROJECT_SPRING_H
