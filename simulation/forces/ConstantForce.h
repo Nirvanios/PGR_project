@@ -13,7 +13,7 @@ class ConstantForce : public ForceGenerator {
  public:
   ConstantForce(const glm::vec3 &force);
 
-  void applyForce(SimulatedObject *object) override;
+  void applyForce(SimObject *object) override;
 
 };
 

@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_COMMON_H
 #define PGR_PROJECT_COMMON_H
 
-typedef float SimulationTime;
+typedef float SimTime;
 
 
 #endif //PGR_PROJECT_COMMON_H

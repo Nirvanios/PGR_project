@@ -6,13 +6,13 @@
 #define PGR_PROJECT_FORCEGENERATOR_H
 
 
-#include "SimulatedObject.h"
+#include "SimObject.h"
 
 class ForceGenerator {
 private:
 protected:
 public:
-    virtual void applyForce(SimulatedObject* object) = 0;
+    virtual void applyForce(SimObject* object) = 0;
 };
 
 

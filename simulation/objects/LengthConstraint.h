@@ -6,12 +6,12 @@
 #define PGR_PROJECT_LENGTHCONSTRAINT_H
 
 #include "Constraint.h"
-#include "SimulatedObject.h"
+#include "SimObject.h"
 
 class LengthConstraint : public Constraint {
  private:
-  SimulatedObject* objectA;
-  SimulatedObject* objectB;
+  SimObject* objectA;
+  SimObject* objectB;
 
   float length;
 
@@ -20,7 +20,7 @@ class LengthConstraint : public Constraint {
   float currentLength;
  protected:
  public:
-  LengthConstraint(SimulatedObject *objectA, SimulatedObject *objectB, float length);
+  LengthConstraint(SimObject *objectA, SimObject *objectB, float length);
 
   void satisfyConstraint() override;
 };

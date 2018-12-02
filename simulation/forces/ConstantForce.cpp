@@ -3,7 +3,7 @@
 //
 
 #include "ConstantForce.h"
-void ConstantForce::applyForce(SimulatedObject *object) {
+void ConstantForce::applyForce(SimObject *object) {
   object->setResultantForce(object->getResultantForce() + force);
 }
 

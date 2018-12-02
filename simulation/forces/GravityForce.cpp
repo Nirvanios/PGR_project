@@ -4,7 +4,7 @@
 
 #include "GravityForce.h"
 
-void GravityForce::applyForce(SimulatedObject* object) {
+void GravityForce::applyForce(SimObject* object) {
     object->setResultantForce(object->getResultantForce() + acceleration * object->getMass());
 }
 

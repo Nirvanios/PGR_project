@@ -14,14 +14,14 @@
 #include <glm/vec3.hpp>
 #include "common.h"
 
-enum SimulatedObjectType {
+enum SimObjectType {
     Passive, Active
 };
 
-class SimulatedObject {
+class SimObject {
 private:
     float mass;
-    SimulatedObjectType objectType;
+    SimObjectType objectType;
 
 protected:
     glm::vec3 currentPosition;
@@ -29,7 +29,7 @@ protected:
     glm::vec3 velocity;
     glm::vec3 resultantForce;
 public:
-    SimulatedObject(float mass, SimulatedObjectType objectType) : mass(mass), objectType(objectType) {
+    SimObject(float mass, SimObjectType objectType) : mass(mass), objectType(objectType) {
         currentPosition = glm::vec3(0, 0, 0);
         previousPosition = currentPosition;
         velocity = glm::vec3(0, 0, 0);
@@ -44,11 +44,11 @@ public:
         return mass;
     }
 
-    void setSimulatedObjectType(SimulatedObjectType type) {
+    void setSimulatedObjectType(SimObjectType type) {
         this->objectType = type;
     }
 
-    SimulatedObjectType getSimulatedObjectType() {
+    SimObjectType getSimulatedObjectType() {
         return objectType;
     }
 
@@ -88,7 +88,7 @@ public:
         resultantForce = glm::vec3(0, 0, 0);
     }
 
-    virtual void update(SimulationTime time) = 0;
+    virtual void update(SimTime time) = 0;
 };
 
 

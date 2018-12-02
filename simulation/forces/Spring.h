@@ -14,16 +14,16 @@ private:
     float damping;
     float restLength;
 
-    SimulatedObject* simulatedObjectA;
-    SimulatedObject* simulatedObjectB;
+    SimObject* simulatedObjectA;
+    SimObject* simulatedObjectB;
 
     glm::vec3 direction;
     glm::vec3 force;
     float currentLength;
 protected:
 public:
-    Spring(float stiffness, float damping, SimulatedObject *simulatedObjectA,
-           SimulatedObject *simulatedObjectB);
+    Spring(float stiffness, float damping, SimObject *simulatedObjectA,
+           SimObject *simulatedObjectB);
 
     void setStiffness(float stiffness) {
         this->stiffness = stiffness;
@@ -41,7 +41,7 @@ public:
         return stiffness;
     }
 
-    void setSimulatedObjectA(SimulatedObject* object) {
+    void setSimulatedObjectA(SimObject* object) {
         this->simulatedObjectA = object;
     }
 
@@ -49,7 +49,7 @@ public:
         return stiffness;
     }
 
-    void setSimulatedObjectB(SimulatedObject* object) {
+    void setSimulatedObjectB(SimObject* object) {
         this->simulatedObjectB = object;
     }
 
@@ -57,7 +57,7 @@ public:
         return stiffness;
     }
 
-    void applyForce(SimulatedObject *object) override;
+    void applyForce(SimObject *object) override;
 };
 
 

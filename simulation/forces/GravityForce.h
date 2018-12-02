@@ -17,7 +17,7 @@ private:
 public:
     GravityForce();
 
-    void applyForce(SimulatedObject* object) override;
+    void applyForce(SimObject* object) override;
 
     glm::vec3 getAcceleration() {
         return acceleration;

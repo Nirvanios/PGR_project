@@ -4,15 +4,15 @@
 
 #include "Spring.h"
 
-Spring::Spring(float stiffness, float damping, SimulatedObject *simulatedObjectA,
-               SimulatedObject *simulatedObjectB) : stiffness(stiffness), damping(damping),
+Spring::Spring(float stiffness, float damping, SimObject *simulatedObjectA,
+               SimObject *simulatedObjectB) : stiffness(stiffness), damping(damping),
                                                     simulatedObjectA(simulatedObjectA),
                                                     simulatedObjectB(simulatedObjectB) {
     restLength = glm::length(simulatedObjectA->getCurrectPosition() - simulatedObjectB->getCurrectPosition());
     currentLength = restLength;
 }
 
-void Spring::applyForce(SimulatedObject *object) {
+void Spring::applyForce(SimObject *object) {
     direction = simulatedObjectA->getCurrectPosition() - simulatedObjectB->getCurrectPosition();
 
     if (direction != glm::vec3(0, 0, 0)) {
