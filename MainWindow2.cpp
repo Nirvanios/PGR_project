@@ -110,6 +110,8 @@ Uint32  Render(std::vector<SimpleGraphicsModel*> *objects)
         glm::mat4 transform = glm::translate(Model, item->getPosition());
 
         glBindBuffer(GL_ARRAY_BUFFER ,vbo->at(i));
+        glBufferData(GL_ARRAY_BUFFER, (item->getVerticesSize() * sizeof(float)), item->getVertices(),
+                     GL_STATIC_DRAW);
         glEnableVertexAttribArray(positionAttributeIndex);
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 

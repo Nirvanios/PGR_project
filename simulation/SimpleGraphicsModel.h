@@ -6,6 +6,8 @@
 #define PGR_PROJECT_SIMPLEGRAPHICSMODEL_H
 
 #include <glm/glm.hpp>
+#include <cstring>
+
 class SimpleGraphicsModel {
  private:
   glm::vec3 position;
