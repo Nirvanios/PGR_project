@@ -6,7 +6,6 @@
 #define PGR_PROJECT_SOFTBODYGRAPHICSMODEL_H
 
 
-#include <stdint-gcc.h>
 
 class SoftBodyGraphicsModel {
 private:

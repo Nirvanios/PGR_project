@@ -40,10 +40,10 @@ const uint32_t points = 4;
 const uint32_t floatsPerColor = 4;
 
 const float sceneFloor[]={
-        -100, -30, 100,
-        -100, -30, -100,
-        100, -30, 100,
-        100, -30, -100
+        -100, -10, 100,
+        -100, -10, -100,
+        100, -10, 100,
+        100, -10, -100
 };
 
 const unsigned char floorIndicies[] ={
@@ -160,42 +160,76 @@ Simulation *simulation;
 void prepareSimulation() {
   simulation = new Simulation();
 
-  auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
-  auto stationaryCubeSimObj = new SimModel(1000.0f,
-                                           Passive, SimpleGraphicsModelCreator::CreateQuad(0.5f, 0.5f, 0.5f, 0, 0, 0));
-  simulation->addObject(stationaryCubeSimObj);
 
-  auto sphereMass = 1.0f;
-  auto sphereAPos = glm::vec3(0, 0, 0);
-  auto movingSphereSimObj = new SimModel(sphereMass,
-                                         Active, SimpleGraphicsModelCreator::CreateQuad(0.3f, 0.3f, 0.3f, 1.0f, 0, 0));
-  simulation->addObject(movingSphereSimObj);
+  auto passive1 = new SimModel(1000.0f,
+                               Passive,
+                               SimpleGraphicsModelCreator::CreateQuad(
+                                   0.5f, 0.5f, 0.5f,
+                                   0, 0, 0));
+  simulation->addObject(passive1);
 
-  auto sphereBPos = glm::vec3(0.2f, 0, 0);
-  auto movingSphereSimObj2 = new SimModel(sphereMass,
-                                          Active, SimpleGraphicsModelCreator::CreateQuad(0.3f, 0.3f, 0.3f, 0.3f, 0, 0));
-  simulation->addObject(movingSphereSimObj2);
+  auto active1_onPassive1 = new SimModel(1.0f,
+                                         Active,
+                                         SimpleGraphicsModelCreator::CreateQuad(
+                                             0.3f, 0.3f, 0.3f,
+                                             1.0f, 0, 0));
+  simulation->addObject(active1_onPassive1);
 
-  auto sphereCPos = glm::vec3(10.0f, 0, 0);
-  auto movingSphereSimObj3 = new SimModel(sphereMass,
-                                          Active, SimpleGraphicsModelCreator::CreateQuad(0.2f, 0.2f, 0.2f, 3.0f, 0, 0));
-  simulation->addObject(movingSphereSimObj3);
+  auto active2_onActive1 = new SimModel(1.0f,
+                                          Active,
+                                          SimpleGraphicsModelCreator::CreateQuad(
+                                              0.3f, 0.3f, 0.3f,
+                                              0.3f, 0, 0));
+  simulation->addObject(active2_onActive1);
+
+  auto active3_onPassive1 = new SimModel(0.5f,
+                                          Active,
+                                          SimpleGraphicsModelCreator::CreateQuad(
+                                              0.2f, 0.2f, 0.2f,
+                                              3.0f, 0, 0));
+  simulation->addObject(active3_onPassive1);
+
+  auto active4_onPassive2Passive3 = new SimModel(0.5f,
+                                         Active,
+                                         SimpleGraphicsModelCreator::CreateQuad(
+                                             0.2f, 0.2f, 0.2f,
+                                             2.0f, 0, 0.5f));
+  simulation->addObject(active4_onPassive2Passive3);
+
+  auto passive2 = new SimModel(1000.0f,
+                               Passive,
+                               SimpleGraphicsModelCreator::CreateQuad(
+                                   0.1f, 0.1f, 0.05f,
+                                   1.8f, 0, 1.0f));
+  simulation->addObject(passive2);
+
+  auto passive3 = new SimModel(1000.0f,
+                               Passive,
+                               SimpleGraphicsModelCreator::CreateQuad(
+                                   0.1f, 0.1f, 0.05f,
+                                   2.0f, 0, 0));
+  simulation->addObject(passive3);
 
   float stiffness = 8.0f;
   float damping = 0.1f;
-  simulation->addSpring(stiffness, damping, stationaryCubeSimObj,
-                        movingSphereSimObj);
+  simulation->addSpring(stiffness, damping, passive1,
+                        active1_onPassive1);
 
-  simulation->addSpring(stiffness, damping, movingSphereSimObj2,
-                        movingSphereSimObj);
+  simulation->addSpring(stiffness, damping, active2_onActive1,
+                        active1_onPassive1);
 
-  simulation->addSpring(stiffness, damping, movingSphereSimObj3,
-                        stationaryCubeSimObj);
+  simulation->addSpring(stiffness, damping, active3_onPassive1,
+                        passive1);
+
+  simulation->addSpring(6.0f, 0.2f, active4_onPassive2Passive3,
+                        passive2);
+
+  simulation->addSpring(4.5f, 0.3f, active4_onPassive2Passive3,
+                        passive3);
 
   simulation->addGlobalForce(gravity);
 
-  float dragCoefficient = 0.5f;
-  air->setDragCoefficient(dragCoefficient);
+  air->setDragCoefficient(0.5f);
   simulation->addGlobalForce(air);
 
   simulation->setConstraintIterations(0);
@@ -380,6 +414,12 @@ int main(int argc, char *argv[]) {
   auto line3 =
       SimpleGraphicsModelCreator::createLine(simObjects[0]->getCurrectPosition(), simObjects[3]->getCurrectPosition());
   objects->emplace_back(line3);
+  auto line4 =
+      SimpleGraphicsModelCreator::createLine(simObjects[4]->getCurrectPosition(), simObjects[5]->getCurrectPosition());
+  objects->emplace_back(line4);
+  auto line5 =
+      SimpleGraphicsModelCreator::createLine(simObjects[4]->getCurrectPosition(), simObjects[6]->getCurrectPosition());
+  objects->emplace_back(line5);
 
   if (!SetupBufferObjects(objects))
     return -1;
@@ -478,8 +518,22 @@ int main(int argc, char *argv[]) {
     line3->getVertices()[4] = simObjects[3]->getCurrectPosition().y;
     line3->getVertices()[5] = simObjects[3]->getCurrectPosition().z;
 
+    line4->getVertices()[0] = simObjects[4]->getCurrectPosition().x;
+    line4->getVertices()[1] = simObjects[4]->getCurrectPosition().y;
+    line4->getVertices()[2] = simObjects[4]->getCurrectPosition().z;
+    line4->getVertices()[3] = simObjects[5]->getCurrectPosition().x;
+    line4->getVertices()[4] = simObjects[5]->getCurrectPosition().y;
+    line4->getVertices()[5] = simObjects[5]->getCurrectPosition().z;
+
+    line5->getVertices()[0] = simObjects[4]->getCurrectPosition().x;
+    line5->getVertices()[1] = simObjects[4]->getCurrectPosition().y;
+    line5->getVertices()[2] = simObjects[4]->getCurrectPosition().z;
+    line5->getVertices()[3] = simObjects[6]->getCurrectPosition().x;
+    line5->getVertices()[4] = simObjects[6]->getCurrectPosition().y;
+    line5->getVertices()[5] = simObjects[6]->getCurrectPosition().z;
+
     Render(objects);
-    SDL_Delay(16);
+    SDL_Delay(1000/60);
   }
 
   Cleanup();
