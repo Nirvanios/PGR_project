@@ -18,7 +18,8 @@
 
 #define GL3_PROTOTYPES 1
 #include <GL/glew.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
+#include <Opengl/gl.h>
 #include <SimpleGraphicsModel.h>
 #include <vector>
 
@@ -28,6 +29,7 @@ std::string programName = "Headerphile SDL2 - OpenGL thing";
 
 // Our SDL_Window ( just like with SDL2 wihout OpenGL)
 SDL_Window *mainWindow;
+
 
 // Our opengl context handle
 SDL_GLContext mainContext;
@@ -247,7 +249,7 @@ bool SetupBufferObjects(std::vector<SimpleGraphicsModel> *objects)
 bool Init()
 {
     // Initialize SDL's Video subsystem
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0)
     {
         std::cout << "Failed to init SDL\n";
         return false;
@@ -341,10 +343,15 @@ int main(int argc, char *argv[]) {
         return -1;
 
     std::cout << "Rendering..." << std::endl;
-    //Render(0, nullptr);
-    //SDL_TimerID my_timer_id = SDL_AddTimer(5000, Render, NULL);
-    //std::cout << my_timer_id << std::endl;
-    while(true){
+
+    bool is_running = true;
+    SDL_Event event;
+    while (is_running) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                is_running = false;
+            }
+        }
         Render(objects);
         SDL_Delay(16);
     }
