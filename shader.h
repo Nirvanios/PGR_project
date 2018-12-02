@@ -53,10 +53,10 @@ public:
         BindAttributeLocation(1, "in_Color");
         BindAttributeLocation(3, "translate");
 
-        if (!LoadVertexShader("/Users/petr/CLionProjects/PGR_project/tutorial2.vert"))
+        if (!LoadVertexShader("../tutorial2.vert"))
             return false;
 
-        if (!LoadFragmentShader("/Users/petr/CLionProjects/PGR_project/tutorial3.frag"))
+        if (!LoadFragmentShader("../tutorial3.frag"))
             return false;
 
         // All shaders has been create, now we must put them together into one large object

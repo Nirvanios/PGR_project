@@ -15,10 +15,17 @@ class SimpleGraphicsModel {
 
   unsigned char *indices;
   int indiciesSize;
+
+  bool line = false;
  protected:
  public:
   SimpleGraphicsModel(const glm::vec3 &position, float *vertices, int verticesSize, unsigned char *indices, int indiciesSize)
-      : position(position), vertices(vertices), verticesSize(verticesSize), indices(indices), indiciesSize(verticesSize) {}
+      : position(position), verticesSize(verticesSize), indiciesSize(indiciesSize) {
+        this->vertices = new float[verticesSize];
+        memcpy(this->vertices, vertices, verticesSize * sizeof(float));
+        this->indices = new unsigned char[indiciesSize];
+        memcpy(this->indices, indices, indiciesSize * sizeof(unsigned char));
+ }
 
   void setPosition(glm::vec3 position) {
     this->position = position;
@@ -42,6 +49,14 @@ class SimpleGraphicsModel {
 
  int getIndiciesSize(){
      return indiciesSize;
+ }
+
+ void setIsLine(bool isLine){
+     this->line = isLine;
+ }
+
+ bool isLine(){
+     return line;
  }
 };
 

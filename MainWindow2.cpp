@@ -11,19 +11,19 @@
 #include <string>
 
 #include "shader.h"
+#include "graphicObjects/SimpleGraphicsModelCreator.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#define GL3_PROTOTYPES 1
+
 #include <GL/glew.h>
 #include <SDL.h>
-#include <Opengl/gl.h>
 #include <SimpleGraphicsModel.h>
 #include <vector>
 
-#define PROGRAM_NAME "Tutorial2"
+
 
 std::string programName = "Headerphile SDL2 - OpenGL thing";
 
@@ -37,26 +37,8 @@ SDL_GLContext mainContext;
 // Our object has 4 points
 const uint32_t points = 4;
 
-// Each point has three values ( x, y, z)
-const uint32_t floatsPerPoint = 3;
-
 // Each color has 4 values ( red, green, blue, alpha )
 const uint32_t floatsPerColor = 4;
-
-// This is the object we'll draw ( a simple square
-float diamond[] =
-        { -1.5,  1.5,  1.5 , // Top left
-         1.5,  1.5,  1.5 , // Top right
-          1.5, -1.5, 1.5 , // Bottom right
-         -1.5, -1.5, 1.5 } // Bottom left
-;
-
-float diamond2[] =
-        { 0.5,  0.5,  0.5 , // Top left
-          0.5,  0.5,  -0.5 , // Top right
-          0.5, -0.5,  -0.5 , // Bottom right
-          0.5, -0.5, 0.5 } // Bottom left
-;
 
 // This is the object we'll draw ( a simple square
 float colors[] = {
@@ -65,23 +47,12 @@ float colors[] = {
          1.0, 0.0, 0.0, 1.0,   // Bottom right
          0.0, 0.0, 1.0, 1.0  }; // Bottom left;
 
-unsigned char indicies[] = {
-        0, 1, 2,
-        0, 2, 3
-};
-
 // Create variables for storing the ID of our VAO and VBO
-GLuint /*vbo[2],*/ vao[1]/*, ebo*/;
-GLuint mvpUniform;
+GLuint vao[1];
 
 std::vector<GLuint> *vbo = new std::vector<GLuint>();
 std::vector<GLuint> *ebo = new std::vector<GLuint>();
 
-
-float rx = 0.0f, ry = 0.0f, pz = -70.0f;
-
-float wheel = 1.0f;
-float z = 0.0f;
 
 // The positons of the position and color data within the VAO
 const uint32_t positionAttributeIndex = 0, colorAttributeIndex = 1;
@@ -95,7 +66,6 @@ void CheckSDLError(int line);
 
 Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
 {
-    z += 0.05f;
     // First, render a square without any colors ( all vertexes will be black )
     // ===================
     // Make our background grey
@@ -105,27 +75,20 @@ Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
-    glm::mat4 translate = glm::mat4(1,0,0,0,
-                                    0,1,0,2,
-                                    0,0,1,0,
-                                    0,0,0,1);
-
 // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
     glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float) 512 / (float)512, 0.1f, 100.0f);
 
-// Or, for an ortho camera :
-//glm::mat4 Projection = glm::ortho(-10.0f,10.0f,-10.0f,10.0f,0.0f,100.0f); // In world coordinates
 
 // Camera matrix
     glm::mat4 View = glm::lookAt(
-            glm::vec3(0,0,10), // Camera is at (4,3,3), in World Space
+            glm::vec3(4,3,5), // Camera is at (4,3,3), in World Space
             glm::vec3(0,0,0), // and looks at the origin
             glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
     );
 
 // Model matrix : an identity matrix (model will be at the origin)
     glm::mat4 Model = glm::mat4(1.0f);
-    //Model = glm::translate(Model, glm::vec3(0,1,0));
+
 // Our ModelViewProjection : multiplication of our 3 matrices
     glm::mat4 mvp = Projection * View * Model; // Remember, matrix multiplication is the other way around
 
@@ -136,6 +99,11 @@ Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
     // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
     int i = 0;
     for(auto item : *objects) {
+        if(item.isLine()){
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        glm::mat4 transform = glm::translate(Model, item.getPosition());
+
         glBindBuffer(GL_ARRAY_BUFFER ,vbo->at(i));
         glEnableVertexAttribArray(positionAttributeIndex);
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -143,50 +111,26 @@ Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo->at(i));
         // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
+        GLuint transformID = shader.getUniformLocation("translate");
+        glUniformMatrix4fv(transformID, 1, GL_FALSE, &transform[0][0]);
         glDrawElements(GL_TRIANGLES, item.getIndiciesSize(), GL_UNSIGNED_BYTE, NULL);
-        GLuint MatrixID = shader.getUniformLocation("mvp");
-        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
         //glDisableVertexAttribArray(positionAttributeIndex);
         i++;
+
+        if(item.isLine()){
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
     }
 
     // Swap our buffers to make our changes visible
     SDL_GL_SwapWindow(mainWindow);
 
-    /*std::cout << "Press ENTER to render next frame\n";
-    std::cin.ignore();
-
-    // Second, enable the colors and draw a solid square
-    // ===================
-    // Enable our attribute within the current VAO
-    glEnableVertexAttribArray(colorAttributeIndex);
-
-    // Make our background black
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
-    glDrawElements(GL_TRIANGLES, sizeof(indicies)/sizeof(*indicies), GL_UNSIGNED_BYTE, NULL);
-
-
-    // Swap our buffers to make our changes visible
-    SDL_GL_SwapWindow(mainWindow);
-
-    std::cout << "Press ENTER to render next frame\n";
-    std::cin.ignore();
-*/
 }
 bool SetupBufferObjects(std::vector<SimpleGraphicsModel> *objects)
 {
 
     GLuint tempVBO;
-    mvpUniform = shader.getUniformLocation("mvp");
-    // Generate and assign two Vertex Buffer Objects to our handle
-/*
-    glGenBuffers(1, &tempVBO);
 
-    vbo->push_back(tempVBO);
-*/
     // Generate and assign a Vertex Array Object to our handle
     glGenVertexArrays(1, vao);
 
@@ -207,11 +151,6 @@ bool SetupBufferObjects(std::vector<SimpleGraphicsModel> *objects)
         glBufferData(GL_ARRAY_BUFFER, (item.getVerticesSize() * sizeof(float)), item.getVertices(),
                      GL_STATIC_DRAW);
 
-        // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
-        //glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-        // Enable our attribute within the current VAO
-        //glEnableVertexAttribArray(positionAttributeIndex);
     }
 
     // Colors
@@ -331,13 +270,12 @@ int main(int argc, char *argv[]) {
     SDL_GL_SwapWindow(mainWindow);
 
     std::cout << "Seting up VBO + VAO..." << std::endl;
-    const glm::vec3 aaa = glm::vec3(0.0f);
-    SimpleGraphicsModel object = SimpleGraphicsModel(aaa, diamond, 12, indicies, 6);
-    std::vector<SimpleGraphicsModel> *objects = new std::vector<SimpleGraphicsModel>();
-    objects->push_back(object);
-    object = SimpleGraphicsModel(aaa, diamond2, 12, indicies, 6);
-    objects->push_back(object);
 
+    std::vector<SimpleGraphicsModel> *objects = new std::vector<SimpleGraphicsModel>();
+    /* Width, Height, Depth, translate x, y, z*/
+    objects->push_back(SimpleGraphicsModelCreator::CreateQuad(1,1,1, 0,0,0));
+    /* start point, end point*/
+    objects->push_back(SimpleGraphicsModelCreator::createLine(glm::vec3(0.0), glm::vec3(5.0)));
 
     if (!SetupBufferObjects(objects))
         return -1;
@@ -357,9 +295,6 @@ int main(int argc, char *argv[]) {
     }
 
 
-
-    std::cout << "Rendering done!\n";
-    std::cin.ignore();
 
     Cleanup();
 
