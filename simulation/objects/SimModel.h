@@ -6,13 +6,13 @@
 #define PGR_PROJECT_SIMULATEDMODEL_H
 
 #include <SimpleGraphicsModel.h>
-#include "SimulatedObject.h"
+#include "SimObject.h"
 
-class SimulatedModel: public SimulatedObject {
+class SimModel: public SimObject {
 private:
   SimpleGraphicsModel* model;
 public:
-    SimulatedModel(float mass, SimulatedObjectType objectType, SimpleGraphicsModel* model);
+    SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel* model);
 
     void setObjectModel(SimpleGraphicsModel* model) {
         this->model = model;
@@ -22,7 +22,7 @@ public:
         return model;
     }
 
-    void update(SimulationTime time) override;
+    void update(SimTime time) override;
 };
 
 

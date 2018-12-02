@@ -4,7 +4,7 @@
 
 #include "EulerIntegrator.h"
 
-void EulerIntegrator::integrate(glm::vec3 acceleration, SimulatedObject *object) {
+void EulerIntegrator::integrate(glm::vec3 acceleration, SimObject *object) {
     object->setCurrentPosition(object->getCurrectPosition() + object->getVelocity() * timeStep);
 
     object->setVelocity(object->getVelocity() + acceleration * timeStep);

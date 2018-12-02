@@ -2,9 +2,9 @@
 // Created by Petr on 28.11.2018.
 //
 
-#include "SimulatedModel.h"
+#include "SimModel.h"
 
-SimulatedModel::SimulatedModel(float mass, SimulatedObjectType objectType, SimpleGraphicsModel* model) : SimulatedObject(mass,
+SimModel::SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel* model) : SimObject(mass,
                                                                                                                 objectType),
                                                                                                 model(model) {
   currentPosition = model->getPosition();
@@ -12,6 +12,6 @@ SimulatedModel::SimulatedModel(float mass, SimulatedObjectType objectType, Simpl
   previousPosition = currentPosition;
 }
 
-void SimulatedModel::update(SimulationTime time) {
+void SimModel::update(SimTime time) {
     model->setPosition(currentPosition);
 }

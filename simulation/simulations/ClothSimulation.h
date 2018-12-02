@@ -20,7 +20,7 @@ class ClothSimulation : public SoftBodySimulation {
       float shearStiffness, float shearDamping,
       float bendStiffness, float bendDamping);
 
- void update(SimulationTime time) override;
+ void update(SimTime time) override;
 };
 
 #endif //PGR_PROJECT_CLOTHSIMULATION_H

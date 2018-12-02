@@ -7,15 +7,15 @@
 
 #include <glm/glm.hpp>
 #include "Constraint.h"
-#include "SimulatedObject.h"
+#include "SimObject.h"
 
 class PointConstraint : public Constraint {
  private:
   glm::vec3 position;
-  SimulatedObject* object;
+  SimObject* object;
  protected:
  public:
-  PointConstraint(const glm::vec3 &position, SimulatedObject *object);
+  PointConstraint(const glm::vec3 &position, SimObject *object);
 
   void setPosition(glm::vec3 pos) {
    this->position = pos;

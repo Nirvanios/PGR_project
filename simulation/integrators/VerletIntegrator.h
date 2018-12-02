@@ -13,7 +13,7 @@ class VerletIntegrator : public Integrator {
  public:
   VerletIntegrator(float timeStep);
 
-  void integrate(glm::vec3 acceleration, SimulatedObject *object) override;
+  void integrate(glm::vec3 acceleration, SimObject *object) override;
 };
 
 #endif //PGR_PROJECT_VERLETINTEGRATOR_H

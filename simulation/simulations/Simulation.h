@@ -6,7 +6,7 @@
 #define PGR_PROJECT_SIMULATION_H
 
 #include <vector>
-#include "SimulatedObject.h"
+#include "SimObject.h"
 #include "ForceGenerator.h"
 #include "Spring.h"
 #include "Integrator.h"
@@ -17,7 +17,7 @@
 class Simulation {
 private:
 protected:
-    std::vector<SimulatedObject*> objects;
+    std::vector<SimObject*> objects;
     std::vector<ForceGenerator*> forces;
     std::vector<Spring*> springs;
     std::vector<Constraint*> constraints;
@@ -27,9 +27,9 @@ protected:
 public:
     Simulation();
 
-    void addSpring(float stiffness, float damping, SimulatedObject* objectA, SimulatedObject* objectB);
+    void addSpring(float stiffness, float damping, SimObject* objectA, SimObject* objectB);
 
-    void addObject(SimulatedObject* object);
+    void addObject(SimObject* object);
 
     void addGlobalForce(ForceGenerator* force);
 
@@ -47,7 +47,7 @@ public:
       this->integrator = integrator;
     }
 
-    virtual void update(SimulationTime time);
+    virtual void update(SimTime time);
 };
 
 

@@ -20,7 +20,7 @@ public:
         this->dragCoefficient = coefficient;
     }
 
-    void applyForce(SimulatedObject *object) override;
+    void applyForce(SimObject *object) override;
 
 };
 

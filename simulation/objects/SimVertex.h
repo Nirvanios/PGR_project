@@ -5,15 +5,15 @@
 #ifndef PGR_PROJECT_SIMULATEDVERTEX_H
 #define PGR_PROJECT_SIMULATEDVERTEX_H
 
-#include "SimulatedObject.h"
+#include "SimObject.h"
 
-class SimulatedVertex : public SimulatedObject {
+class SimVertex : public SimObject {
  private:
   int vertexId;
 
  protected:
  public:
-  SimulatedVertex(float mass, SimulatedObjectType objectType, int vertexId, glm::vec3 position);
+  SimVertex(float mass, SimObjectType objectType, int vertexId, glm::vec3 position);
 
   void setVertexId(int id) {
    this->vertexId = id;
@@ -22,7 +22,7 @@ class SimulatedVertex : public SimulatedObject {
  int getVertexId() {
    return vertexId;
  }
-  void update(SimulationTime time) override;
+  void update(SimTime time) override;
 };
 
 #endif //PGR_PROJECT_SIMULATEDVERTEX_H

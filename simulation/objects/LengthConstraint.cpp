@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include "LengthConstraint.h"
 
-LengthConstraint::LengthConstraint(SimulatedObject *objectA, SimulatedObject *objectB, float length)
+LengthConstraint::LengthConstraint(SimObject *objectA, SimObject *objectB, float length)
     : objectA(objectA), objectB(objectB), length(length) {}
 
 void LengthConstraint::satisfyConstraint() {

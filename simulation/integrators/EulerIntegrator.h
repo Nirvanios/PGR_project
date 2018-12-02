@@ -14,7 +14,7 @@ protected:
 public:
     EulerIntegrator(float timeStep);
 
-    void integrate(glm::vec3 acceleration, SimulatedObject *object) override;
+    void integrate(glm::vec3 acceleration, SimObject *object) override;
 
 };
 

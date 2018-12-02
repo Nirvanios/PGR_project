@@ -8,11 +8,11 @@ Simulation::Simulation() {
     integrator = new EulerIntegrator(1.0f / 60.0f);
 }
 
-void Simulation::addSpring(float stiffness, float damping, SimulatedObject* objectA, SimulatedObject* objectB) {
+void Simulation::addSpring(float stiffness, float damping, SimObject* objectA, SimObject* objectB) {
     springs.emplace_back(new Spring(stiffness, damping, objectA, objectB));
 }
 
-void Simulation::addObject(SimulatedObject *object)  {
+void Simulation::addObject(SimObject *object)  {
     objects.emplace_back(object);
 }
 
@@ -20,7 +20,7 @@ void Simulation::addGlobalForce(ForceGenerator *force) {
     forces.emplace_back(force);
 }
 
-void Simulation::update(SimulationTime time) {
+void Simulation::update(SimTime time) {
     for (auto spring : springs) {
         spring->applyForce(nullptr);
     }
