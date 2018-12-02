@@ -18,7 +18,7 @@ include_directories(${GLM_INCLUDE_DIRS})
 
 include_directories(simulation/simulations simulation/base
         simulation/common simulation/forces simulation/integrators
-        simulation/objects simulation)
+        simulation/objects simulation graphics graphics/Camera)
 
 add_executable(sim_test sim_test_main.cpp simulation/base/SimObject.h simulation/objects/Constraint.h
         simulation/common/common.h simulation/objects/SimModel.cpp simulation/objects/SimModel.h
@@ -44,7 +44,7 @@ add_executable(PGR_project test.cpp simulation/base/SimObject.h simulation/objec
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphicObjects/SimpleGraphicsModelCreator.cpp graphicObjects/SimpleGraphicsModelCreator.h)
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphicObjects/SimpleGraphicsModelCreator.cpp graphicObjects/SimpleGraphicsModelCreator.h graphics/camera/Camera.cpp graphics/camera/Camera.h)
 
 target_link_libraries(PGR_project ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
@@ -58,7 +58,7 @@ add_executable(Render_test MainWindow2.cpp shader.h simulation/base/SimObject.h 
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h)
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/camera/Camera.cpp graphics/camera/Camera.h)
 
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
