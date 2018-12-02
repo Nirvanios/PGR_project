@@ -48,8 +48,8 @@ public:
             unsigned char indicies [] = {0,0,1,
                                  1,1,0
             };
-            glm::vec3 position = glm::vec3(0.0f);
-            SimpleGraphicsModel* model = new SimpleGraphicsModel(position, vertices, 6, indicies, 6);
+            auto position = glm::vec3(0.0f);
+            auto model = new SimpleGraphicsModel(position, vertices, 6, indicies, 6);
             model->setIsLine(true);
             return model;
         }

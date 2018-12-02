@@ -372,9 +372,7 @@ int main(int argc, char *argv[]) {
         line1->getVertices()[3] = simObjects[1]->getCurrectPosition().x;
         line1->getVertices()[4] = simObjects[1]->getCurrectPosition().y;
         line1->getVertices()[5] = simObjects[1]->getCurrectPosition().z;
-        line1->getVertices()[6] = simObjects[1]->getCurrectPosition().x;
-        line1->getVertices()[7] = simObjects[1]->getCurrectPosition().y;
-        line1->getVertices()[8] = simObjects[1]->getCurrectPosition().z;
+
         Render(objects);
         SDL_Delay(16);
     }
