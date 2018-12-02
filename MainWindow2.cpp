@@ -23,6 +23,11 @@
 #include <SimpleGraphicsModel.h>
 #include <vector>
 
+#include <Simulation.h>
+#include <SimModel.h>
+#include <GravityForce.h>
+#include <DragForce.h>
+
 
 
 std::string programName = "Headerphile SDL2 - OpenGL thing";
@@ -64,7 +69,7 @@ bool SetOpenGLAttributes();
 void PrintSDL_GL_Attributes();
 void CheckSDLError(int line);
 
-Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
+Uint32  Render(std::vector<SimpleGraphicsModel*> *objects)
 {
     // First, render a square without any colors ( all vertexes will be black )
     // ===================
@@ -81,7 +86,7 @@ Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
 
 // Camera matrix
     glm::mat4 View = glm::lookAt(
-            glm::vec3(4,3,5), // Camera is at (4,3,3), in World Space
+            glm::vec3(10,3,10), // Camera is at (4,3,3), in World Space
             glm::vec3(0,0,0), // and looks at the origin
             glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
     );
@@ -99,10 +104,10 @@ Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
     // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
     int i = 0;
     for(auto item : *objects) {
-        if(item.isLine()){
+        if(item->isLine()){
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         }
-        glm::mat4 transform = glm::translate(Model, item.getPosition());
+        glm::mat4 transform = glm::translate(Model, item->getPosition());
 
         glBindBuffer(GL_ARRAY_BUFFER ,vbo->at(i));
         glEnableVertexAttribArray(positionAttributeIndex);
@@ -113,11 +118,11 @@ Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
 
         GLuint transformID = shader.getUniformLocation("translate");
         glUniformMatrix4fv(transformID, 1, GL_FALSE, &transform[0][0]);
-        glDrawElements(GL_TRIANGLES, item.getIndiciesSize(), GL_UNSIGNED_BYTE, NULL);
+        glDrawElements(GL_TRIANGLES, item->getIndiciesSize(), GL_UNSIGNED_BYTE, NULL);
         //glDisableVertexAttribArray(positionAttributeIndex);
         i++;
 
-        if(item.isLine()){
+        if(item->isLine()){
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
     }
@@ -126,7 +131,56 @@ Uint32  Render(std::vector<SimpleGraphicsModel> *objects)
     SDL_GL_SwapWindow(mainWindow);
 
 }
-bool SetupBufferObjects(std::vector<SimpleGraphicsModel> *objects)
+
+Simulation* simulation;
+void prepareSimulation() {
+    simulation = new Simulation();
+
+    auto sphereMass = 1.0f;
+    auto sphereAPos = glm::vec3(0, 0, 0);
+    auto movingSphereSimObj = new SimModel(sphereMass,
+                                           Active, SimpleGraphicsModelCreator::CreateQuad(0.3f,0.3f,0.3f, 1.0f,0,0));
+    simulation->addObject(movingSphereSimObj);
+
+    auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
+    auto stationaryCubeSimObj = new SimModel(1000.0f,
+                                             Passive,  SimpleGraphicsModelCreator::CreateQuad(0.5f,0.5f,0.5f, 0,0,0));
+    simulation->addObject(stationaryCubeSimObj);
+
+      auto sphereBPos = glm::vec3(0.2f, 0, 0);
+  auto movingSphereSimObj2 = new SimModel(sphereMass,
+                                          Active, SimpleGraphicsModelCreator::CreateQuad(0.3f,0.3f,0.3f, 0.3f,0,0));
+  simulation->addObject(movingSphereSimObj2);
+
+    /*auto sphereCPos = glm::vec3(10.0f, 0, 0);
+    auto movingSphereSimObj3 = new SimModel(sphereMass,
+                                            Active, SimpleGraphicsModelCreator::CreateQuad(0.2f,0.2f,0.2f, 3.0f,0,0));
+    simulation->addObject(movingSphereSimObj3);*/
+
+    float stiffness = 8.0f;
+    float damping = 0.1f;
+    simulation->addSpring(stiffness, damping, stationaryCubeSimObj,
+                          movingSphereSimObj);
+
+    simulation->addSpring(stiffness, damping, movingSphereSimObj2,
+                          movingSphereSimObj);
+
+   /* simulation->addSpring(stiffness, damping, movingSphereSimObj3,
+                          stationaryCubeSimObj);*/
+
+    auto gravity = new GravityForce();
+    simulation->addGlobalForce(gravity);
+
+    float dragCoefficient = 0.5f;
+    auto air = new DragForce();
+    air->setDragCoefficient(dragCoefficient);
+    simulation->addGlobalForce(air);
+
+    simulation->setConstraintIterations(0);
+}
+
+
+bool SetupBufferObjects(std::vector<SimpleGraphicsModel*> *objects)
 {
 
     GLuint tempVBO;
@@ -148,7 +202,7 @@ bool SetupBufferObjects(std::vector<SimpleGraphicsModel> *objects)
 
 
         // Copy the vertex data from diamond to our buffer
-        glBufferData(GL_ARRAY_BUFFER, (item.getVerticesSize() * sizeof(float)), item.getVertices(),
+        glBufferData(GL_ARRAY_BUFFER, (item->getVerticesSize() * sizeof(float)), item->getVertices(),
                      GL_STATIC_DRAW);
 
     }
@@ -170,7 +224,7 @@ bool SetupBufferObjects(std::vector<SimpleGraphicsModel> *objects)
         GLuint tempEBO;
         glGenBuffers(1, &tempEBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, item.getIndiciesSize(), item.getIndices(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, item->getIndiciesSize(), item->getIndices(), GL_STATIC_DRAW);
         ebo->push_back(tempEBO);
     }
 
@@ -257,6 +311,13 @@ void Cleanup()
     SDL_Quit();
 }
 
+void updateSimulation() {
+    static SimTime simTime = 0.0f;
+    simTime += 1/60.0f;
+    simulation->update(simTime);
+}
+
+
 int main(int argc, char *argv[]) {
 
 
@@ -271,11 +332,24 @@ int main(int argc, char *argv[]) {
 
     std::cout << "Seting up VBO + VAO..." << std::endl;
 
-    std::vector<SimpleGraphicsModel> *objects = new std::vector<SimpleGraphicsModel>();
+    auto objects = new std::vector<SimpleGraphicsModel*>();
     /* Width, Height, Depth, translate x, y, z*/
-    objects->push_back(SimpleGraphicsModelCreator::CreateQuad(1,1,1, 0,0,0));
+    //objects->push_back(SimpleGraphicsModelCreator::CreateQuad(1,1,1, 0,0,0));
     /* start point, end point*/
-    objects->push_back(SimpleGraphicsModelCreator::createLine(glm::vec3(0.0), glm::vec3(5.0)));
+
+    prepareSimulation();
+
+    auto simObjects = simulation->getObjects();
+    for (auto object : simObjects) {
+        objects->emplace_back(dynamic_cast<SimModel*>(object)->getObjectModel());
+    }
+
+    auto line1 = SimpleGraphicsModelCreator::createLine(simObjects[0]->getCurrectPosition(), simObjects[1]->getCurrectPosition());
+  objects->emplace_back(line1);
+  /*auto line2 = SimpleGraphicsModelCreator::createLine(simObjects[2]->getCurrectPosition(), simObjects[0]->getCurrectPosition());
+  objects->emplace_back(line2);
+  auto line3 = SimpleGraphicsModelCreator::createLine(simObjects[2]->getCurrectPosition(), simObjects[3]->getCurrectPosition());
+  objects->emplace_back(line3);*/
 
     if (!SetupBufferObjects(objects))
         return -1;
@@ -290,6 +364,16 @@ int main(int argc, char *argv[]) {
                 is_running = false;
             }
         }
+        updateSimulation();
+        line1->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
+        line1->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
+        line1->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
+        line1->getVertices()[3] = simObjects[1]->getCurrectPosition().x;
+        line1->getVertices()[4] = simObjects[1]->getCurrectPosition().y;
+        line1->getVertices()[5] = simObjects[1]->getCurrectPosition().z;
+        line1->getVertices()[6] = simObjects[1]->getCurrectPosition().x;
+        line1->getVertices()[7] = simObjects[1]->getCurrectPosition().y;
+        line1->getVertices()[8] = simObjects[1]->getCurrectPosition().z;
         Render(objects);
         SDL_Delay(16);
     }

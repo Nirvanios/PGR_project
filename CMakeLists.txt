@@ -48,6 +48,17 @@ add_executable(PGR_project test.cpp simulation/base/SimObject.h simulation/objec
 
 target_link_libraries(PGR_project ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
-add_executable(Render_test MainWindow2.cpp shader.h)
+add_executable(Render_test MainWindow2.cpp shader.h simulation/base/SimObject.h simulation/objects/Constraint.h
+        simulation/common/common.h simulation/objects/SimModel.cpp simulation/objects/SimModel.h
+        simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
+        simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/Spring.cpp
+        simulation/forces/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
+        simulation/integrators/EulerIntegrator.h simulation/simulations/Simulation.cpp simulation/simulations/Simulation.h
+        simulation/objects/PointConstraint.cpp simulation/objects/PointConstraint.h simulation/objects/LengthConstraint.cpp
+        simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
+        simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
+        simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h)
+
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})

@@ -31,6 +31,10 @@ public:
 
     void addObject(SimObject* object);
 
+    const std::vector<SimObject*>& getObjects() {
+      return objects;
+    }
+
     void addGlobalForce(ForceGenerator* force);
 
     void addConstraint(Constraint* constraint);

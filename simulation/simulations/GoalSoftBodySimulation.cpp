@@ -22,7 +22,7 @@ void GoalSoftBodySimulation::createVertices() {
   float vertexMass = 0 / 1;
 
   for (int i = 0; i < vertexCount; i++) {
-    modelVertices.emplace_back(new SimVertex(vertexMass, Active, i, model->getVertices()[i]));
+    modelVertices.emplace_back(new SimVertex(vertexMass, Active, i, glm::vec3(0,0,0)));
     addObject(modelVertices[i]);
   }
 }
@@ -33,7 +33,7 @@ void GoalSoftBodySimulation::createGoalVertices() {
   float vertexMass = 0 / 1;
 
   for (int i = 0; i < vertexCount; i++) {
-    goalVertices.emplace_back(new SimVertex(vertexMass, Passive, i, goal->getVertices()[i]));
+    goalVertices.emplace_back(new SimVertex(vertexMass, Passive, i, glm::vec3(0,0,0)));
     addObject(goalVertices[i]);
   }
 }

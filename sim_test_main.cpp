@@ -102,22 +102,22 @@ int main(int argc, char** argv) {
   auto sphereMass = 1.0f;
   auto sphereAPos = glm::vec3(0, 0, 0);
   auto movingSphereSimObj = new SimModel(sphereMass,
-                                               Active, new SimpleGraphicsModel(sphereAPos, nullptr, nullptr));
+                                               Active, );
   simulation.addObject(movingSphereSimObj);
 
   auto sphereBPos = glm::vec3(0.2f, 0, 0);
   auto movingSphereSimObj2 = new SimModel(sphereMass,
-                                               Active, new SimpleGraphicsModel(sphereBPos, nullptr, nullptr));
+                                               Active, );
   simulation.addObject(movingSphereSimObj2);
 
   auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
   auto stationaryCubeSimObj = new SimModel(1000.0f,
-                                      Passive, new SimpleGraphicsModel(cubePos, nullptr, nullptr));
+                                      Passive, );
   simulation.addObject(stationaryCubeSimObj);
 
   auto sphereCPos = glm::vec3(10.0f, 0, 0);
   auto movingSphereSimObj3 = new SimModel(sphereMass,
-                                                Active, new SimpleGraphicsModel(sphereCPos, nullptr, nullptr));
+                                                Active, );
   simulation.addObject(movingSphereSimObj3);
 
   float stiffness = 8.0f;
