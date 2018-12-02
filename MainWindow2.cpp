@@ -398,12 +398,12 @@ int main(int argc, char *argv[]) {
         line2->getVertices()[4] = simObjects[2]->getCurrectPosition().y;
         line2->getVertices()[5] = simObjects[2]->getCurrectPosition().z;
 
-        line2->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
-        line2->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
-        line2->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
-        line2->getVertices()[3] = simObjects[3]->getCurrectPosition().x;
-        line2->getVertices()[4] = simObjects[3]->getCurrectPosition().y;
-        line1->getVertices()[5] = simObjects[3]->getCurrectPosition().z;
+        line3->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
+        line3->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
+        line3->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
+        line3->getVertices()[3] = simObjects[3]->getCurrectPosition().x;
+        line3->getVertices()[4] = simObjects[3]->getCurrectPosition().y;
+        line3->getVertices()[5] = simObjects[3]->getCurrectPosition().z;
 
         Render(objects);
         SDL_Delay(16);
