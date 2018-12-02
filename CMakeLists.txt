@@ -30,7 +30,7 @@ add_executable(sim_test sim_test_main.cpp simulation/base/SimObject.h simulation
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h)
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h)
 
 target_link_libraries(sim_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
@@ -44,7 +44,7 @@ add_executable(PGR_project test.cpp simulation/base/SimObject.h simulation/objec
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h)
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h)
 
 target_link_libraries(PGR_project ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
