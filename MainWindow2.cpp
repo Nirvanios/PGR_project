@@ -58,6 +58,9 @@ const uint32_t positionAttributeIndex = 0, colorAttributeIndex = 1;
 // Our wrapper to simplify the shader code
 Shader shader;
 
+auto gravity = new GravityForce;
+auto air = new DragForce();
+
 bool SetOpenGLAttributes();
 void PrintSDL_GL_Attributes();
 void CheckSDLError(int line);
@@ -156,11 +159,9 @@ void prepareSimulation() {
   simulation->addSpring(stiffness, damping, movingSphereSimObj3,
                         stationaryCubeSimObj);
 
-  auto gravity = new GravityForce();
   simulation->addGlobalForce(gravity);
 
   float dragCoefficient = 0.5f;
-  auto air = new DragForce();
   air->setDragCoefficient(dragCoefficient);
   simulation->addGlobalForce(air);
 
@@ -342,6 +343,7 @@ int main(int argc, char *argv[]) {
 
   bool is_running = true;
   bool enableCameraMovement = false;
+  bool gravityEnabled = true;
   SDL_Event event;
   while (is_running) {
     while (SDL_PollEvent(&event)) {
@@ -374,6 +376,21 @@ int main(int argc, char *argv[]) {
             case SDLK_a:camera.ProcessKeyboard(LEFT, 0.1);
               break;
             case SDLK_d:camera.ProcessKeyboard(RIGHT, 0.1);
+              break;
+            case SDLK_g:
+              if (gravityEnabled) {
+                gravity->disable();
+                gravityEnabled = false;
+              } else {
+                gravity->enable();
+                gravityEnabled = true;
+              }
+              break;
+            case SDLK_o:air->setDragCoefficient(air->getDragCoefficient() - 0.05f);
+              break;
+            case SDLK_p:if (air->getDragCoefficient() > 0.05f) {
+              air->setDragCoefficient(air->getDragCoefficient() + 0.05f);
+              }
               break;
           }
           break;
