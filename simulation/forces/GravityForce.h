@@ -22,6 +22,10 @@ public:
     glm::vec3 getAcceleration() {
         return acceleration;
     }
+
+    void disable();
+
+    void enable();
 };
 
 
