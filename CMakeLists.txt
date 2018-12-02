@@ -48,6 +48,6 @@ add_executable(PGR_project test.cpp simulation/base/SimulatedObject.h simulation
 
 target_link_libraries(PGR_project ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
-add_executable(Render_test MainWindow.cpp)
+add_executable(Render_test MainWindow2.cpp shader.h)
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
