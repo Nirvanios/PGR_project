@@ -30,6 +30,8 @@
 
 
 
+int width = 512, height = 512;
+
 std::string programName = "Headerphile SDL2 - OpenGL thing";
 
 // Our SDL_Window ( just like with SDL2 wihout OpenGL)
@@ -81,7 +83,7 @@ Uint32  Render(std::vector<SimpleGraphicsModel*> *objects)
     glDepthFunc(GL_LESS);
 
 // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-    glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float) 512 / (float)512, 0.1f, 100.0f);
+    glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float) width / (float)height, 0.1f, 100.0f);
 
 
 // Camera matrix
@@ -110,8 +112,7 @@ Uint32  Render(std::vector<SimpleGraphicsModel*> *objects)
         glm::mat4 transform = glm::translate(Model, item->getPosition());
 
         glBindBuffer(GL_ARRAY_BUFFER ,vbo->at(i));
-        glBufferData(GL_ARRAY_BUFFER, (item->getVerticesSize() * sizeof(float)), item->getVertices(),
-                     GL_STATIC_DRAW);
+        glBufferSubData(GL_ARRAY_BUFFER, 0 ,(item->getVerticesSize() * sizeof(float)), item->getVertices());
         glEnableVertexAttribArray(positionAttributeIndex);
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -206,7 +207,7 @@ bool SetupBufferObjects(std::vector<SimpleGraphicsModel*> *objects)
 
         // Copy the vertex data from diamond to our buffer
         glBufferData(GL_ARRAY_BUFFER, (item->getVerticesSize() * sizeof(float)), item->getVertices(),
-                     GL_STATIC_DRAW);
+                     GL_DYNAMIC_DRAW);
 
     }
 
@@ -253,7 +254,7 @@ bool Init()
 
     // Create our window centered at 512x512 resolution
     mainWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                  512, 512, SDL_WINDOW_OPENGL);
+                                  width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
     // Check that everything worked out okay
     if (!mainWindow )
@@ -363,9 +364,16 @@ int main(int argc, char *argv[]) {
     SDL_Event event;
     while (is_running) {
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
+            switch (event.type){
+                case SDL_QUIT:
                 is_running = false;
-            } else if (event.type == SDL_KEYDOWN) {
+                break;
+                case SDL_WINDOWEVENT:
+                    if(event.window.type == SDL_WINDOWEVENT_RESIZED)
+                        SDL_GetWindowSize(mainWindow, &width, &height);
+                        glViewport(0, 0, width, height);
+                        break;
+                case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                   case SDLK_LEFT:
                         simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
@@ -380,6 +388,7 @@ int main(int argc, char *argv[]) {
                         simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
                     break;
                 }
+                break;
             }
         }
 
