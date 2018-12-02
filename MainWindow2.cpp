@@ -454,13 +454,13 @@ int main(int argc, char *argv[]) {
             case SDLK_DOWN:
               simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
               break;
-            case SDLK_w:camera.ProcessKeyboard(FORWARD, 0.1);
+            case SDLK_w:camera.ProcessKeyboard(FORWARD, 0.05);
               break;
-            case SDLK_s:camera.ProcessKeyboard(BACKWARD, 0.1);
+            case SDLK_s:camera.ProcessKeyboard(BACKWARD, 0.05);
               break;
-            case SDLK_a:camera.ProcessKeyboard(LEFT, 0.1);
+            case SDLK_a:camera.ProcessKeyboard(LEFT, 0.05);
               break;
-            case SDLK_d:camera.ProcessKeyboard(RIGHT, 0.1);
+            case SDLK_d:camera.ProcessKeyboard(RIGHT, 0.05);
               break;
             case SDLK_g:
               if (gravityEnabled) {
@@ -473,7 +473,7 @@ int main(int argc, char *argv[]) {
               break;
             case SDLK_o:air->setDragCoefficient(air->getDragCoefficient() - 0.05f);
               break;
-            case SDLK_p:if (air->getDragCoefficient() > 0.05f) {
+            case SDLK_p:if (air->getDragCoefficient() > 0.2f) {
               air->setDragCoefficient(air->getDragCoefficient() + 0.05f);
               }
               break;
