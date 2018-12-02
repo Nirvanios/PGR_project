@@ -138,16 +138,17 @@ Simulation* simulation;
 void prepareSimulation() {
     simulation = new Simulation();
 
+    auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
+    auto stationaryCubeSimObj = new SimModel(1000.0f,
+                                             Passive,  SimpleGraphicsModelCreator::CreateQuad(0.5f,0.5f,0.5f, 0,0,0));
+    simulation->addObject(stationaryCubeSimObj);
+
     auto sphereMass = 1.0f;
     auto sphereAPos = glm::vec3(0, 0, 0);
     auto movingSphereSimObj = new SimModel(sphereMass,
                                            Active, SimpleGraphicsModelCreator::CreateQuad(0.3f,0.3f,0.3f, 1.0f,0,0));
     simulation->addObject(movingSphereSimObj);
 
-    auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
-    auto stationaryCubeSimObj = new SimModel(1000.0f,
-                                             Passive,  SimpleGraphicsModelCreator::CreateQuad(0.5f,0.5f,0.5f, 0,0,0));
-    simulation->addObject(stationaryCubeSimObj);
 
       auto sphereBPos = glm::vec3(0.2f, 0, 0);
   auto movingSphereSimObj2 = new SimModel(sphereMass,
@@ -348,10 +349,10 @@ int main(int argc, char *argv[]) {
 
     auto line1 = SimpleGraphicsModelCreator::createLine(simObjects[0]->getCurrectPosition(), simObjects[1]->getCurrectPosition());
   objects->emplace_back(line1);
-  /*auto line2 = SimpleGraphicsModelCreator::createLine(simObjects[2]->getCurrectPosition(), simObjects[0]->getCurrectPosition());
+  auto line2 = SimpleGraphicsModelCreator::createLine(simObjects[1]->getCurrectPosition(), simObjects[2]->getCurrectPosition());
   objects->emplace_back(line2);
-  auto line3 = SimpleGraphicsModelCreator::createLine(simObjects[2]->getCurrectPosition(), simObjects[3]->getCurrectPosition());
-  objects->emplace_back(line3);*/
+  auto line3 = SimpleGraphicsModelCreator::createLine(simObjects[0]->getCurrectPosition(), simObjects[3]->getCurrectPosition());
+  objects->emplace_back(line3);
 
     if (!SetupBufferObjects(objects))
         return -1;
@@ -367,16 +368,16 @@ int main(int argc, char *argv[]) {
             } else if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
                   case SDLK_LEFT:
-                        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
+                        simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
                     break;
                     case SDLK_RIGHT:
-                        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
+                        simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
                     break;
                     case SDLK_UP:
-                        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
+                        simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
                     break;
                     case SDLK_DOWN:
-                        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
+                        simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
                     break;
                 }
             }
@@ -389,6 +390,20 @@ int main(int argc, char *argv[]) {
         line1->getVertices()[3] = simObjects[1]->getCurrectPosition().x;
         line1->getVertices()[4] = simObjects[1]->getCurrectPosition().y;
         line1->getVertices()[5] = simObjects[1]->getCurrectPosition().z;
+
+        line2->getVertices()[0] = simObjects[1]->getCurrectPosition().x;
+        line2->getVertices()[1] = simObjects[1]->getCurrectPosition().y;
+        line2->getVertices()[2] = simObjects[1]->getCurrectPosition().z;
+        line2->getVertices()[3] = simObjects[2]->getCurrectPosition().x;
+        line2->getVertices()[4] = simObjects[2]->getCurrectPosition().y;
+        line2->getVertices()[5] = simObjects[2]->getCurrectPosition().z;
+
+        line2->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
+        line2->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
+        line2->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
+        line2->getVertices()[3] = simObjects[3]->getCurrectPosition().x;
+        line2->getVertices()[4] = simObjects[3]->getCurrectPosition().y;
+        line1->getVertices()[5] = simObjects[3]->getCurrectPosition().z;
 
         Render(objects);
         SDL_Delay(16);
