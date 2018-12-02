@@ -364,9 +364,24 @@ int main(int argc, char *argv[]) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 is_running = false;
+            } else if (event.type == SDL_KEYDOWN) {
+                switch (event.key.keysym.sym) {
+                  case SDLK_LEFT:
+                        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
+                    break;
+                    case SDLK_RIGHT:
+                        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
+                    break;
+                    case SDLK_UP:
+                        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
+                    break;
+                    case SDLK_DOWN:
+                        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
+                    break;
+                }
             }
         }
-        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(0.06f, 0, 0));
+
         updateSimulation();
         line1->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
         line1->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
