@@ -86,7 +86,7 @@ Uint32  Render(std::vector<SimpleGraphicsModel*> *objects)
 
 // Camera matrix
     glm::mat4 View = glm::lookAt(
-            glm::vec3(10,3,10), // Camera is at (4,3,3), in World Space
+            glm::vec3(20,3,20), // Camera is at (4,3,3), in World Space
             glm::vec3(0,0,0), // and looks at the origin
             glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
     );
@@ -152,10 +152,10 @@ void prepareSimulation() {
                                           Active, SimpleGraphicsModelCreator::CreateQuad(0.3f,0.3f,0.3f, 0.3f,0,0));
   simulation->addObject(movingSphereSimObj2);
 
-    /*auto sphereCPos = glm::vec3(10.0f, 0, 0);
+    auto sphereCPos = glm::vec3(10.0f, 0, 0);
     auto movingSphereSimObj3 = new SimModel(sphereMass,
                                             Active, SimpleGraphicsModelCreator::CreateQuad(0.2f,0.2f,0.2f, 3.0f,0,0));
-    simulation->addObject(movingSphereSimObj3);*/
+    simulation->addObject(movingSphereSimObj3);
 
     float stiffness = 8.0f;
     float damping = 0.1f;
@@ -165,8 +165,8 @@ void prepareSimulation() {
     simulation->addSpring(stiffness, damping, movingSphereSimObj2,
                           movingSphereSimObj);
 
-   /* simulation->addSpring(stiffness, damping, movingSphereSimObj3,
-                          stationaryCubeSimObj);*/
+   simulation->addSpring(stiffness, damping, movingSphereSimObj3,
+                          stationaryCubeSimObj);
 
     auto gravity = new GravityForce();
     simulation->addGlobalForce(gravity);
@@ -364,6 +364,7 @@ int main(int argc, char *argv[]) {
                 is_running = false;
             }
         }
+        simObjects[1]->setCurrentPosition(simObjects[1]->getCurrectPosition() + glm::vec3(0.06f, 0, 0));
         updateSimulation();
         line1->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
         line1->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
