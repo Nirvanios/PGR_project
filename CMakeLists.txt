@@ -58,7 +58,8 @@ add_executable(Render_test MainWindow2.cpp shader.h simulation/base/SimObject.h 
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/camera/Camera.cpp graphics/camera/Camera.h graphics/ShadowCalc.cpp graphics/ShadowCalc.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h)
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h simulation/SimpleGraphicsModel.cpp simulation/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/camera/Camera.cpp graphics/camera/Camera.h graphics/ShadowCalc.cpp graphics/ShadowCalc.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h
+        graphics/GraphicsCore.cpp)
 
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
