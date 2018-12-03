@@ -20,7 +20,7 @@ include_directories(${GLM_INCLUDE_DIRS})
 
 include_directories(simulation/simulations simulation/base
         simulation/common simulation/forces simulation/integrators
-        simulation/objects simulation graphics graphics/Camera graphics/graphicObjects)
+        simulation/objects simulation graphics graphics/Camera graphics/objects)
 
 add_executable(sim_test sim_test_main.cpp simulation/base/SimObject.h simulation/objects/Constraint.h
         simulation/common/common.h simulation/objects/SimModel.cpp simulation/objects/SimModel.h
@@ -32,7 +32,7 @@ add_executable(sim_test sim_test_main.cpp simulation/base/SimObject.h simulation
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/graphicObjects/SimpleGraphicsModel.cpp graphics/graphicObjects/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h)
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/objects/SimpleGraphicsModel.cpp graphics/objects/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h)
 
 target_link_libraries(sim_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
@@ -46,7 +46,7 @@ add_executable(PGR_project test.cpp simulation/base/SimObject.h simulation/objec
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/graphicObjects/SimpleGraphicsModel.cpp graphics/graphicObjects/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/graphicObjects/SimpleGraphicsModelCreator.cpp graphics/graphicObjects/SimpleGraphicsModelCreator.h graphics/camera/Camera.cpp graphics/camera/Camera.h graphics/ShadowCalc.cpp graphics/ShadowCalc.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h)
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/objects/SimpleGraphicsModel.cpp graphics/objects/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/objects/SimpleGraphicsModelCreator.cpp graphics/objects/SimpleGraphicsModelCreator.h graphics/camera/Camera.cpp graphics/camera/Camera.h graphics/ShadowCalc.cpp graphics/ShadowCalc.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h)
 
 target_link_libraries(PGR_project ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
@@ -60,7 +60,7 @@ add_executable(Render_test MainWindow2.cpp shader.h simulation/base/SimObject.h 
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/graphicObjects/SimpleGraphicsModel.cpp graphics/graphicObjects/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/camera/Camera.cpp graphics/camera/Camera.h graphics/ShadowCalc.cpp graphics/ShadowCalc.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/objects/SimpleGraphicsModel.cpp graphics/objects/SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/camera/Camera.cpp graphics/camera/Camera.h graphics/ShadowCalc.cpp graphics/ShadowCalc.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h
         graphics/GraphicsCore.cpp)
 
 
