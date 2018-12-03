@@ -97,27 +97,27 @@ int main(int argc, char** argv) {
 #endif
 
 #ifdef SPRING
-  Simulation simulation;
+  PGRsim::Simulation simulation;
 
   auto sphereMass = 1.0f;
   auto sphereAPos = glm::vec3(0, 0, 0);
-  auto movingSphereSimObj = new SimModel(sphereMass,
-                                               Active, );
+  auto movingSphereSimObj = new PGRsim::SimModel(sphereMass,
+                                                 PGRsim::Active, );
   simulation.addObject(movingSphereSimObj);
 
   auto sphereBPos = glm::vec3(0.2f, 0, 0);
-  auto movingSphereSimObj2 = new SimModel(sphereMass,
-                                               Active, );
+  auto movingSphereSimObj2 = new PGRsim::SimModel(sphereMass,
+                                                  PGRsim::Active, );
   simulation.addObject(movingSphereSimObj2);
 
   auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
-  auto stationaryCubeSimObj = new SimModel(1000.0f,
-                                      Passive, );
+  auto stationaryCubeSimObj = new PGRsim::SimModel(1000.0f,
+                                                   PGRsim::Passive, );
   simulation.addObject(stationaryCubeSimObj);
 
   auto sphereCPos = glm::vec3(10.0f, 0, 0);
-  auto movingSphereSimObj3 = new SimModel(sphereMass,
-                                                Active, );
+  auto movingSphereSimObj3 = new PGRsim::SimModel(sphereMass,
+                                                  PGRsim::Active, );
   simulation.addObject(movingSphereSimObj3);
 
   float stiffness = 8.0f;
@@ -131,11 +131,11 @@ int main(int argc, char** argv) {
   simulation.addSpring(stiffness, damping, movingSphereSimObj3,
                        stationaryCubeSimObj);
 
-  auto gravity = new GravityForce();
+  auto gravity = new PGRsim::GravityForce();
   simulation.addGlobalForce(gravity);
 
   float dragCoefficient = 0.5f;
-  auto air = new DragForce();
+  auto air = new PGRsim::DragForce();
   air->setDragCoefficient(dragCoefficient);
   simulation.addGlobalForce(air);
 
