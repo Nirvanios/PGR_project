@@ -5,6 +5,7 @@
 #ifndef PGR_PROJECT_INTEGRATOR_H
 #define PGR_PROJECT_INTEGRATOR_H
 
+#include <iostream>
 #include "SimObject.h"
 
 namespace PGRsim {
@@ -18,6 +19,9 @@ class Integrator {
   float timeStep;
  public:
   Integrator(float timeStep) : timeStep(timeStep) {}
+  virtual ~Integrator() {
+    std::cout << "Integrator deleted" << std::endl;
+  }
 
   void setTimeStep(float step) {
     this->timeStep = step;

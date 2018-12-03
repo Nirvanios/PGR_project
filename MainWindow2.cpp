@@ -10,7 +10,7 @@
 #include <iostream>
 
 //#include "shader.h"
-#include "graphicObjects/SimpleGraphicsModelCreator.h"
+#include "SimpleGraphicsModelCreator.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

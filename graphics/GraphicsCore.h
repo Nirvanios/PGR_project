@@ -7,7 +7,7 @@
 
 
 #include <camera/Camera.h>
-#include "../graphicObjects/SimpleGraphicsModel.h"
+#include "SimpleGraphicsModel.h"
 #include "Shader.h"
 
 class GraphicsCore {
