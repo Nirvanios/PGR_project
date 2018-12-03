@@ -7,7 +7,7 @@
 
 #include <collisions/CollisionObject.h>
 #include "SimpleGraphicsModel.h"
-#include "SimpleObject.h"
+#include "SimObject.h"
 
 namespace PGRsim {
 

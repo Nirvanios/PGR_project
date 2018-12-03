@@ -9,7 +9,7 @@
 #include "Simulation.h"
 #include "GravityForce.h"
 #include "DragForce.h"
-#include "SimpleObject.h"
+#include "SimObject.h"
 #include "ClothSimulation.h"
 #include "PointConstraint.h"
 #include "ConstantForce.h"

@@ -6,7 +6,7 @@
 #define PGR_PROJECT_INTEGRATOR_H
 
 #include <iostream>
-#include "SimpleObject.h"
+#include "SimObject.h"
 
 namespace PGRsim {
 

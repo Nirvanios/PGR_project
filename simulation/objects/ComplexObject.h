@@ -4,7 +4,7 @@
 
 #ifndef PGR_PROJECT_COMPLEXOBJECT_H
 #define PGR_PROJECT_COMPLEXOBJECT_H
-#include <SimpleObject.h>
+#include <SimObject.h>
 #include <collisions/CollisionObject.h>
 #include <objects/SoftBodyGraphicsModel.h>
 #include "Vertex.h"

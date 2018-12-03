@@ -22,8 +22,8 @@ include_directories(simulation/simulations simulation/base
         simulation/common simulation/forces simulation/integrators
         simulation/objects simulation graphics graphics/Camera graphics/objects)
 
-add_executable(sim_test sim_test_main.cpp simulation/base/SimpleObject.h simulation/objects/Constraint.h
-        simulation/common/common.h simulation/objects/SimpleObject.cpp simulation/objects/SimpleObject.h
+add_executable(sim_test sim_test_main.cpp simulation/base/SimObject.h simulation/objects/Constraint.h
+        simulation/common/common.h simulation/objects/SimObject.cpp simulation/objects/SimpleObject.h
         simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
         simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/Spring.cpp
         simulation/forces/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
@@ -36,8 +36,8 @@ add_executable(sim_test sim_test_main.cpp simulation/base/SimpleObject.h simulat
 
 target_link_libraries(sim_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
-add_executable(PGR_project test.cpp simulation/base/SimpleObject.h simulation/objects/Constraint.h
-        simulation/common/common.h simulation/objects/SimpleObject.cpp simulation/objects/SimpleObject.h
+add_executable(PGR_project test.cpp simulation/base/SimObject.h simulation/objects/Constraint.h
+        simulation/common/common.h simulation/objects/SimObject.cpp simulation/objects/SimpleObject.h
         simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
         simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/Spring.cpp
         simulation/forces/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
@@ -50,8 +50,8 @@ add_executable(PGR_project test.cpp simulation/base/SimpleObject.h simulation/ob
 
 target_link_libraries(PGR_project ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
-add_executable(Render_test MainWindow2.cpp shader.h simulation/base/SimpleObject.h simulation/objects/Constraint.h
-        simulation/common/common.h simulation/objects/SimpleObject.cpp simulation/objects/SimpleObject.h
+add_executable(Render_test MainWindow2.cpp shader.h simulation/base/SimObject.h simulation/objects/Constraint.h
+        simulation/common/common.h simulation/objects/SimObject.cpp simulation/objects/SimpleObject.h
         simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
         simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/Spring.cpp
         simulation/forces/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp

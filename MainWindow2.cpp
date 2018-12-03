@@ -16,12 +16,13 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <Simulation.h>
-#include <SimpleObject.h>
+#include <SimObject.h>
 #include <GravityForce.h>
 #include <DragForce.h>
 #include "graphics/camera/Camera.h"
 #include <SnapableSpring.h>
 #include <GraphicsCore.h>
+#include <SimObject.h>
 #include <SimpleObject.h>
 
 auto gravity = new PGRsim::GravityForce;
