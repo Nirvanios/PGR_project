@@ -24,7 +24,7 @@ bool GraphicsCore::init() {
 
     // Check that everything worked out okay
     if (!mainWindow) {
-        std::cout << "Unable to create window\n" << std::endl;;
+        std::cout << "Unable to create window\n" << std::endl;
         checkSDLError(__LINE__);
         return false;
     }

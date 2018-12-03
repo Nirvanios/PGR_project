@@ -42,6 +42,7 @@ void prepareSimulation() {
                                    0.5f, 0.5f, 0.5f,
                                    0, 0, 0));
   simulation->addObject(passive1);
+  passive1->getBoundingBox();
 
   auto active1_onPassive1 = new PGRsim::SimModel(1.0f,
                                                  PGRsim::Active,

@@ -5,6 +5,7 @@
 #ifndef PGR_PROJECT_SIMULATEDMODEL_H
 #define PGR_PROJECT_SIMULATEDMODEL_H
 
+#include <collisions/CollisionObject.h>
 #include "SimpleGraphicsModel.h"
 #include "SimObject.h"
 
@@ -15,7 +16,7 @@ namespace PGRsim {
  *
  * Position may be used to create translation matrix for model's vertices.
  */
-class SimModel : public SimObject {
+ class SimModel : public SimObject, Collision::CollisionObject {
  private:
   SimpleGraphicsModel *model;
  public:
@@ -30,7 +31,11 @@ class SimModel : public SimObject {
   }
 
   void update(SimTime time) override;
-};
+
+  void calcBoundingBox() override;
+
+  Collision::BoundingBox getBoundingBox() override;
+ };
 }
 
 #endif //PGR_PROJECT_SIMULATEDMODEL_H

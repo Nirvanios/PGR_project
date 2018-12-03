@@ -15,7 +15,7 @@ private:
     std::string programName;
     SDL_Window *mainWindow;
     SDL_GLContext mainContext;
-    int width = 512, height = 512;
+    int width = 1200, height = 700;
     Camera camera;
     Shader shader;
 
