@@ -24,6 +24,7 @@
 #include <GraphicsCore.h>
 #include <SimObject.h>
 #include <SimpleObject.h>
+#include <objects/OBJ_Loader.h>
 
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
@@ -121,6 +122,25 @@ void updateSimulation() {
 }
 
 int main(int argc, char *argv[]) {
+
+  // ukazka nacteni OBJ souboru:
+  /*// Initialize Loader
+  objl::Loader Loader;
+
+  // Load .obj File
+  bool loaded = Loader.LoadFile("/Users/petr/Desktop/small_ball.obj");
+
+  if (!loaded) {
+    std::cerr << "OBJ load failed" << std::endl;
+    return 2;
+  }
+
+  // --  Loader.LoadedVertices
+  // --  Loader.LoadedIndices
+  // --  Loader.LoadedMaterials - ???
+  // --  Loader.LoadedMeshes - ????????
+  */
+
     GraphicsCore graphicsCore;
 
   if (!graphicsCore.init())
