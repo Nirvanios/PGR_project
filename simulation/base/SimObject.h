@@ -10,10 +10,20 @@
 #include "common.h"
 
 namespace PGRsim {
+
+/**
+ * Type of simulated object:
+ *  -   Passive - static object unafected by the simulation
+ *  -   Active  - object affected by the simulation
+ */
 enum SimObjectType {
   Passive, Active
 };
 
+
+/**
+ * Base class for simulated objects.
+ */
 class SimObject {
  private:
   float mass;
@@ -25,6 +35,11 @@ class SimObject {
   glm::vec3 velocity;
   glm::vec3 resultantForce;
  public:
+  /**
+   * Initialize object in coords = 0, 0, 0 with no forces acting on it.
+   * @param mass mass of an object
+   * @param objectType type - Passive/Active
+   */
   SimObject(float mass, SimObjectType objectType) : mass(mass), objectType(objectType) {
       currentPosition = glm::vec3(0, 0, 0);
       previousPosition = currentPosition;
@@ -84,6 +99,10 @@ class SimObject {
       resultantForce = glm::vec3(0, 0, 0);
   }
 
+  /**
+   * Update the object after simulation step.
+   * @param time simulation time
+   */
   virtual void update(SimTime time) = 0;
 };
 }

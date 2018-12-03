@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_GOALSOFTBODYSIMULATION_H
 #define PGR_PROJECT_GOALSOFTBODYSIMULATION_H
 
-#include "../../graphicObjects/SimpleGraphicsModel.h"
+#include "SimpleGraphicsModel.h"
 #include <SimVertex.h>
 #include "Simulation.h"
 

@@ -7,6 +7,10 @@
 
 
 namespace PGRsim {
+
+/**
+ * Interface for constraints that are checked at the end of each time step.
+ */
 class Constraint {
  public:
   virtual void satisfyConstraint() = 0;

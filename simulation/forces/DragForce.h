@@ -9,6 +9,10 @@
 #include "ForceGenerator.h"
 
 namespace PGRsim {
+
+/**
+ * Drag force of an environment. Applied to the entire area.
+ */
 class DragForce : public ForceGenerator {
  private:
   float dragCoefficient;
@@ -22,7 +26,6 @@ class DragForce : public ForceGenerator {
   }
 
   void applyForce(SimObject *object) override;
-
 };
 }
 

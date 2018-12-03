@@ -13,7 +13,7 @@ class VerletIntegrator : public Integrator {
   glm::vec3 newPosition;
  protected:
  public:
-  VerletIntegrator(float timeStep);
+  explicit VerletIntegrator(float timeStep);
 
   void integrate(glm::vec3 acceleration, SimObject *object) override;
 };

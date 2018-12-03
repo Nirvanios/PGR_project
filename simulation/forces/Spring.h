@@ -9,6 +9,14 @@
 #include "ForceGenerator.h"
 
 namespace PGRsim {
+
+/**
+ * Force connecting two objects together.
+ *
+ * The spring can be configured via its stiffness and damping parameters.
+ *
+ * Length is calculated at the time of creation of the object as a distance between connected objects.
+ */
 class Spring : public ForceGenerator {
  protected:
   float stiffness;

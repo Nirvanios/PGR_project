@@ -9,10 +9,18 @@
 #include "SimObject.h"
 
 namespace PGRsim {
+
+/**
+ * Interface for forces acting in the simulation.
+ */
 class ForceGenerator {
  private:
  protected:
  public:
+  /**
+   * Apply effects to a simulated object
+   * @param object
+   */
   virtual void applyForce(SimObject *object) = 0;
 };
 }

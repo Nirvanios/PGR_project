@@ -10,7 +10,13 @@
 #include "ForceGenerator.h"
 
 namespace PGRsim {
-class GravityForce : public ForceGenerator {
+
+/**
+ * Gravity force applied to the entire are based on real gravity.
+ *
+ * Acceleration: 0, -9.8f, 0
+ */
+class GravityForce final : public ForceGenerator {
  private:
   glm::vec3 acceleration;
  public:

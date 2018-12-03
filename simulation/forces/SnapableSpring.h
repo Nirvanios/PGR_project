@@ -9,6 +9,13 @@
 #include <glm/glm.hpp>
 
 namespace PGRsim {
+
+/**
+ * In addition to the properties of Spring, this class provides an option to quit applying force
+ * when a force above set value is applied by the string.
+ *
+ * @see PGRsim::Spring
+ */
 class SnapableSpring : public Spring {
  private:
   float snapLimit;

@@ -8,6 +8,10 @@
 #include "SimObject.h"
 
 namespace PGRsim {
+
+/**
+ * Simulation of a single vertex which may be a part of a more complicated object.
+ */
 class SimVertex : public SimObject {
  private:
   int vertexId;

@@ -6,7 +6,7 @@
 #include "LengthConstraint.h"
 
 PGRsim::LengthConstraint::LengthConstraint(PGRsim::SimObject *objectA, PGRsim::SimObject *objectB, float length)
-    : objectA(objectA), objectB(objectB), length(length) {}
+    : objectA(objectA), objectB(objectB), length(length), currentLength(length) {}
 
 void PGRsim::LengthConstraint::satisfyConstraint() {
   direction = objectB->getCurrectPosition() - objectA->getCurrectPosition();

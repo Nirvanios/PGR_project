@@ -8,6 +8,10 @@
 #include "SimObject.h"
 
 namespace PGRsim {
+
+/**
+ * Interface for an integrator applying changes to simulated objects.
+ */
 class Integrator {
  private:
  protected:

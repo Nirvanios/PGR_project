@@ -5,10 +5,16 @@
 #ifndef PGR_PROJECT_SIMULATEDMODEL_H
 #define PGR_PROJECT_SIMULATEDMODEL_H
 
-#include "../../graphicObjects/SimpleGraphicsModel.h"
+#include "SimpleGraphicsModel.h"
 #include "SimObject.h"
 
 namespace PGRsim {
+
+/**
+ * Simulated object with unchangeable shape.
+ *
+ * Position may be used to create translation matrix for model's vertices.
+ */
 class SimModel : public SimObject {
  private:
   SimpleGraphicsModel *model;

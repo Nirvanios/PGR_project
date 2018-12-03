@@ -8,6 +8,10 @@
 #include "ForceGenerator.h"
 
 namespace PGRsim {
+
+/**
+ * Apply constant force in the entire area.
+ */
 class ConstantForce : public ForceGenerator {
  private:
   glm::vec3 force;

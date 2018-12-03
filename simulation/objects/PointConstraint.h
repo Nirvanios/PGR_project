@@ -10,6 +10,10 @@
 #include "SimObject.h"
 
 namespace PGRsim {
+
+/**
+ * Maintains location of a chosen object.
+ */
 class PointConstraint : public Constraint {
  private:
   glm::vec3 position;

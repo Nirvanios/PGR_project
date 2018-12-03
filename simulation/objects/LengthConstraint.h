@@ -9,6 +9,10 @@
 #include "SimObject.h"
 
 namespace PGRsim {
+
+/**
+ * Maintains distance between two objects.
+ */
 class LengthConstraint : public Constraint {
  private:
   SimObject *objectA;

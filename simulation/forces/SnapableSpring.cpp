@@ -17,6 +17,7 @@ void PGRsim::SnapableSpring::applyForce(SimObject *object) {
   }
   Spring::applyForce(object);
 
+  // check for force limit
   if (abs(force[0]) > snapLimit || abs(force[1]) > snapLimit || abs(force[2]) > snapLimit) {
     snapped = true;
   }
