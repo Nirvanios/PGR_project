@@ -5,25 +5,26 @@
 #ifndef PGR_PROJECT_SIMULATEDMODEL_H
 #define PGR_PROJECT_SIMULATEDMODEL_H
 
-#include <SimpleGraphicsModel.h>
+#include "../../graphicObjects/SimpleGraphicsModel.h"
 #include "SimObject.h"
 
-class SimModel: public SimObject {
-private:
-  SimpleGraphicsModel* model;
-public:
-    SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel* model);
+namespace PGRsim {
+class SimModel : public SimObject {
+ private:
+  SimpleGraphicsModel *model;
+ public:
+  SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel *model);
 
-    void setObjectModel(SimpleGraphicsModel* model) {
-        this->model = model;
-    }
+  void setObjectModel(SimpleGraphicsModel *model) {
+    this->model = model;
+  }
 
-  SimpleGraphicsModel* getObjectModel() {
-        return model;
-    }
+  SimpleGraphicsModel *getObjectModel() {
+    return model;
+  }
 
-    void update(SimTime time) override;
+  void update(SimTime time) override;
 };
-
+}
 
 #endif //PGR_PROJECT_SIMULATEDMODEL_H

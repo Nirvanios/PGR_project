@@ -5,13 +5,13 @@
 #include <iostream>
 #include "SnapableSpring.h"
 
-SnapableSpring::SnapableSpring(float stiffness,
+PGRsim::SnapableSpring::SnapableSpring(float stiffness,
                                float damping,
-                               SimObject *simulatedObjectA,
-                               SimObject *simulatedObjectB,
+                                       PGRsim::SimObject *simulatedObjectA,
+                                       PGRsim::SimObject *simulatedObjectB,
                                float snapLimit) : Spring(stiffness, damping, simulatedObjectA, simulatedObjectB),
                                                   snapLimit(snapLimit) {}
-void SnapableSpring::applyForce(SimObject *object) {
+void PGRsim::SnapableSpring::applyForce(SimObject *object) {
   if (snapped) {
     return;
   }

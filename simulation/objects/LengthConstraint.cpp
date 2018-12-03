@@ -5,10 +5,10 @@
 #include <glm/glm.hpp>
 #include "LengthConstraint.h"
 
-LengthConstraint::LengthConstraint(SimObject *objectA, SimObject *objectB, float length)
+PGRsim::LengthConstraint::LengthConstraint(PGRsim::SimObject *objectA, PGRsim::SimObject *objectB, float length)
     : objectA(objectA), objectB(objectB), length(length) {}
 
-void LengthConstraint::satisfyConstraint() {
+void PGRsim::LengthConstraint::satisfyConstraint() {
   direction = objectB->getCurrectPosition() - objectA->getCurrectPosition();
 
   currentLength = glm::length(direction);

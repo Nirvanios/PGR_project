@@ -8,21 +8,23 @@
 
 #include "ForceGenerator.h"
 
+namespace PGRsim {
 class DragForce : public ForceGenerator {
-private:
-    float dragCoefficient;
-public:
-    float getDragCoefficient() {
-        return dragCoefficient;
-    }
+ private:
+  float dragCoefficient;
+ public:
+  float getDragCoefficient() {
+    return dragCoefficient;
+  }
 
-    void setDragCoefficient(float coefficient) {
-        this->dragCoefficient = coefficient;
-    }
+  void setDragCoefficient(float coefficient) {
+    this->dragCoefficient = coefficient;
+  }
 
-    void applyForce(SimObject *object) override;
+  void applyForce(SimObject *object) override;
 
 };
+}
 
 
 #endif //PGR_PROJECT_DRAGFORCE_H

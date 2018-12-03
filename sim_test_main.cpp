@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <SimpleGraphicsModel.h>
+#include "graphicObjects/SimpleGraphicsModel.h"
 #include "Simulation.h"
 #include "GravityForce.h"
 #include "DragForce.h"

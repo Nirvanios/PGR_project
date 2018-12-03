@@ -6,6 +6,8 @@
 #define PGR_PROJECT_VERLETINTEGRATOR_H
 
 #include "Integrator.h"
+
+namespace PGRsim {
 class VerletIntegrator : public Integrator {
  private:
   glm::vec3 newPosition;
@@ -15,5 +17,6 @@ class VerletIntegrator : public Integrator {
 
   void integrate(glm::vec3 acceleration, SimObject *object) override;
 };
+}
 
 #endif //PGR_PROJECT_VERLETINTEGRATOR_H

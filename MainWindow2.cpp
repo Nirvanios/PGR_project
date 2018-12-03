@@ -24,62 +24,62 @@
 #include <GraphicsCore.h>
 
 
-auto gravity = new GravityForce;
-auto air = new DragForce();
+auto gravity = new PGRsim::GravityForce;
+auto air = new PGRsim::DragForce();
 
-Simulation *simulation;
+PGRsim::Simulation *simulation;
 
 
 
 
 void prepareSimulation() {
-  simulation = new Simulation();
+  simulation = new PGRsim::Simulation();
 
 
-  auto passive1 = new SimModel(1000.0f,
-                               Passive,
+  auto passive1 = new PGRsim::SimModel(1000.0f,
+                                       PGRsim::Passive,
                                SimpleGraphicsModelCreator::CreateQuad(
                                    0.5f, 0.5f, 0.5f,
                                    0, 0, 0));
   simulation->addObject(passive1);
 
-  auto active1_onPassive1 = new SimModel(1.0f,
-                                         Active,
+  auto active1_onPassive1 = new PGRsim::SimModel(1.0f,
+                                                 PGRsim::Active,
                                          SimpleGraphicsModelCreator::CreateQuad(
                                              0.3f, 0.3f, 0.3f,
                                              1.0f, 0, 0));
   simulation->addObject(active1_onPassive1);
 
-  auto active2_onActive1 = new SimModel(1.0f,
-                                          Active,
+  auto active2_onActive1 = new PGRsim::SimModel(1.0f,
+                                                PGRsim::Active,
                                           SimpleGraphicsModelCreator::CreateQuad(
                                               0.3f, 0.3f, 0.3f,
                                               0.3f, 0, 0));
   simulation->addObject(active2_onActive1);
 
-  auto active3_onPassive1 = new SimModel(0.5f,
-                                          Active,
+  auto active3_onPassive1 = new PGRsim::SimModel(0.5f,
+                                                 PGRsim::Active,
                                           SimpleGraphicsModelCreator::CreateQuad(
                                               0.2f, 0.2f, 0.2f,
                                               3.0f, 0, 0));
   simulation->addObject(active3_onPassive1);
 
-  auto active4_onPassive2Passive3 = new SimModel(0.5f,
-                                         Active,
+  auto active4_onPassive2Passive3 = new PGRsim::SimModel(0.5f,
+                                                         PGRsim::Active,
                                          SimpleGraphicsModelCreator::CreateQuad(
                                              0.2f, 0.2f, 0.2f,
                                              2.0f, 0, 0.5f));
   simulation->addObject(active4_onPassive2Passive3);
 
-  auto passive2 = new SimModel(1000.0f,
-                               Passive,
+  auto passive2 = new PGRsim::SimModel(1000.0f,
+                                       PGRsim::Passive,
                                SimpleGraphicsModelCreator::CreateQuad(
                                    0.1f, 0.1f, 0.05f,
                                    1.8f, 0, 1.0f));
   simulation->addObject(passive2);
 
-  auto passive3 = new SimModel(1000.0f,
-                               Passive,
+  auto passive3 = new PGRsim::SimModel(1000.0f,
+                                       PGRsim::Passive,
                                SimpleGraphicsModelCreator::CreateQuad(
                                    0.1f, 0.1f, 0.05f,
                                    2.0f, 0, 0));
@@ -99,7 +99,7 @@ void prepareSimulation() {
   simulation->addSpring(6.0f, 0.2f, active4_onPassive2Passive3,
                         passive2);
 
-  simulation->addSpring(new SnapableSpring(stiffness, damping, active4_onPassive2Passive3,
+  simulation->addSpring(new PGRsim::SnapableSpring(stiffness, damping, active4_onPassive2Passive3,
                                    passive3, 7.0f));
   //simulation->addSpring(4.5f, 0.3f, active4_onPassive2Passive3,
   //                      passive3);
@@ -113,7 +113,7 @@ void prepareSimulation() {
 }
 
 void updateSimulation() {
-  static SimTime simTime = 0.0f;
+  static PGRsim::SimTime simTime = 0.0f;
   simTime += 1 / 60.0f;
   simulation->update(simTime);
 }
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
 
   auto simObjects = simulation->getObjects();
   for (auto object : simObjects) {
-    objects->emplace_back(dynamic_cast<SimModel *>(object)->getObjectModel());
+    objects->emplace_back(dynamic_cast<PGRsim::SimModel *>(object)->getObjectModel());
   }
 
   auto line1 =

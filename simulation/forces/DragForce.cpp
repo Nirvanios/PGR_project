@@ -4,6 +4,6 @@
 
 #include "DragForce.h"
 
-void DragForce::applyForce(SimObject *object) {
+void PGRsim::DragForce::applyForce(SimObject *object) {
     object->setResultantForce(object->getResultantForce() - dragCoefficient * object->getVelocity());
 }

@@ -7,22 +7,24 @@
 
 #include "SimObject.h"
 
+namespace PGRsim {
 class Integrator {
-private:
-protected:
-    float timeStep;
-public:
-    Integrator(float timeStep) : timeStep(timeStep) {}
+ private:
+ protected:
+  float timeStep;
+ public:
+  Integrator(float timeStep) : timeStep(timeStep) {}
 
-    void setTimeStep(float step) {
-        this ->timeStep = step;
-    }
+  void setTimeStep(float step) {
+    this->timeStep = step;
+  }
 
-    float getTimeStep() {
-        return timeStep;
-    }
+  float getTimeStep() {
+    return timeStep;
+  }
 
-    virtual void integrate(glm::vec3 acceleration, SimObject* object)=0;
+  virtual void integrate(glm::vec3 acceleration, SimObject *object) = 0;
 };
+}
 
 #endif //PGR_PROJECT_INTEGRATOR_H

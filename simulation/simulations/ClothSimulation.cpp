@@ -5,7 +5,7 @@
 #include <iostream>
 #include <LengthConstraint.h>
 #include "ClothSimulation.h"
-ClothSimulation::ClothSimulation(float mass,
+PGRsim::ClothSimulation::ClothSimulation(float mass,
                                  float structStiffness,
                                  float structDamping,
                                  float shearStiffness,
@@ -18,7 +18,7 @@ ClothSimulation::ClothSimulation(float mass,
       shearStiffness, shearDamping,
       bendStiffness, bendDamping);
 }
-void ClothSimulation::createVertices(float mass) {
+void PGRsim::ClothSimulation::createVertices(float mass) {
   int vertexCount = 10;
   float vertexMass = mass / vertexCount;
 
@@ -44,7 +44,7 @@ void ClothSimulation::createVertices(float mass) {
 
 
 }
-void ClothSimulation::connectSprings(float structStiffness,
+void PGRsim::ClothSimulation::connectSprings(float structStiffness,
                                      float structDamping,
                                      float shearStiffness,
                                      float shearDamping,
@@ -52,8 +52,8 @@ void ClothSimulation::connectSprings(float structStiffness,
                                      float bendDamping) {
 
 }
-void ClothSimulation::update(SimTime time) {
-  Simulation::update(time);
+void PGRsim::ClothSimulation::update(SimTime time) {
+  PGRsim::Simulation::update(time);
 
 
 }

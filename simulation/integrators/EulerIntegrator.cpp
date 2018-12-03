@@ -4,10 +4,10 @@
 
 #include "EulerIntegrator.h"
 
-void EulerIntegrator::integrate(glm::vec3 acceleration, SimObject *object) {
+void PGRsim::EulerIntegrator::integrate(glm::vec3 acceleration, SimObject *object) {
     object->setCurrentPosition(object->getCurrectPosition() + object->getVelocity() * timeStep);
 
     object->setVelocity(object->getVelocity() + acceleration * timeStep);
 }
 
-EulerIntegrator::EulerIntegrator(float timeStep) : Integrator(timeStep) {}
+PGRsim::EulerIntegrator::EulerIntegrator(float timeStep) : Integrator(timeStep) {}

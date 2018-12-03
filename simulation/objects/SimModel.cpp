@@ -4,7 +4,7 @@
 
 #include "SimModel.h"
 
-SimModel::SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel* model) : SimObject(mass,
+PGRsim::SimModel::SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel* model) : SimObject(mass,
                                                                                                                 objectType),
                                                                                                 model(model) {
   currentPosition = model->getPosition();
@@ -12,6 +12,6 @@ SimModel::SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel* mo
   previousPosition = currentPosition;
 }
 
-void SimModel::update(SimTime time) {
+void PGRsim::SimModel::update(SimTime time) {
     model->setPosition(currentPosition);
 }

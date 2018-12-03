@@ -3,8 +3,9 @@
 //
 
 #include "ConstantForce.h"
-void ConstantForce::applyForce(SimObject *object) {
+
+void PGRsim::ConstantForce::applyForce(SimObject *object) {
   object->setResultantForce(object->getResultantForce() + force);
 }
 
-ConstantForce::ConstantForce(const glm::vec3 &force) : force(force) {}
+PGRsim::ConstantForce::ConstantForce(const glm::vec3 &force) : force(force) {}

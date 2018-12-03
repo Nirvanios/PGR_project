@@ -4,15 +4,15 @@
 
 #include "GravityForce.h"
 
-void GravityForce::applyForce(SimObject* object) {
+void PGRsim::GravityForce::applyForce(SimObject* object) {
     object->setResultantForce(object->getResultantForce() + acceleration * object->getMass());
 }
 
-GravityForce::GravityForce() : acceleration(glm::vec3(0, -9.8f, 0)) {}
+PGRsim::GravityForce::GravityForce() : acceleration(glm::vec3(0, -9.8f, 0)) {}
 
-void GravityForce::disable() {
+void PGRsim::GravityForce::disable() {
     acceleration = glm::vec3(0, 0, 0);
 }
-void GravityForce::enable() {
+void PGRsim::GravityForce::enable() {
     acceleration = glm::vec3(0, -9.8f, 0);
 }

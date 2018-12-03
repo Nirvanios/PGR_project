@@ -9,23 +9,25 @@
 #include "Constraint.h"
 #include "SimObject.h"
 
+namespace PGRsim {
 class PointConstraint : public Constraint {
  private:
   glm::vec3 position;
-  SimObject* object;
+  SimObject *object;
  protected:
  public:
   PointConstraint(const glm::vec3 &position, SimObject *object);
 
   void setPosition(glm::vec3 pos) {
-   this->position = pos;
- }
+    this->position = pos;
+  }
 
- glm::vec3 getPosition() {
-   return position;
- }
+  glm::vec3 getPosition() {
+    return position;
+  }
 
   void satisfyConstraint() override;
 };
+}
 
 #endif //PGR_PROJECT_POINTCONSTRAINT_H

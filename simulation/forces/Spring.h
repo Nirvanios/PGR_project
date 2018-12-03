@@ -8,6 +8,7 @@
 #include <glm/geometric.hpp>
 #include "ForceGenerator.h"
 
+namespace PGRsim {
 class Spring : public ForceGenerator {
  protected:
   float stiffness;
@@ -58,5 +59,6 @@ class Spring : public ForceGenerator {
 
   void applyForce(SimObject *object) override;
 };
+}
 
 #endif //PGR_PROJECT_SPRING_H

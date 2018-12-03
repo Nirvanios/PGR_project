@@ -3,8 +3,8 @@
 //
 
 #include "PointConstraint.h"
-PointConstraint::PointConstraint(const glm::vec3 &position, SimObject *object) : position(position), object(object) {}
+PGRsim::PointConstraint::PointConstraint(const glm::vec3 &position, PGRsim::SimObject *object) : position(position), object(object) {}
 
-void PointConstraint::satisfyConstraint() {
+void PGRsim::PointConstraint::satisfyConstraint() {
   object->setCurrentPosition(position);
 }

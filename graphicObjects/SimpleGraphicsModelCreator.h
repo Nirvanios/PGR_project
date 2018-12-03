@@ -7,8 +7,8 @@
 
 
 #include <vector>
-#include <SimpleGraphicsModel.h>
-#include <SoftBodyGraphicsModel.h>
+#include "SimpleGraphicsModel.h"
+#include "SoftBodyGraphicsModel.h"
 
 class SimpleGraphicsModelCreator {
 

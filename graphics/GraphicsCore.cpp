@@ -7,7 +7,7 @@
 #include <iostream>
 #include <glm/vec3.hpp>
 #include <GL/glew.h>
-#include <SimpleGraphicsModel.h>
+#include "../graphicObjects/SimpleGraphicsModel.h"
 #include "GraphicsCore.h"
 #include "Shader.h"
 

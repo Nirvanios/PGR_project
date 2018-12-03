@@ -5,28 +5,27 @@
 #ifndef PGR_PROJECT_GRAVITYFORCE_H
 #define PGR_PROJECT_GRAVITYFORCE_H
 
-#define GLM_ENABLE_EXPERIMENTAL
-
 #include <glm/glm.hpp>
 #include <glm/gtx/scalar_multiplication.hpp>
 #include "ForceGenerator.h"
 
+namespace PGRsim {
 class GravityForce : public ForceGenerator {
-private:
-    glm::vec3 acceleration;
-public:
-    GravityForce();
+ private:
+  glm::vec3 acceleration;
+ public:
+  GravityForce();
 
-    void applyForce(SimObject* object) override;
+  void applyForce(SimObject *object) override;
 
-    glm::vec3 getAcceleration() {
-        return acceleration;
-    }
+  glm::vec3 getAcceleration() {
+    return acceleration;
+  }
 
-    void disable();
+  void disable();
 
-    void enable();
+  void enable();
 };
-
+}
 
 #endif //PGR_PROJECT_GRAVITYFORCE_H

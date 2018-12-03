@@ -7,16 +7,18 @@
 
 #include "Simulation.h"
 #include "SimVertex.h"
+
+namespace PGRsim {
 class SoftBodySimulation : public Simulation {
  private:
  protected:
-  std::vector<SimVertex*> vertices;
+  std::vector<SimVertex *> vertices;
  public:
   SoftBodySimulation();
 
-  std::vector<SimVertex*> getVertices() {
+  std::vector<SimVertex *> getVertices() {
     return vertices;
   }
 };
-
+}
 #endif //PGR_PROJECT_SOFTBODYSIMULATION_H

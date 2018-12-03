@@ -3,4 +3,4 @@
 //
 
 #include "SoftBodySimulation.h"
-SoftBodySimulation::SoftBodySimulation() {}
+PGRsim::SoftBodySimulation::SoftBodySimulation() {}

@@ -3,7 +3,7 @@
 //
 
 #include "GoalSoftBodySimulation.h"
-GoalSoftBodySimulation::GoalSoftBodySimulation(SimpleGraphicsModel *model, SimpleGraphicsModel *goal)
+PGRsim::GoalSoftBodySimulation::GoalSoftBodySimulation(SimpleGraphicsModel *model, SimpleGraphicsModel *goal)
     : model(model), goal(goal) {
   createVertices();
 
@@ -12,11 +12,11 @@ GoalSoftBodySimulation::GoalSoftBodySimulation(SimpleGraphicsModel *model, Simpl
   connectSprings();
 }
 
-void GoalSoftBodySimulation::connectSprings() {
+void PGRsim::GoalSoftBodySimulation::connectSprings() {
 
 }
 
-void GoalSoftBodySimulation::createVertices() {
+void PGRsim::GoalSoftBodySimulation::createVertices() {
   int vertexCount = 0;
 
   float vertexMass = 0 / 1;
@@ -27,7 +27,7 @@ void GoalSoftBodySimulation::createVertices() {
   }
 }
 
-void GoalSoftBodySimulation::createGoalVertices() {
+void PGRsim::GoalSoftBodySimulation::createGoalVertices() {
   int vertexCount = 0;
 
   float vertexMass = 0 / 1;

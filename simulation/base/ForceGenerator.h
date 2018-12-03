@@ -8,12 +8,14 @@
 
 #include "SimObject.h"
 
+namespace PGRsim {
 class ForceGenerator {
-private:
-protected:
-public:
-    virtual void applyForce(SimObject* object) = 0;
+ private:
+ protected:
+ public:
+  virtual void applyForce(SimObject *object) = 0;
 };
+}
 
 
 #endif //PGR_PROJECT_FORCEGENERATOR_H

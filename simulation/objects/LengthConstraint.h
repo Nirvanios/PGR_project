@@ -8,10 +8,11 @@
 #include "Constraint.h"
 #include "SimObject.h"
 
+namespace PGRsim {
 class LengthConstraint : public Constraint {
  private:
-  SimObject* objectA;
-  SimObject* objectB;
+  SimObject *objectA;
+  SimObject *objectB;
 
   float length;
 
@@ -24,5 +25,6 @@ class LengthConstraint : public Constraint {
 
   void satisfyConstraint() override;
 };
+}
 
 #endif //PGR_PROJECT_LENGTHCONSTRAINT_H

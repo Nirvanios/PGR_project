@@ -14,47 +14,48 @@
 #include "VerletIntegrator.h"
 #include "Constraint.h"
 
+namespace PGRsim {
 class Simulation {
-private:
-protected:
-    std::vector<SimObject*> objects;
-    std::vector<ForceGenerator*> forces;
-    std::vector<Spring*> springs;
-    std::vector<Constraint*> constraints;
-    int constraintIterations;
+ private:
+ protected:
+  std::vector<SimObject *> objects;
+  std::vector<ForceGenerator *> forces;
+  std::vector<Spring *> springs;
+  std::vector<Constraint *> constraints;
+  int constraintIterations;
 
-    Integrator* integrator;
-public:
-    Simulation();
+  Integrator *integrator;
+ public:
+  Simulation();
 
-    void addSpring(float stiffness, float damping, SimObject* objectA, SimObject* objectB);
+  void addSpring(float stiffness, float damping, SimObject *objectA, SimObject *objectB);
 
-    void addSpring(Spring* spring);
+  void addSpring(Spring *spring);
 
-    void addObject(SimObject* object);
+  void addObject(SimObject *object);
 
-    const std::vector<SimObject*>& getObjects() {
-      return objects;
-    }
+  const std::vector<SimObject *> &getObjects() {
+    return objects;
+  }
 
-    void addGlobalForce(ForceGenerator* force);
+  void addGlobalForce(ForceGenerator *force);
 
-    void addConstraint(Constraint* constraint);
+  void addConstraint(Constraint *constraint);
 
-    void setConstraintIterations(int value) {
-      constraintIterations = value;
-    }
+  void setConstraintIterations(int value) {
+    constraintIterations = value;
+  }
 
-    int getConstraintIterations() {
-      return constraintIterations;
-    }
+  int getConstraintIterations() {
+    return constraintIterations;
+  }
 
-    void setIntegrator(Integrator* integrator) {
-      this->integrator = integrator;
-    }
+  void setIntegrator(Integrator *integrator) {
+    this->integrator = integrator;
+  }
 
-    virtual void update(SimTime time);
+  virtual void update(SimTime time);
 };
-
+}
 
 #endif //PGR_PROJECT_SIMULATION_H

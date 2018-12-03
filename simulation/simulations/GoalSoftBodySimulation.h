@@ -5,17 +5,18 @@
 #ifndef PGR_PROJECT_GOALSOFTBODYSIMULATION_H
 #define PGR_PROJECT_GOALSOFTBODYSIMULATION_H
 
-#include <SimpleGraphicsModel.h>
+#include "../../graphicObjects/SimpleGraphicsModel.h"
 #include <SimVertex.h>
 #include "Simulation.h"
 
+namespace PGRsim {
 class GoalSoftBodySimulation : public Simulation {
  private:
-  SimpleGraphicsModel* model;
-  SimpleGraphicsModel* goal;
+  SimpleGraphicsModel *model;
+  SimpleGraphicsModel *goal;
 
-  std::vector<SimVertex*> modelVertices;
-  std::vector<SimVertex*> goalVertices;
+  std::vector<SimVertex *> modelVertices;
+  std::vector<SimVertex *> goalVertices;
 
   void createVertices();
 
@@ -28,5 +29,5 @@ class GoalSoftBodySimulation : public Simulation {
   GoalSoftBodySimulation(SimpleGraphicsModel *model, SimpleGraphicsModel *goal);
 
 };
-
+}
 #endif //PGR_PROJECT_GOALSOFTBODYSIMULATION_H

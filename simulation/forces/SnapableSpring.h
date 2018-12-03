@@ -8,7 +8,7 @@
 #include <Spring.h>
 #include <glm/glm.hpp>
 
-
+namespace PGRsim {
 class SnapableSpring : public Spring {
  private:
   float snapLimit;
@@ -24,5 +24,6 @@ class SnapableSpring : public Spring {
 
   void applyForce(SimObject *object) override;
 };
+}
 
 #endif //PGR_PROJECT_SNAPABLESPRING_H

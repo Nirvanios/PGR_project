@@ -3,9 +3,9 @@
 //
 
 #include "VerletIntegrator.h"
-VerletIntegrator::VerletIntegrator(float timeStep) : Integrator(timeStep) {}
+PGRsim::VerletIntegrator::VerletIntegrator(float timeStep) : PGRsim::Integrator(timeStep) {}
 
-void VerletIntegrator::integrate(glm::vec3 acceleration, SimObject *object) {
+void PGRsim::VerletIntegrator::integrate(glm::vec3 acceleration, SimObject *object) {
   newPosition = 2.0f * object->getCurrectPosition() - object->getPreviousPosition()
       + acceleration * timeStep * timeStep;
 

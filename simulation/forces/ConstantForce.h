@@ -7,6 +7,7 @@
 
 #include "ForceGenerator.h"
 
+namespace PGRsim {
 class ConstantForce : public ForceGenerator {
  private:
   glm::vec3 force;
@@ -16,5 +17,6 @@ class ConstantForce : public ForceGenerator {
   void applyForce(SimObject *object) override;
 
 };
+}
 
 #endif //PGR_PROJECT_CONSTANTFORCE_H

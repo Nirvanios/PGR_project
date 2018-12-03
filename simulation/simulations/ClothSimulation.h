@@ -7,6 +7,7 @@
 
 #include "SoftBodySimulation.h"
 
+namespace PGRsim {
 class ClothSimulation : public SoftBodySimulation {
  private:
   void createVertices(float mass);
@@ -17,10 +18,11 @@ class ClothSimulation : public SoftBodySimulation {
  protected:
  public:
   ClothSimulation(float mass, float structStiffness, float structDamping,
-      float shearStiffness, float shearDamping,
-      float bendStiffness, float bendDamping);
+                  float shearStiffness, float shearDamping,
+                  float bendStiffness, float bendDamping);
 
- void update(SimTime time) override;
+  void update(SimTime time) override;
 };
+}
 
 #endif //PGR_PROJECT_CLOTHSIMULATION_H

@@ -4,24 +4,24 @@
 
 #include "Simulation.h"
 
-Simulation::Simulation() {
+PGRsim::Simulation::Simulation() {
     integrator = new EulerIntegrator(1.0f / 60.0f);
 }
 
-void Simulation::addSpring(float stiffness, float damping, SimObject* objectA, SimObject* objectB) {
+void PGRsim::Simulation::addSpring(float stiffness, float damping, SimObject* objectA, SimObject* objectB) {
     springs.emplace_back(new Spring(stiffness, damping, objectA, objectB));
 }
 
 
-void Simulation::addObject(SimObject *object)  {
+void PGRsim::Simulation::addObject(SimObject *object)  {
     objects.emplace_back(object);
 }
 
-void Simulation::addGlobalForce(ForceGenerator *force) {
+void PGRsim::Simulation::addGlobalForce(ForceGenerator *force) {
     forces.emplace_back(force);
 }
 
-void Simulation::update(SimTime time) {
+void PGRsim::Simulation::update(SimTime time) {
     for (auto spring : springs) {
         spring->applyForce(nullptr);
     }
@@ -59,10 +59,10 @@ void Simulation::update(SimTime time) {
     }
 }
 
-void Simulation::addConstraint(Constraint *constraint) {
+void PGRsim::Simulation::addConstraint(Constraint *constraint) {
     constraints.emplace_back(constraint);
 }
 
-void Simulation::addSpring(Spring *spring) {
+void PGRsim::Simulation::addSpring(Spring *spring) {
     springs.emplace_back(spring);
 }

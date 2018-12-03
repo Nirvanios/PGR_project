@@ -7,6 +7,7 @@
 
 #include "SimObject.h"
 
+namespace PGRsim {
 class SimVertex : public SimObject {
  private:
   int vertexId;
@@ -16,13 +17,14 @@ class SimVertex : public SimObject {
   SimVertex(float mass, SimObjectType objectType, int vertexId, glm::vec3 position);
 
   void setVertexId(int id) {
-   this->vertexId = id;
- }
+    this->vertexId = id;
+  }
 
- int getVertexId() {
-   return vertexId;
- }
+  int getVertexId() {
+    return vertexId;
+  }
   void update(SimTime time) override;
 };
+}
 
 #endif //PGR_PROJECT_SIMULATEDVERTEX_H

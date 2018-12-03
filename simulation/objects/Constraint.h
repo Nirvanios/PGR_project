@@ -6,10 +6,11 @@
 #define PGR_PROJECT_CONSTRAINT_H
 
 
+namespace PGRsim {
 class Constraint {
  public:
   virtual void satisfyConstraint() = 0;
 };
-
+}
 
 #endif //PGR_PROJECT_CONSTRAINT_H
