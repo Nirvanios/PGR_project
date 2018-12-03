@@ -16,13 +16,13 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <Simulation.h>
-#include <SimModel.h>
+#include <SimpleObject.h>
 #include <GravityForce.h>
 #include <DragForce.h>
 #include "graphics/camera/Camera.h"
 #include <SnapableSpring.h>
 #include <GraphicsCore.h>
-
+#include <SimpleObject.h>
 
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
@@ -36,7 +36,7 @@ void prepareSimulation() {
   simulation = new PGRsim::Simulation();
 
 
-  auto passive1 = new PGRsim::SimModel(1000.0f,
+  auto passive1 = new PGRsim::SimpleObject(1000.0f,
                                        PGRsim::Passive,
                                SimpleGraphicsModelCreator::CreateQuad(
                                    0.5f, 0.5f, 0.5f,
@@ -44,42 +44,42 @@ void prepareSimulation() {
   simulation->addObject(passive1);
   passive1->getBoundingBox();
 
-  auto active1_onPassive1 = new PGRsim::SimModel(1.0f,
+  auto active1_onPassive1 = new PGRsim::SimpleObject(1.0f,
                                                  PGRsim::Active,
                                          SimpleGraphicsModelCreator::CreateQuad(
                                              0.3f, 0.3f, 0.3f,
                                              1.0f, 0, 0));
   simulation->addObject(active1_onPassive1);
 
-  auto active2_onActive1 = new PGRsim::SimModel(1.0f,
+  auto active2_onActive1 = new PGRsim::SimpleObject(1.0f,
                                                 PGRsim::Active,
                                           SimpleGraphicsModelCreator::CreateQuad(
                                               0.3f, 0.3f, 0.3f,
                                               0.3f, 0, 0));
   simulation->addObject(active2_onActive1);
 
-  auto active3_onPassive1 = new PGRsim::SimModel(0.5f,
+  auto active3_onPassive1 = new PGRsim::SimpleObject(0.5f,
                                                  PGRsim::Active,
                                           SimpleGraphicsModelCreator::CreateQuad(
                                               0.2f, 0.2f, 0.2f,
                                               3.0f, 0, 0));
   simulation->addObject(active3_onPassive1);
 
-  auto active4_onPassive2Passive3 = new PGRsim::SimModel(0.5f,
+  auto active4_onPassive2Passive3 = new PGRsim::SimpleObject(0.5f,
                                                          PGRsim::Active,
                                          SimpleGraphicsModelCreator::CreateQuad(
                                              0.2f, 0.2f, 0.2f,
                                              2.0f, 0, 0.5f));
   simulation->addObject(active4_onPassive2Passive3);
 
-  auto passive2 = new PGRsim::SimModel(1000.0f,
+  auto passive2 = new PGRsim::SimpleObject(1000.0f,
                                        PGRsim::Passive,
                                SimpleGraphicsModelCreator::CreateQuad(
                                    0.1f, 0.1f, 0.05f,
                                    1.8f, 0, 1.0f));
   simulation->addObject(passive2);
 
-  auto passive3 = new PGRsim::SimModel(1000.0f,
+  auto passive3 = new PGRsim::SimpleObject(1000.0f,
                                        PGRsim::Passive,
                                SimpleGraphicsModelCreator::CreateQuad(
                                    0.1f, 0.1f, 0.05f,
@@ -134,7 +134,7 @@ int main(int argc, char *argv[]) {
 
   auto simObjects = simulation->getObjects();
   for (auto object : simObjects) {
-    objects->emplace_back(dynamic_cast<PGRsim::SimModel *>(object)->getObjectModel());
+    objects->emplace_back(dynamic_cast<PGRsim::SimpleObject *>(object)->getObjectModel());
   }
 
   auto line1 =

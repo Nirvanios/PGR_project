@@ -6,7 +6,7 @@
 #define PGR_PROJECT_LENGTHCONSTRAINT_H
 
 #include "Constraint.h"
-#include "SimObject.h"
+#include "SimpleObject.h"
 
 namespace PGRsim {
 

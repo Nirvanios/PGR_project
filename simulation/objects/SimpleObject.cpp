@@ -2,12 +2,12 @@
 // Created by Petr on 28.11.2018.
 //
 
-#include "SimModel.h"
+#include "SimpleObject.h"
 #include <iostream>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/vec4.hpp>
 
-PGRsim::SimModel::SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel* model) : SimObject(mass,
+PGRsim::SimpleObject::SimpleObject(float mass, SimObjectType objectType, SimpleGraphicsModel* model) : SimObject(mass,
                                                                                                                 objectType),
                                                                                                 model(model) {
   currentPosition = model->getPosition();
@@ -35,11 +35,12 @@ PGRsim::SimModel::SimModel(float mass, SimObjectType objectType, SimpleGraphicsM
   }
 }
 
-void PGRsim::SimModel::update(SimTime time) {
+void PGRsim::SimpleObject::update(SimTime time) {
     model->setPosition(currentPosition);
 }
-void PGRsim::SimModel::calcBoundingBox() {}
-PGRsim::Collision::BoundingBox PGRsim::SimModel::getBoundingBox() {
+
+void PGRsim::SimpleObject::calcBoundingBox() {}
+PGRsim::Collision::BoundingBox PGRsim::SimpleObject::getBoundingBox() {
   Collision::BoundingBox box;
   static auto model = glm::mat4(1.0f);
   auto translation = glm::translate(model, getCurrectPosition());

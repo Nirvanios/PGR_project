@@ -7,7 +7,7 @@
 
 #include <glm/glm.hpp>
 #include "Constraint.h"
-#include "SimObject.h"
+#include "SimpleObject.h"
 
 namespace PGRsim {
 

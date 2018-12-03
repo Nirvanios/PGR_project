@@ -6,7 +6,7 @@
 #define PGR_PROJECT_FORCEGENERATOR_H
 
 
-#include "SimObject.h"
+#include "SimpleObject.h"
 
 namespace PGRsim {
 

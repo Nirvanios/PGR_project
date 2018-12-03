@@ -6,7 +6,7 @@
 #define PGR_PROJECT_SIMULATION_H
 
 #include <vector>
-#include "SimObject.h"
+#include "SimpleObject.h"
 #include "ForceGenerator.h"
 #include "Spring.h"
 #include "Integrator.h"

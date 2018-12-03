@@ -9,7 +9,7 @@
 #include "Simulation.h"
 #include "GravityForce.h"
 #include "DragForce.h"
-#include "SimModel.h"
+#include "SimpleObject.h"
 #include "ClothSimulation.h"
 #include "PointConstraint.h"
 #include "ConstantForce.h"
@@ -101,22 +101,22 @@ int main(int argc, char** argv) {
 
   auto sphereMass = 1.0f;
   auto sphereAPos = glm::vec3(0, 0, 0);
-  auto movingSphereSimObj = new PGRsim::SimModel(sphereMass,
+  auto movingSphereSimObj = new PGRsim::SimpleObject(sphereMass,
                                                  PGRsim::Active, );
   simulation.addObject(movingSphereSimObj);
 
   auto sphereBPos = glm::vec3(0.2f, 0, 0);
-  auto movingSphereSimObj2 = new PGRsim::SimModel(sphereMass,
+  auto movingSphereSimObj2 = new PGRsim::SimpleObject(sphereMass,
                                                   PGRsim::Active, );
   simulation.addObject(movingSphereSimObj2);
 
   auto cubePos = glm::vec3(0.1f, 0.3f, 0.3f);
-  auto stationaryCubeSimObj = new PGRsim::SimModel(1000.0f,
+  auto stationaryCubeSimObj = new PGRsim::SimpleObject(1000.0f,
                                                    PGRsim::Passive, );
   simulation.addObject(stationaryCubeSimObj);
 
   auto sphereCPos = glm::vec3(10.0f, 0, 0);
-  auto movingSphereSimObj3 = new PGRsim::SimModel(sphereMass,
+  auto movingSphereSimObj3 = new PGRsim::SimpleObject(sphereMass,
                                                   PGRsim::Active, );
   simulation.addObject(movingSphereSimObj3);
 

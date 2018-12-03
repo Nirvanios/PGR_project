@@ -6,7 +6,7 @@
 #define PGR_PROJECT_GOALSOFTBODYSIMULATION_H
 
 #include "SimpleGraphicsModel.h"
-#include <SimVertex.h>
+#include <Vertex.h>
 #include "Simulation.h"
 
 namespace PGRsim {
@@ -15,8 +15,8 @@ class GoalSoftBodySimulation : public Simulation {
   SimpleGraphicsModel *model;
   SimpleGraphicsModel *goal;
 
-  std::vector<SimVertex *> modelVertices;
-  std::vector<SimVertex *> goalVertices;
+  std::vector<Vertex *> modelVertices;
+  std::vector<Vertex *> goalVertices;
 
   void createVertices();
 

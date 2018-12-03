@@ -7,7 +7,7 @@
 
 #include <collisions/CollisionObject.h>
 #include "SimpleGraphicsModel.h"
-#include "SimObject.h"
+#include "SimpleObject.h"
 
 namespace PGRsim {
 
@@ -16,11 +16,11 @@ namespace PGRsim {
  *
  * Position may be used to create translation matrix for model's vertices.
  */
- class SimModel : public SimObject, Collision::CollisionObject {
- private:
+ class SimpleObject : public SimObject, Collision::CollisionObject {
+  protected:
   SimpleGraphicsModel *model;
  public:
-  SimModel(float mass, SimObjectType objectType, SimpleGraphicsModel *model);
+  SimpleObject(float mass, SimObjectType objectType, SimpleGraphicsModel *model);
 
   void setObjectModel(SimpleGraphicsModel *model) {
     this->model = model;
