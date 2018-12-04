@@ -25,6 +25,7 @@
 #include <SimObject.h>
 #include <SimpleObject.h>
 #include <objects/OBJ_Loader.h>
+#include <objects/GraphicsModel.h>
 
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
@@ -122,33 +123,29 @@ void updateSimulation() {
 }
 
 int main(int argc, char *argv[]) {
-
-  // ukazka nacteni OBJ souboru:
-  // Initialize Loader
-  objl::Loader Loader;
-
-  // Load .obj File
-  bool loaded = Loader.LoadFile("/Users/petr/Desktop/small_ball.obj");
-
-  if (!loaded) {
-    std::cerr << "OBJ load failed" << std::endl;
-    return 2;
-  }
-
-  // --  Loader.LoadedVertices
-  // --  Loader.LoadedIndices
-  // --  Loader.LoadedMaterials - ???
-  // --  Loader.LoadedMeshes - ????????
-  Loader.LoadedIndices
-
-    GraphicsCore graphicsCore;
+  GraphicsCore graphicsCore;
 
   if (!graphicsCore.init())
     return -1;
 
   std::cout << "Seting up VBO + VAO..." << std::endl;
 
-  auto objects = new std::vector<SimpleGraphicsModel *>();
+  std::vector<GraphicsModel*> objects;
+
+  objects.emplace_back(GraphicsModel::LoadFromOBJ("../../resources/small_ball.obj"));
+
+  bool is_running = true;
+  bool is_simRunning = false;
+  bool enableCameraMovement = false;
+  bool gravityEnabled = true;
+  SDL_Event event;
+
+  while (is_running) {
+    graphicsCore.render(objects);
+    SDL_Delay(1000/60);
+  }
+
+ /* auto objects = new std::vector<SimpleGraphicsModel *>();
 
 
   prepareSimulation();
@@ -289,7 +286,7 @@ int main(int argc, char *argv[]) {
 
     graphicsCore.render(objects);
     SDL_Delay(1000/60);
-  }
+  }*/
 
   graphicsCore.cleanup();
 

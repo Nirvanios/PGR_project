@@ -18,18 +18,18 @@ class GraphicsModel {
   std::vector<glm::vec3> normals;
   std::vector<glm::vec3> texCoords;
  public:
-  GraphicsModel* LoadFromOBJ(std::string path) {
+  static GraphicsModel* LoadFromOBJ(std::string path) {
     auto model = new GraphicsModel();
     objl::Loader loader;
 
     loader.LoadFile(path);
 
-    indices = loader.LoadedIndices;
+    model->indices = loader.LoadedIndices;
 
     for (auto vertex : loader.LoadedVertices) {
-      vertices.emplace_back(vertex.Position);
-      normals.emplace_back(vertex.Normal);
-      texCoords.emplace_back(vertex.TextureCoordinate);
+      model->vertices.emplace_back(vertex.Position);
+      model->normals.emplace_back(vertex.Normal);
+      model->texCoords.emplace_back(vertex.TextureCoordinate);
     }
 
     return model;
