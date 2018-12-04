@@ -20,6 +20,17 @@ bool GraphicsCore::init() {
         return false;
     }
 
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
+
     // Create our window centered at 512x512 resolution
     mainWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                   width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
@@ -42,7 +53,8 @@ bool GraphicsCore::init() {
     glewExperimental = GL_TRUE;
     glewInit();
 
-    camera.Position = glm::vec3(10, 0, 10);
+    camera.Position = glm::vec3(0, 0, 10);
+    camera.MovementSpeed = 3.0f;
 
     // Clear our buffer with a grey background
     glClearColor(0.5, 0.5, 0.5, 1.0);
@@ -201,6 +213,8 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_FRONT);
     glFrontFace(GL_CW);
+
+    glEnable(GL_MULTISAMPLE);
 
     // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
     int i = 0;

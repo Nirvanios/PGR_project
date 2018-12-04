@@ -104,6 +104,9 @@ int main(int argc, char *argv[]) {
   bool enableCameraMovement = false;
   bool gravityEnabled = true;
   SDL_Event event;
+
+  uint32_t time1 = 0;
+  uint32_t time2;
   while (is_running) {
     while (SDL_PollEvent(&event)) {
       switch (event.type) {
@@ -173,12 +176,15 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    if (is_simRunning) {
-      updateSimulation();
+    time2 = SDL_GetTicks();
+    if (time2 - time1 > 16) {
+      time1 = time2;
+      graphicsCore.render(objects);
+      if (is_simRunning) {
+        updateSimulation();
+      }
     }
-
-    graphicsCore.render(objects);
-    SDL_Delay(1000/60);
+    SDL_Delay(1);
   }
 
   graphicsCore.cleanup();

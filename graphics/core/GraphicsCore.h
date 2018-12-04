@@ -33,7 +33,7 @@ class GraphicsCore {
   std::vector<GLuint> ebo;
   std::vector<GLuint> nbo;
 
-  glm::vec3 lightPos = glm::vec3(0, -2, 0);
+  glm::vec3 lightPos = glm::vec3(0, 10, 0);
 
   const std::vector<float> sceneFloor = {
       -100, -10, 100,
