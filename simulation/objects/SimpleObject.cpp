@@ -4,10 +4,10 @@
 
 #include "SimpleObject.h"
 #include <iostream>
-#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/vec4.hpp>
 
-PGRsim::SimpleObject::SimpleObject(float mass, PGRsim::SimObjectType objectType, SimpleGraphicsModel* model) : SimObject(mass,
+PGRsim::SimpleObject::SimpleObject(float mass, PGRsim::SimObjectType objectType, DEPRECATED_SimpleGraphicsModel* model) : SimObject(mass,
                                                                                                                 objectType),
                                                                                                 model(model) {
   currentPosition = model->getPosition();

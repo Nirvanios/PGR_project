@@ -8,6 +8,7 @@
 #include <collisions/CollisionObject.h>
 #include "DEPRECATED_SimpleGraphicsModel.h"
 #include "SimpleObject.h"
+#include <SimObject.h>
 
 namespace PGRsim {
 
