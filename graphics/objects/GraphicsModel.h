@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <string>
-#include <tiny_obj_loader.h>
+#include "../../third_party/tiny_obj_loader.h"
 #include <iostream>
 
 namespace PGRgraphics {

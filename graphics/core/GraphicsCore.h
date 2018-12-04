@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_GRAPHICSCORE_H
 #define PGR_PROJECT_GRAPHICSCORE_H
 
-#include <camera/Camera.h>
+#include "../../third_party/Camera.h"
 #include <objects/GraphicsModel.h>
 #include "Shader.h"
 

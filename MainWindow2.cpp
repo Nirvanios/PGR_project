@@ -15,7 +15,7 @@
 #include <Simulation.h>
 #include <GravityForce.h>
 #include <DragForce.h>
-#include "graphics/camera/Camera.h"
+#include "third_party/Camera.h"
 #include <SnapableSpring.h>
 #include <core/GraphicsCore.h>
 #include <SimObject.h>

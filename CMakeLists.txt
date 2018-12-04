@@ -37,12 +37,12 @@ add_executable(Render_test MainWindow2.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
         simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h
         simulation/simulations/GoalSoftBodySimulation.cpp
-        simulation/simulations/GoalSoftBodySimulation.h graphics/camera/Camera.cpp graphics/camera/Camera.h
+        simulation/simulations/GoalSoftBodySimulation.h third_party/Camera.cpp third_party/Camera.h
         simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h
         graphics/core/GraphicsCore.cpp simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h
         simulation/objects/ComplexObject.cpp simulation/objects/ComplexObject.h
         graphics/objects/GraphicsModel.h simulation/objects/SimpleObject.h
-        graphics/objects/tiny_obj_loader.h graphics/objects/tiny_obj_loader.cc graphics/objects/ComplexGraphicsModel.cpp graphics/objects/ComplexGraphicsModel.h)
+        third_party/tiny_obj_loader.h third_party/tiny_obj_loader.cc graphics/objects/ComplexGraphicsModel.cpp graphics/objects/ComplexGraphicsModel.h)
 
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
