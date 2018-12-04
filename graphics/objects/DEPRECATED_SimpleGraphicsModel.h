@@ -2,8 +2,8 @@
 // Created by Petr Flajsingr on 2018-12-01.
 //
 
-#ifndef PGR_PROJECT_SIMPLEGRAPHICSMODEL_H
-#define PGR_PROJECT_SIMPLEGRAPHICSMODEL_H
+#ifndef PGR_PROJECT_DEPR_SIMPLEGRAPHICSMODEL_H
+#define PGR_PROJECT_DEPR_SIMPLEGRAPHICSMODEL_H
 
 #include <glm/glm.hpp>
 #include <cstring>
@@ -62,4 +62,4 @@ class DEPRECATED_SimpleGraphicsModel {
  }
 };
 
-#endif //PGR_PROJECT_SIMPLEGRAPHICSMODEL_H
+#endif //PGR_PROJECT_DEPR_SIMPLEGRAPHICSMODEL_H

@@ -16,7 +16,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <Simulation.h>
-#include <SimObject.h>
 #include <GravityForce.h>
 #include <DragForce.h>
 #include "graphics/camera/Camera.h"
@@ -25,6 +24,7 @@
 #include <SimObject.h>
 #include <SimpleObject.h>
 #include <objects/GraphicsModel.h>
+#include <objects/SimpleGraphicsModel.h>
 
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
@@ -131,7 +131,7 @@ int main(int argc, char *argv[]) {
 
   std::vector<GraphicsModel*> objects;
 
-  objects.emplace_back(GraphicsModel::LoadFromOBJ("small_ball.obj"));
+  objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("small_ball.obj"));
 
   bool is_running = true;
   bool is_simRunning = false;
