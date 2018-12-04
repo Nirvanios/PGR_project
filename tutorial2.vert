@@ -24,15 +24,17 @@ in vec3 inputNormal;
 uniform mat4 projection, modelview, normalMat;
 uniform int mode;
 uniform mat4 translate;
+uniform vec3 lightPos;
 
 out vec4 forFragColor;
 
-const vec3 lightPos = vec3(1.0, -3.0, 1.0);
-const vec3 diffuseColor = vec3(0.5, 0.0, 0.0);
+const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
 
 void main(){
   gl_Position = projection * modelview * translate * vec4(inputPosition, 1.0);
+
+  vec3 ambient = 0.2 * specColor;
 
   // all following gemetric computations are performed in the
   // camera coordinate system (aka eye coordinates)
@@ -60,5 +62,5 @@ void main(){
     if(mode == 4) specular *= 0.0;
   }
 
-  forFragColor = inputColor * vec4(lambertian*diffuseColor + specular*specColor, 1.0);
+  forFragColor = vec4(lambertian*diffuseColor + specular*specColor + ambient, 1.0);
 }

@@ -144,6 +144,11 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>& objects) {
         nbo.push_back(tempNBO);
     }
 
+    glGenBuffers(1, &tempNBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempNBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, floorNormals.size() * sizeof(float), floorNormals.data(), GL_STATIC_DRAW);
+    nbo.push_back(tempNBO);
+
     // Set up shader ( will be covered in the next part )
     // ===================
     if (!shader.Init())
@@ -155,6 +160,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>& objects) {
     projGLUniform = shader.getUniformLocation("projection");
     normalMatGLUniform = shader.getUniformLocation("normalMat");
     translateGLUniform = shader.getUniformLocation("translate");
+    lightPosUniform = shader.getUniformLocation("lightPos");
 
 
     return true;
@@ -177,12 +183,13 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
 
 // Model matrix : an identity matrix (model will be at the origin)
     glm::mat4 Model = glm::mat4(1.0f);
-    glUniform1i(shader.getUniformLocation("mode"), 4);
+    glUniform1i(shader.getUniformLocation("mode"), 3);
 
 // Our ModelViewProjection : multiplication of our 3 matrices
     glm::mat4 modelView = Model * camera.GetViewMatrix(); // Remember, matrix multiplication is the other way around
 
     glUniformMatrix4fv(modelViewGLUniform, 1, GL_FALSE, glm::value_ptr(modelView));
+    glUniform3fv(lightPosUniform, 1, glm::value_ptr(lightPos));
     glUniformMatrix4fv(projGLUniform, 1, GL_FALSE, glm::value_ptr(Projection));
     auto normalMV = glm::transpose(glm::inverse(modelView));
     glUniformMatrix4fv(normalMatGLUniform, 1, GL_FALSE, glm::value_ptr(normalMV));
@@ -190,6 +197,10 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
 
 
     glDisableVertexAttribArray(colorAttributeIndex);
+
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
+    glFrontFace(GL_CW);
 
     // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
     int i = 0;
@@ -202,6 +213,7 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
         glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size()* 3 * sizeof(float)), item->getVertices().data());
         glEnableVertexAttribArray(positionAttributeIndex);
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
         glBindBuffer(GL_ARRAY_BUFFER, nbo[i]);
         glEnableVertexAttribArray(normalAttributeIndex);
         glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -230,6 +242,11 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
     glBindBuffer(GL_ARRAY_BUFFER, vboC.back());
     glEnableVertexAttribArray(colorAttributeIndex);
     glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, nbo.back());
+    glEnableVertexAttribArray(normalAttributeIndex);
+    glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo.back());
     glUniformMatrix4fv(translateGLUniform, 1, GL_FALSE, glm::value_ptr(Model));
     glDrawElements(GL_TRIANGLES, sizeof(floorIndicies.data()), GL_UNSIGNED_BYTE, NULL);
@@ -299,4 +316,10 @@ void GraphicsCore::handleCameraMove(SDL_Keycode key) {
 
 void GraphicsCore::handleMouseMove(float xoffset, float yoffset, GLboolean constrainPitch) {
     camera.ProcessMouseMovement(xoffset, yoffset, constrainPitch);
+}
+const glm::vec3 &GraphicsCore::getLightPos() const {
+    return lightPos;
+}
+void GraphicsCore::setLightPos(const glm::vec3 &lightPos) {
+    GraphicsCore::lightPos = lightPos;
 }

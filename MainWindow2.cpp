@@ -37,11 +37,11 @@ void prepareSimulation() {
 
   auto passive1 = new PGRsim::SimpleObject(1000.0f,
                                        PGRsim::Passive,
-                               SimpleGraphicsModel::LoadFromOBJ("small_ball.obj"));
+                               SimpleGraphicsModel::LoadFromOBJ("test.obj"));
   simulation->addObject(passive1);
 
-  auto model = SimpleGraphicsModel::LoadFromOBJ("small_ball.obj");
-  model->setPosition(glm::vec3(0, 2.0f, 0));
+  auto model = SimpleGraphicsModel::LoadFromOBJ("test.obj");
+  model->setPosition(glm::vec3(0, -2.0f, 0));
   auto active1_onPassive1 = new PGRsim::SimpleObject(1.0f,
                                                  PGRsim::Active,
                                                      model);
@@ -139,6 +139,10 @@ int main(int argc, char *argv[]) {
     objects.emplace_back(dynamic_cast<PGRsim::SimpleObject *>(object)->getObjectModel());
   }
 
+  auto model = SimpleGraphicsModel::LoadFromOBJ("small_ball.obj");
+  model->setPosition(graphicsCore.getLightPos());
+  objects.emplace_back(model);
+
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
 
@@ -161,16 +165,16 @@ int main(int argc, char *argv[]) {
         case SDL_KEYDOWN:
           switch (event.key.keysym.sym) {
             case SDLK_LEFT:
-              //simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
+              simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
               break;
             case SDLK_RIGHT:
-              //simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
+              simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
               break;
             case SDLK_UP:
-              //simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
+              simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
               break;
             case SDLK_DOWN:
-              //simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
+              simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
               break;
             case SDLK_w:
             case SDLK_s:

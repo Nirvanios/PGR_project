@@ -22,7 +22,6 @@ class GraphicsModel {
   std::vector<glm::vec2> texCoords;
 
   std::vector<int> vertexIndices;
-  std::vector<int> normalIndices;
 
   static glm::vec3 floatsToVec3(float x, float y, float z) {
     return glm::vec3(x, y, z);
@@ -49,16 +48,16 @@ class GraphicsModel {
 
     for (auto indice : model->indices) {
       model->vertexIndices.emplace_back(indice.vertex_index);
-      model->normalIndices.emplace_back(indice.normal_index);
+      model->normals.emplace_back(attribs.normals[indice.normal_index]);
     }
 
     for (int i = 0; i < attribs.vertices.size(); i += 3) {
       model->vertices.emplace_back(floatsToVec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
     }
 
-    for (int i = 0; i < attribs.normals.size(); i += 3) {
+    /*for (int i = 0; i < attribs.normals.size(); i += 3) {
       model->normals.emplace_back(floatsToVec3(attribs.normals[i], attribs.normals[i + 1], attribs.normals[i + 2]));
-    }
+    }*/
 
 
     return model;
@@ -100,9 +99,6 @@ class GraphicsModel {
 
   const std::vector<int> &getVertexIndices() const {
     return vertexIndices;
-  }
-  const std::vector<int> &getNormalIndices() const {
-    return normalIndices;
   }
 };
 
