@@ -22,7 +22,6 @@ in vec4 inputColor;
 in vec3 inputNormal;
 
 uniform mat4 projection, modelview, normalMat;
-uniform int mode;
 uniform mat4 translate;
 uniform vec3 lightPos;
 
@@ -51,8 +50,6 @@ void main(){
   if(lambertian > 0.0) {
     float specAngle = max(dot(reflectDir, viewDir), 0.0);
     specular = pow(specAngle, 4.0);
-
-    //specular = pow(specAngle, 16.0);
 
     specular *= lambertian;
 

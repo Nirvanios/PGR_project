@@ -31,7 +31,6 @@ bool GraphicsCore::init() {
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
 
-    // Create our window centered at 512x512 resolution
     mainWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                   width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
@@ -54,7 +53,7 @@ bool GraphicsCore::init() {
     glewInit();
 
     camera.Position = glm::vec3(0, 0, 10);
-    camera.MovementSpeed = 3.0f;
+    camera.MovementSpeed = 1.0f;
 
     // Clear our buffer with a grey background
     glClearColor(0.5, 0.5, 0.5, 1.0);
@@ -79,7 +78,7 @@ bool GraphicsCore::setOpenGLAttributes() {
 void GraphicsCore::checkSDLError(int line = -1) {
     std::string error = SDL_GetError();
 
-    if (error != "") {
+    if (!error.empty()) {
         std::cerr << "SLD Error : " << error << std::endl;
 
         if (line != -1)
@@ -195,7 +194,6 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
 
 // Model matrix : an identity matrix (model will be at the origin)
     glm::mat4 Model = glm::mat4(1.0f);
-    glUniform1i(shader.getUniformLocation("mode"), 3);
 
 // Our ModelViewProjection : multiplication of our 3 matrices
     glm::mat4 modelView = Model * camera.GetViewMatrix(); // Remember, matrix multiplication is the other way around
@@ -219,18 +217,14 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
     // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
     int i = 0;
     for (auto item : objects) {
-        /*if (item->isLine()) {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        }*/
-
         glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
         glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size()* 3 * sizeof(float)), item->getVertices().data());
         glEnableVertexAttribArray(positionAttributeIndex);
-        glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
         glBindBuffer(GL_ARRAY_BUFFER, nbo[i]);
         glEnableVertexAttribArray(normalAttributeIndex);
-        glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
         // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
@@ -242,28 +236,23 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
         }
 #pragma clang diagnostic pop
         glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, NULL);
-        //glDisableVertexAttribArray(positionAttributeIndex);
         i++;
-/*
-        if (item->isLine()) {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        }*/
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo.back());
     glEnableVertexAttribArray(positionAttributeIndex);
-    glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glBindBuffer(GL_ARRAY_BUFFER, vboC.back());
     glEnableVertexAttribArray(colorAttributeIndex);
-    glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glBindBuffer(GL_ARRAY_BUFFER, nbo.back());
     glEnableVertexAttribArray(normalAttributeIndex);
-    glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo.back());
     glUniformMatrix4fv(translateGLUniform, 1, GL_FALSE, glm::value_ptr(Model));
-    glDrawElements(GL_TRIANGLES, sizeof(floorIndicies.data()), GL_UNSIGNED_BYTE, NULL);
+    glDrawElements(GL_TRIANGLES, sizeof(floorIndicies.data()), GL_UNSIGNED_BYTE, nullptr);
 
 
     // Swap our buffers to make our changes visible
@@ -313,16 +302,16 @@ void GraphicsCore::handleResize() {
 void GraphicsCore::handleCameraMove(SDL_Keycode key) {
     switch(key) {
         case SDLK_w:
-            camera.ProcessKeyboard(FORWARD, 0.05);
+            camera.ProcessKeyboard(FORWARD, 1);
             break;
         case SDLK_s:
-            camera.ProcessKeyboard(BACKWARD, 0.05);
+            camera.ProcessKeyboard(BACKWARD, 1);
             break;
         case SDLK_a:
-            camera.ProcessKeyboard(LEFT, 0.05);
+            camera.ProcessKeyboard(LEFT, 1);
             break;
         case SDLK_d:
-            camera.ProcessKeyboard(RIGHT, 0.05);
+            camera.ProcessKeyboard(RIGHT, 1);
             break;
     }
 
