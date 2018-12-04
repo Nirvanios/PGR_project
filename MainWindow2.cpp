@@ -143,6 +143,8 @@ int main(int argc, char *argv[]) {
   model->setPosition(graphicsCore.getLightPos());
   objects.emplace_back(model);
 
+  objects.emplace_back(model);SimpleGraphicsModel::LoadFromOBJ("floor.obj");
+
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
 

@@ -43,7 +43,6 @@ class SimpleGraphicsModel : public GraphicsModel {
 
     for (auto indice : model->indices) {
       model->vertexIndices.emplace_back(indice.vertex_index);
-      //model->normals.emplace_back(attribs.normals[indice.normal_index]);
       model->normals[indice.vertex_index] += glm::vec3(attribs.normals[indice.normal_index * 3],
                                                        attribs.normals[indice.normal_index * 3 + 1],
                                                        attribs.normals[indice.normal_index * 3 + 2]);
@@ -59,10 +58,6 @@ class SimpleGraphicsModel : public GraphicsModel {
     for (int i = 0; i < attribs.vertices.size(); i += 3) {
       model->vertices.emplace_back(floatsToVec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
     }
-
-    //for (int i = 0; i < attribs.normals.size(); i += 3) {
-    //  model->normals.emplace_back(floatsToVec3(attribs.normals[i], attribs.normals[i + 1], attribs.normals[i + 2]));
-    //}
 
     model->position = glm::vec3(0, 0, 0);
 
