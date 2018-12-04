@@ -113,22 +113,6 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
 
     }
 
-    glGenBuffers(1, &tempVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-    vbo.push_back(tempVBO);
-    // Copy the vertex data from diamond to our buffer
-    glBufferData(GL_ARRAY_BUFFER, sceneFloor.size() * sizeof(unsigned int), sceneFloor.data(),
-                 GL_STATIC_DRAW);
-
-    // Colors
-    // =======================
-    glGenBuffers(1, &tempVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-    vboC.push_back(tempVBO);
-
-    // Copy the vertex data from diamond to our buffer
-    glBufferData(GL_ARRAY_BUFFER, floorColor.size() * sizeof(float), floorColor.data(), GL_STATIC_DRAW);
-
     // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
     //glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -140,12 +124,6 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
         ebo.push_back(tempEBO);
     }
 
-    glGenBuffers(1, &tempEBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
-    //glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, floorIndicies.size() * sizeof(float), floorIndicies.data(), GL_STATIC_DRAW);
-    ebo.push_back(tempEBO);
-
     GLuint tempNBO;
     for (auto item : objects) {
         glGenBuffers(1, &tempNBO);
@@ -153,11 +131,6 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, item->getNormals().size() * sizeof(float), item->getNormals().data(), GL_STATIC_DRAW);
         nbo.push_back(tempNBO);
     }
-
-    glGenBuffers(1, &tempNBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempNBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, floorNormals.size() * sizeof(float), floorNormals.data(), GL_STATIC_DRAW);
-    nbo.push_back(tempNBO);
 
     // Set up shader ( will be covered in the next part )
     // ===================
@@ -243,25 +216,7 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects) {
         i++;
     }
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo.back());
-    glEnableVertexAttribArray(positionAttributeIndex);
-    glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-    glBindBuffer(GL_ARRAY_BUFFER, vboC.back());
-    glEnableVertexAttribArray(colorAttributeIndex);
-    glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-    glBindBuffer(GL_ARRAY_BUFFER, nbo.back());
-    glEnableVertexAttribArray(normalAttributeIndex);
-    glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo.back());
-    glUniformMatrix4fv(translateGLUniform, 1, GL_FALSE, glm::value_ptr(Model));
-    glDrawElements(GL_TRIANGLES, sizeof(floorIndicies.data()), GL_UNSIGNED_BYTE, nullptr);
-
-
-    // Swap our buffers to make our changes visible
     SDL_GL_SwapWindow(mainWindow);
-
 }
 
 void PGRgraphics::GraphicsCore::cleanup() {

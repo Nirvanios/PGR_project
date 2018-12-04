@@ -37,32 +37,6 @@ class GraphicsCore {
 
   glm::vec3 lightPos = glm::vec3(0, 10, 0);
 
-  const std::vector<float> sceneFloor = {
-      -100, -10, 100,
-      -100, -10, -100,
-      100, -10, 100,
-      100, -10, -100
-  };
-
-  const std::vector<float> floorNormals = {
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0,
-  };
-
-  const std::vector<unsigned char> floorIndicies = {
-      0, 2, 1,
-      1, 2, 3
-  };
-
-  const std::vector<float> floorColor = {
-      0.0, 1.0, 0.0, 1.0,
-      0.0, 1.0, 0.0, 1.0,
-      0.0, 1.0, 0.0, 1.0,
-      0.0, 1.0, 0.0, 1.0
-  };
-
   void checkSDLError(int);
   bool setOpenGLAttributes();
   void deleteBuffers(std::vector<GLuint> &);
