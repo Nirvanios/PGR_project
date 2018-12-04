@@ -12,6 +12,10 @@
 
 class GraphicsCore {
 private:
+
+  // GL identifiers
+  GLuint projGLUniform, modelViewGLUniform, normalMatGLUniform, translateGLUniform, modeGLUniform;
+
     std::string programName;
     SDL_Window *mainWindow;
     SDL_GLContext mainContext;

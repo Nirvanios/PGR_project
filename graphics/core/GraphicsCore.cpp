@@ -143,7 +143,11 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>& objects) {
 
     shader.UseProgram();
 
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    modelViewGLUniform = shader.getUniformLocation("modelview");
+    projGLUniform = shader.getUniformLocation("projection");
+    normalMatGLUniform = shader.getUniformLocation("normalMat");
+    translateGLUniform = shader.getUniformLocation("translate");
+
 
     return true;
 }
@@ -165,13 +169,17 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
 
 // Model matrix : an identity matrix (model will be at the origin)
     glm::mat4 Model = glm::mat4(1.0f);
+    glUniform1i(shader.getUniformLocation("translate"), 4);
 
 // Our ModelViewProjection : multiplication of our 3 matrices
-    glm::mat4
-            mvp = Projection * camera.GetViewMatrix() * Model; // Remember, matrix multiplication is the other way around
+    glm::mat4 modelView = Model * camera.GetViewMatrix(); // Remember, matrix multiplication is the other way around
 
-    GLuint MatrixID = shader.getUniformLocation("mvp");
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+    glUniformMatrix4fv(modelViewGLUniform, 1, GL_FALSE, glm::value_ptr(modelView));
+    glUniformMatrix4fv(projGLUniform, 1, GL_FALSE, glm::value_ptr(Projection));
+    auto normalMV = glm::transpose(glm::inverse(modelView));
+    glUniformMatrix4fv(normalMatGLUniform, 1, GL_FALSE, glm::value_ptr(normalMV));
+
+
 
     glDisableVertexAttribArray(colorAttributeIndex);
 
@@ -193,8 +201,7 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCDFAInspection"
         if (dynamic_cast<SimpleGraphicsModel*>(item) != nullptr) {
-            GLuint transformID = shader.getUniformLocation("translate");
-            glUniformMatrix4fv(transformID, 1, GL_FALSE, glm::value_ptr(dynamic_cast<SimpleGraphicsModel*>(item)->getTranslationMatrix()));
+            glUniformMatrix4fv(translateGLUniform, 1, GL_FALSE, glm::value_ptr(dynamic_cast<SimpleGraphicsModel*>(item)->getTranslationMatrix()));
         }
 #pragma clang diagnostic pop
         glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, NULL);
@@ -213,8 +220,7 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
     glEnableVertexAttribArray(colorAttributeIndex);
     glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo.back());
-    GLuint transformID = shader.getUniformLocation("translate");
-    glUniformMatrix4fv(transformID, 1, GL_FALSE, &Model[0][0]);
+    glUniformMatrix4fv(translateGLUniform, 1, GL_FALSE, glm::value_ptr(Model));
     glDrawElements(GL_TRIANGLES, sizeof(floorIndicies.data()), GL_UNSIGNED_BYTE, NULL);
 
 
