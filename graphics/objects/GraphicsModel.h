@@ -31,6 +31,8 @@ class GraphicsModel {
       normals.emplace_back(vertex.Normal);
       texCoords.emplace_back(vertex.TextureCoordinate);
     }
+
+    return model;
   }
 
   const std::vector<glm::vec3> &getVertices() const {
