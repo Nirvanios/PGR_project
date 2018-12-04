@@ -5,15 +5,15 @@
 #ifndef PGR_PROJECT_GOALSOFTBODYSIMULATION_H
 #define PGR_PROJECT_GOALSOFTBODYSIMULATION_H
 
-#include "SimpleGraphicsModel.h"
+#include "DEPRECATED_SimpleGraphicsModel.h"
 #include <Vertex.h>
 #include "Simulation.h"
 
 namespace PGRsim {
 class GoalSoftBodySimulation : public Simulation {
  private:
-  SimpleGraphicsModel *model;
-  SimpleGraphicsModel *goal;
+  DEPRECATED_SimpleGraphicsModel *model;
+  DEPRECATED_SimpleGraphicsModel *goal;
 
   std::vector<Vertex *> modelVertices;
   std::vector<Vertex *> goalVertices;
@@ -26,7 +26,7 @@ class GoalSoftBodySimulation : public Simulation {
 
  protected:
  public:
-  GoalSoftBodySimulation(SimpleGraphicsModel *model, SimpleGraphicsModel *goal);
+  GoalSoftBodySimulation(DEPRECATED_SimpleGraphicsModel *model, DEPRECATED_SimpleGraphicsModel *goal);
 
 };
 }

@@ -10,7 +10,7 @@
 #include <iostream>
 
 //#include "shader.h"
-#include "SimpleGraphicsModelCreator.h"
+#include "DEPRECATED_SimpleGraphicsModelCreator.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -145,7 +145,7 @@ int main(int argc, char *argv[]) {
     SDL_Delay(1000/60);
   }
 
- /* auto objects = new std::vector<SimpleGraphicsModel *>();
+ /* auto objects = new std::vector<DEPRECATED_SimpleGraphicsModel *>();
 
 
   prepareSimulation();

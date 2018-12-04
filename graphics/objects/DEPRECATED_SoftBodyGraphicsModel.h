@@ -7,7 +7,7 @@
 
 
 
-class SoftBodyGraphicsModel {
+class DEPRECATED_SoftBodyGraphicsModel {
 private:
     float * vertices;
     int verticesSize;
@@ -16,7 +16,7 @@ private:
     int indiciesSize;
 
 public:
-    SoftBodyGraphicsModel(float *vertices, int verticesSize, uint8_t indicies, int indiciesSize) :
+    DEPRECATED_SoftBodyGraphicsModel(float *vertices, int verticesSize, uint8_t indicies, int indiciesSize) :
             vertices(vertices) ,verticesSize(verticesSize), indicies(indicies), indiciesSize(indiciesSize){
     }
 
@@ -24,25 +24,25 @@ public:
       return vertices;
   }
   void setVertices(float *vertices) {
-      SoftBodyGraphicsModel::vertices = vertices;
+      DEPRECATED_SoftBodyGraphicsModel::vertices = vertices;
   }
   int getVerticesSize() const {
       return verticesSize;
   }
   void setVerticesSize(int verticesSize) {
-      SoftBodyGraphicsModel::verticesSize = verticesSize;
+      DEPRECATED_SoftBodyGraphicsModel::verticesSize = verticesSize;
   }
   uint8_t getIndicies() const {
       return indicies;
   }
   void setIndicies(uint8_t indicies) {
-      SoftBodyGraphicsModel::indicies = indicies;
+      DEPRECATED_SoftBodyGraphicsModel::indicies = indicies;
   }
   int getIndiciesSize() const {
       return indiciesSize;
   }
   void setIndiciesSize(int indiciesSize) {
-      SoftBodyGraphicsModel::indiciesSize = indiciesSize;
+      DEPRECATED_SoftBodyGraphicsModel::indiciesSize = indiciesSize;
   }
 };
 

@@ -4,7 +4,7 @@
 
 #include "ComplexObject.h"
 
-PGRsim::ComplexObject::ComplexObject(float mass, SoftBodyGraphicsModel *model)
+PGRsim::ComplexObject::ComplexObject(float mass, DEPRECATED_SoftBodyGraphicsModel *model)
     : SimObject(mass, Active), model(model) {}
 
 void PGRsim::ComplexObject::update(PGRsim::SimTime time) {

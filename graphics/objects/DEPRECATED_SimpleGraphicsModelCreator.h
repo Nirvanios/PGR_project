@@ -7,13 +7,13 @@
 
 
 #include <vector>
-#include "SimpleGraphicsModel.h"
-#include "SoftBodyGraphicsModel.h"
+#include "DEPRECATED_SimpleGraphicsModel.h"
+#include "DEPRECATED_SoftBodyGraphicsModel.h"
 
 class SimpleGraphicsModelCreator {
 
 public:
-        static SimpleGraphicsModel* CreateQuad(float width, float height, float depth, float tx, float ty, float tz){
+        static DEPRECATED_SimpleGraphicsModel* CreateQuad(float width, float height, float depth, float tx, float ty, float tz){
             float vertices[] = {(width/2), (height/2), (depth/2),
                                 (width/2), -(height/2), (depth/2),
                                 -(width/2), (height/2), (depth/2),
@@ -38,10 +38,10 @@ public:
                                 0,5,4
             };
             glm::vec3 position = glm::vec3(tx, ty, tz);
-            return new SimpleGraphicsModel(position, vertices, 24, indicies, 36);
+            return new DEPRECATED_SimpleGraphicsModel(position, vertices, 24, indicies, 36);
         }
 
-        static SimpleGraphicsModel* createLine(glm::vec3 start, glm::vec3 end){
+        static DEPRECATED_SimpleGraphicsModel* createLine(glm::vec3 start, glm::vec3 end){
             float vertices [] = {start.x, start.y, start.z,
                                 end.x, end.y, end.z
             };
@@ -50,12 +50,12 @@ public:
                                  1,1,0
             };
             auto position = glm::vec3(0.0f);
-            auto model = new SimpleGraphicsModel(position, vertices, 6, indicies, 6);
+            auto model = new DEPRECATED_SimpleGraphicsModel(position, vertices, 6, indicies, 6);
             model->setIsLine(true);
             return model;
         }
 
-        static SoftBodyGraphicsModel* createCloth(float width, float height, int widthVertices, int heightVertices){
+        static DEPRECATED_SoftBodyGraphicsModel* createCloth(float width, float height, int widthVertices, int heightVertices){
             float *vertices = new float[widthVertices*heightVertices*3];
             float yStep = width/(widthVertices-1);
             float xStep = height/(heightVertices-1);

@@ -7,7 +7,7 @@
 #include <iostream>
 #include <glm/vec3.hpp>
 #include <GL/glew.h>
-#include "SimpleGraphicsModel.h"
+#include "DEPRECATED_SimpleGraphicsModel.h"
 #include "GraphicsCore.h"
 #include "Shader.h"
 
@@ -75,7 +75,7 @@ void GraphicsCore::checkSDLError(int line = -1) {
     }
 }
 
-bool GraphicsCore::setupBufferObjects(std::vector<SimpleGraphicsModel *> *objects) {
+bool GraphicsCore::setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel *> *objects) {
 
     GLuint tempVBO;
 
@@ -146,7 +146,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<SimpleGraphicsModel *> *object
     return true;
 }
 
-void GraphicsCore::render(std::vector<SimpleGraphicsModel *> *objects) {
+void GraphicsCore::render(std::vector<DEPRECATED_SimpleGraphicsModel *> *objects) {
     // First, render a square without any colors ( all vertexes will be black )
     // ===================
     // Make our background grey

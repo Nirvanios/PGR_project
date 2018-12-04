@@ -7,7 +7,7 @@
 
 
 #include <camera/Camera.h>
-#include "SimpleGraphicsModel.h"
+#include "DEPRECATED_SimpleGraphicsModel.h"
 #include "Shader.h"
 
 class GraphicsCore {
@@ -51,8 +51,8 @@ private:
     void deleteBuffers( std::vector<GLuint> *);
 public:
     bool init();
-    bool setupBufferObjects(std::vector<SimpleGraphicsModel*>*);
-    void render(std::vector<SimpleGraphicsModel*>*);
+    bool setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel*>*);
+    void render(std::vector<DEPRECATED_SimpleGraphicsModel*>*);
     void handleResize();
     void handleCameraMove(SDL_Keycode);
     void handleMouseMove(float, float, GLboolean);

@@ -10,6 +10,9 @@
 #include <string>
 #include <OBJ_Loader.h>
 
+/**
+ * Base graphics model for rendering. Is build from OBJ file.
+ */
 class GraphicsModel {
  private:
  protected:
