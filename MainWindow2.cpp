@@ -82,8 +82,11 @@ int main(int argc, char *argv[]) {
   objects.emplace_back(model);
 
   objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("floor.obj"));
-  objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("monkey.obj"));
+  //objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("monkey.obj"));
 
+  model = PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("male_head.obj");
+  model->setPosition(glm::vec3(0, 0, -30));
+  objects.emplace_back(model);
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
 
