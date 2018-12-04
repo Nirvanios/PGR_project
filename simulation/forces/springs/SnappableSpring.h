@@ -33,6 +33,10 @@ class SnappableSpring : public Spring {
   void applyForce(SimObject &object) override;
 
   void applyForce() override;
+
+  bool isSnapped() {
+    return snapped;
+  }
 };
 }
 

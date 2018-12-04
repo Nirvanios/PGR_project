@@ -13,11 +13,13 @@ class SnappableSpringGroup {
  private:
   std::vector<SnappableSpring *> springs;
 
+ protected:
   void snapAll();
+
  public:
   void addSpring(SnappableSpring *spring);
 
-  bool checkSnaps();
+  virtual bool check();
 };
 }
 

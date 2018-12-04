@@ -14,7 +14,7 @@ void PGRsim::SnappableSpringGroup::addSpring(PGRsim::SnappableSpring *spring) {
   springs.emplace_back(spring);
 }
 
-bool PGRsim::SnappableSpringGroup::checkSnaps() {
+bool PGRsim::SnappableSpringGroup::check() {
   if (std::any_of(springs.begin(),
                   springs.end(),
                   [](auto spring) {

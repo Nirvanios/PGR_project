@@ -43,7 +43,7 @@ add_executable(Render_test MainWindow2.cpp
         graphics/core/GraphicsCore.cpp simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h
         simulation/objects/ComplexObject.cpp simulation/objects/ComplexObject.h
         graphics/objects/GraphicsModel.h simulation/objects/SimpleObject.h
-        third_party/tiny_obj_loader.h third_party/tiny_obj_loader.cc graphics/objects/ComplexGraphicsModel.cpp graphics/objects/ComplexGraphicsModel.h simulation/forces/springs/SnappableSpringGroup.cpp simulation/forces/springs/SnappableSpringGroup.h misc/Logger.h misc/StdoutLogger.cpp misc/StdoutLogger.h)
+        third_party/tiny_obj_loader.h third_party/tiny_obj_loader.cc graphics/objects/ComplexGraphicsModel.cpp graphics/objects/ComplexGraphicsModel.h simulation/forces/springs/SnappableSpringGroup.cpp simulation/forces/springs/SnappableSpringGroup.h misc/Logger.h misc/StdoutLogger.cpp misc/StdoutLogger.h simulation/forces/springs/LimitedSnappableSpringGroup.cpp simulation/forces/springs/LimitedSnappableSpringGroup.h)
 
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
