@@ -31,7 +31,7 @@ const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
 
 void main(){
-  gl_Position = projection * modelview * translate * vec4(inputPosition, 1.0);
+  gl_Position = projection * modelview * vec4(inputPosition, 1.0);
 
   vec3 ambient = 0.2 * specColor;
 

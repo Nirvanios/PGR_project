@@ -197,11 +197,13 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects) {
 // Our ModelViewProjection : multiplication of our 3 matrices
     glm::mat4 modelView = Model * camera.GetViewMatrix(); // Remember, matrix multiplication is the other way around
 
-    glUniformMatrix4fv(modelViewGLUniform, 1, GL_FALSE, glm::value_ptr(modelView));
+
     glUniform3fv(lightPosUniform, 1, glm::value_ptr(lightPos));
     glUniformMatrix4fv(projGLUniform, 1, GL_FALSE, glm::value_ptr(Projection));
-    auto normalMV = glm::transpose(glm::inverse(modelView));
-    glUniformMatrix4fv(normalMatGLUniform, 1, GL_FALSE, glm::value_ptr(normalMV));
+
+  glm::mat4 normalMV;
+
+
 
 
 
@@ -216,6 +218,16 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects) {
     // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
     int i = 0;
     for (auto item : objects) {
+      if (dynamic_cast<SimpleGraphicsModel *>(item) != nullptr) {
+        modelView = reinterpret_cast<SimpleGraphicsModel *>(item)->getTranslationMatrix() * camera.GetViewMatrix();
+      } else {
+        modelView = Model * camera.GetViewMatrix();
+      }
+      normalMV = glm::transpose(glm::inverse(modelView));
+      glUniformMatrix4fv(normalMatGLUniform, 1, GL_FALSE, glm::value_ptr(normalMV));
+
+      glUniformMatrix4fv(modelViewGLUniform, 1, GL_FALSE, glm::value_ptr(modelView));
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
         glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size()* 3 * sizeof(float)), item->getVertices().data());
         glEnableVertexAttribArray(positionAttributeIndex);
@@ -226,14 +238,7 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects) {
         glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
-        // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCDFAInspection"
-        if (dynamic_cast<SimpleGraphicsModel*>(item) != nullptr) {
-            glUniformMatrix4fv(translateGLUniform, 1, GL_FALSE, glm::value_ptr(dynamic_cast<SimpleGraphicsModel*>(item)->getTranslationMatrix()));
-        }
-#pragma clang diagnostic pop
         glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, NULL);
         i++;
     }

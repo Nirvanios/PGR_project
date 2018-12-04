@@ -1,12 +1,3 @@
-// Headerphile.com OpenGL Tutorial part 2
-// A simple example involving VBOs and a VAO to draw a simple square
-// Source code is an adaption / simplicication of : https://www.opengl.org/wiki/Tutorial2:_VAOs,_VBOs,_Vertex_and_Fragment_Shaders_(C_/_SDL)
-
-// Compile :
-// 	clang++ main.cpp -lGL -lGLEW -lSDL2 -std=c++11 -o Test
-// or
-// 	g++ main.cpp -lGL -lGLEW -lSDL2 -std=c++11 -o Test
-//
 #include <iostream>
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -26,45 +17,44 @@
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
 
-PGRsim::Simulation *simulation;
+PGRsim::Simulation simulation;
 
 
 
 
 void prepareSimulation() {
-  simulation = new PGRsim::Simulation();
 
 
   auto passive1 = new PGRsim::SimpleObject(1000.0f,
                                            PGRsim::Passive,
                                            PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("donut.obj"));
-  simulation->addObject(passive1);
+  simulation.addObject(passive1);
 
   auto model = PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("test.obj");
-  model->setPosition(glm::vec3(0, -2.0f, 0));
+  model->setPosition(glm::vec3(0, -8.0f, 0));
   auto active1_onPassive1 = new PGRsim::SimpleObject(1.0f,
                                                  PGRsim::Active,
                                                      model);
-  simulation->addObject(active1_onPassive1);
+  simulation.addObject(active1_onPassive1);
 
 
   float stiffness = 8.0f;
   float damping = 0.1f;
-  simulation->addSpring(stiffness, damping, passive1,
-                        active1_onPassive1);
+  simulation.addSpring(stiffness, damping, passive1,
+                       active1_onPassive1);
 
-  simulation->addGlobalForce(gravity);
+  simulation.addGlobalForce(gravity);
 
   air->setDragCoefficient(0.5f);
-  simulation->addGlobalForce(air);
+  simulation.addGlobalForce(air);
 
-  simulation->setConstraintIterations(0);
+  simulation.setConstraintIterations(0);
 }
 
 void updateSimulation() {
   static PGRsim::SimTime simTime = 0.0f;
   simTime += 1 / 60.0f;
-  simulation->update(simTime);
+  simulation.update(simTime);
 }
 
 int main(int argc, char *argv[]) {
@@ -81,7 +71,7 @@ int main(int argc, char *argv[]) {
 
   prepareSimulation();
 
-  auto simObjects = simulation->getObjects();
+  auto simObjects = simulation.getObjects();
   objects.reserve(simObjects.size());
   for (auto object : simObjects) {
     objects.emplace_back(dynamic_cast<PGRsim::SimpleObject *>(object)->getObjectModel());
