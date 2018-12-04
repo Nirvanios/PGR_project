@@ -76,58 +76,6 @@ int main(int argc, char *argv[]) {
 
   std::cout << "Seting up VBO + VAO..." << std::endl;
 
-  /*
-  objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("small_ball.obj"));
-
-  if (!graphicsCore.setupBufferObjects(objects))
-    return -1;
-
-
-  bool is_running = true;
-  bool is_simRunning = false;
-  bool enableCameraMovement = false;
-  bool gravityEnabled = true;
-  SDL_Event event;
-
-  while (is_running) {
-    while (SDL_PollEvent(&event)) {
-      switch (event.type) {
-        case SDL_QUIT:
-          is_running = false;
-              break;
-        case SDL_WINDOWEVENT:
-          if (event.window.type == SDL_WINDOWEVENT_RESIZED)
-            graphicsCore.handleResize();
-              break;
-        case SDL_KEYDOWN:
-          switch (event.key.keysym.sym) {
-            case SDLK_w:
-            case SDLK_s:
-            case SDLK_a:
-            case SDLK_d:
-              graphicsCore.handleCameraMove(event.key.keysym.sym);
-                  break;
-          }
-        case SDL_MOUSEBUTTONDOWN:
-          if (event.button.button == SDL_BUTTON_LEFT) {
-            enableCameraMovement = true;
-          }
-              break;
-        case SDL_MOUSEBUTTONUP:
-          if (event.button.button == SDL_BUTTON_LEFT) {
-            enableCameraMovement = false;
-          }
-        case SDL_MOUSEMOTION:
-          if (enableCameraMovement) {
-            graphicsCore.handleMouseMove(event.motion.xrel, event.motion.yrel, false);
-          }
-              break;
-      }
-    }
-    graphicsCore.render(objects);
-    SDL_Delay(1000/60);
-  }*/
-
   std::vector<GraphicsModel*> objects;
 
 
@@ -143,7 +91,8 @@ int main(int argc, char *argv[]) {
   model->setPosition(graphicsCore.getLightPos());
   objects.emplace_back(model);
 
-  objects.emplace_back(model);SimpleGraphicsModel::LoadFromOBJ("floor.obj");
+  objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("floor.obj"));
+  objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("monkey.obj"));
 
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
@@ -193,15 +142,19 @@ int main(int argc, char *argv[]) {
                 gravityEnabled = true;
               }
               break;
-            case SDLK_o:air->setDragCoefficient(air->getDragCoefficient() - 0.05f);
-              break;
-            case SDLK_p:if (air->getDragCoefficient() > 0.2f) {
-              air->setDragCoefficient(air->getDragCoefficient() + 0.05f);
+            case SDLK_o:if (air->getDragCoefficient() > 0.2f) {
+                air->setDragCoefficient(air->getDragCoefficient() - 0.05f);
               }
+              break;
+            case SDLK_p:
+              air->setDragCoefficient(air->getDragCoefficient() + 0.05f);
               break;
             case SDLK_SPACE: is_simRunning = !is_simRunning;
               break;
           }
+          break;
+        case SDL_MOUSEWHEEL:
+          graphicsCore.handleMouseWheel(event.wheel.y);
           break;
         case SDL_MOUSEBUTTONDOWN:
           if (event.button.button == SDL_BUTTON_LEFT) {

@@ -71,6 +71,7 @@ class GraphicsCore {
   void handleResize();
   void handleCameraMove(SDL_Keycode);
   void handleMouseMove(float, float, GLboolean);
+  void handleMouseWheel(float yOffset);
   void mainLoop();
   void cleanup();
 

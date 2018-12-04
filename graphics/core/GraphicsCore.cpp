@@ -42,7 +42,7 @@ bool GraphicsCore::init() {
     glewExperimental = GL_TRUE;
     glewInit();
 
-    camera.Position = glm::vec3(0, 0, 5);
+    camera.Position = glm::vec3(10, 0, 10);
 
     // Clear our buffer with a grey background
     glClearColor(0.5, 0.5, 0.5, 1.0);
@@ -322,4 +322,7 @@ const glm::vec3 &GraphicsCore::getLightPos() const {
 }
 void GraphicsCore::setLightPos(const glm::vec3 &lightPos) {
     GraphicsCore::lightPos = lightPos;
+}
+void GraphicsCore::handleMouseWheel(float yOffset) {
+    camera.ProcessMouseScroll(yOffset);
 }
