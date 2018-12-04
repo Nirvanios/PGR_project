@@ -136,6 +136,14 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>& objects) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, floorIndicies.size() * sizeof(float), floorIndicies.data(), GL_STATIC_DRAW);
     ebo.push_back(tempEBO);
 
+    GLuint tempNBO;
+    for (auto item : objects) {
+        glGenBuffers(1, &tempNBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempNBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, item->getNormals().size() * sizeof(float), item->getNormals().data(), GL_STATIC_DRAW);
+        nbo.push_back(tempNBO);
+    }
+
     // Set up shader ( will be covered in the next part )
     // ===================
     if (!shader.Init())
@@ -169,7 +177,7 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
 
 // Model matrix : an identity matrix (model will be at the origin)
     glm::mat4 Model = glm::mat4(1.0f);
-    glUniform1i(shader.getUniformLocation("translate"), 4);
+    glUniform1i(shader.getUniformLocation("mode"), 4);
 
 // Our ModelViewProjection : multiplication of our 3 matrices
     glm::mat4 modelView = Model * camera.GetViewMatrix(); // Remember, matrix multiplication is the other way around
@@ -194,6 +202,9 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
         glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size()* 3 * sizeof(float)), item->getVertices().data());
         glEnableVertexAttribArray(positionAttributeIndex);
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, nbo[i]);
+        glEnableVertexAttribArray(normalAttributeIndex);
+        glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
         // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex

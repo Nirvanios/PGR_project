@@ -33,6 +33,7 @@ private:
     std::vector<GLuint> vbo;
     std::vector<GLuint> vboC;
     std::vector<GLuint> ebo;
+    std::vector<GLuint> nbo;
 
     const std::vector<float> sceneFloor={
             -100, -10, 100,
