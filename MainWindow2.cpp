@@ -127,11 +127,15 @@ int main(int argc, char *argv[]) {
   if (!graphicsCore.init())
     return -1;
 
+
   std::cout << "Seting up VBO + VAO..." << std::endl;
 
   std::vector<GraphicsModel*> objects;
 
   objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("small_ball.obj"));
+
+  if (!graphicsCore.setupBufferObjects(objects))
+    return -1;
 
 
   bool is_running = true;
@@ -141,11 +145,41 @@ int main(int argc, char *argv[]) {
   SDL_Event event;
 
   while (is_running) {
-    switch (event.type) {
-      case SDL_QUIT:is_running = false;
-        break;
+    while (SDL_PollEvent(&event)) {
+      switch (event.type) {
+        case SDL_QUIT:
+          is_running = false;
+              break;
+        case SDL_WINDOWEVENT:
+          if (event.window.type == SDL_WINDOWEVENT_RESIZED)
+            graphicsCore.handleResize();
+              break;
+        case SDL_KEYDOWN:
+          switch (event.key.keysym.sym) {
+            case SDLK_w:
+            case SDLK_s:
+            case SDLK_a:
+            case SDLK_d:
+              graphicsCore.handleCameraMove(event.key.keysym.sym);
+                  break;
+          }
+        case SDL_MOUSEBUTTONDOWN:
+          if (event.button.button == SDL_BUTTON_LEFT) {
+            enableCameraMovement = true;
+          }
+              break;
+        case SDL_MOUSEBUTTONUP:
+          if (event.button.button == SDL_BUTTON_LEFT) {
+            enableCameraMovement = false;
+          }
+        case SDL_MOUSEMOTION:
+          if (enableCameraMovement) {
+            graphicsCore.handleMouseMove(event.motion.xrel, event.motion.yrel, false);
+          }
+              break;
+      }
     }
-    //graphicsCore.render(objects);
+    graphicsCore.render(objects);
     SDL_Delay(1000/60);
   }
 

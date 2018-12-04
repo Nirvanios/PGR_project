@@ -7,6 +7,7 @@
 
 
 #include <camera/Camera.h>
+#include <objects/GraphicsModel.h>
 #include "DEPRECATED_SimpleGraphicsModel.h"
 #include "Shader.h"
 
@@ -48,11 +49,11 @@ private:
 
     void checkSDLError(int);
     bool setOpenGLAttributes();
-    void deleteBuffers( std::vector<GLuint> *);
+    void deleteBuffers( std::vector<GLuint>*);
 public:
     bool init();
-    bool setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel*>*);
-    void render(std::vector<DEPRECATED_SimpleGraphicsModel*>*);
+    bool setupBufferObjects(std::vector<GraphicsModel*>);
+    void render(std::vector<GraphicsModel*>);
     void handleResize();
     void handleCameraMove(SDL_Keycode);
     void handleMouseMove(float, float, GLboolean);

@@ -2,6 +2,7 @@
 // Created by kuro on 2.12.18.
 //
 
+
 #include <SDL.h>
 #include <string>
 #include <iostream>
@@ -75,7 +76,7 @@ void GraphicsCore::checkSDLError(int line = -1) {
     }
 }
 
-bool GraphicsCore::setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel *> *objects) {
+bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>objects) {
 
     GLuint tempVBO;
 
@@ -88,7 +89,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel
     // Positions
     // ===================
     // Bind our first VBO as being the active buffer and storing vertex attributes (coordinates)
-    for (auto item : *objects) {
+    for (auto item : objects) {
         glGenBuffers(1, &tempVBO);
 
         glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
@@ -96,7 +97,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel
 
 
         // Copy the vertex data from diamond to our buffer
-        glBufferData(GL_ARRAY_BUFFER, (item->getVerticesSize() * sizeof(float)), item->getVertices(),
+        glBufferData(GL_ARRAY_BUFFER, (item->getVertices().size() * sizeof(float)), item->getVertices().data(),
                      GL_DYNAMIC_DRAW);
 
     }
@@ -105,7 +106,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel
     glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
     vbo->push_back(tempVBO);
     // Copy the vertex data from diamond to our buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(sceneFloor.data()), sceneFloor.data(),
+    glBufferData(GL_ARRAY_BUFFER, sceneFloor.size() * sizeof(unsigned int), sceneFloor.data(),
                  GL_STATIC_DRAW);
 
     // Colors
@@ -115,23 +116,23 @@ bool GraphicsCore::setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel
     vboC->push_back(tempVBO);
 
     // Copy the vertex data from diamond to our buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(floorColor.data()), floorColor.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, floorColor.size() * sizeof(float), floorColor.data(), GL_STATIC_DRAW);
 
     // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
     //glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
     GLuint tempEBO;
-    for (auto item : *objects) {
+    for (auto item : objects) {
         glGenBuffers(1, &tempEBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, item->getIndiciesSize(), item->getIndices(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, item->getVertexIndices().size() * sizeof(int), item->getVertexIndices().data(), GL_STATIC_DRAW);
         ebo->push_back(tempEBO);
     }
 
     glGenBuffers(1, &tempEBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
-    glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(floorIndicies.data()), floorIndicies.data(), GL_STATIC_DRAW);
+    //glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, floorIndicies.size() * sizeof(float), floorIndicies.data(), GL_STATIC_DRAW);
     ebo->push_back(tempEBO);
 
     // Set up shader ( will be covered in the next part )
@@ -141,12 +142,12 @@ bool GraphicsCore::setupBufferObjects(std::vector<DEPRECATED_SimpleGraphicsModel
 
     shader.UseProgram();
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     return true;
 }
 
-void GraphicsCore::render(std::vector<DEPRECATED_SimpleGraphicsModel *> *objects) {
+void GraphicsCore::render(std::vector<GraphicsModel*> objects) {
     // First, render a square without any colors ( all vertexes will be black )
     // ===================
     // Make our background grey
@@ -175,29 +176,29 @@ void GraphicsCore::render(std::vector<DEPRECATED_SimpleGraphicsModel *> *objects
 
     // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
     int i = 0;
-    for (auto item : *objects) {
-        if (item->isLine()) {
+    for (auto item : objects) {
+        /*if (item->isLine()) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         }
-        glm::mat4 transform = glm::translate(Model, item->getPosition());
+        glm::mat4 transform = glm::translate(Model, item->getPosition());*/
 
-        glBindBuffer(GL_ARRAY_BUFFER, vbo->at(i));
-        glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVerticesSize() * sizeof(float)), item->getVertices());
+        glBindBuffer(GL_ARRAY_BUFFER, *vbo[i].data());
+        glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size()* 3 * sizeof(float)), item->getVertices().data());
         glEnableVertexAttribArray(positionAttributeIndex);
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo->at(i));
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ebo[i].data());
         // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
         GLuint transformID = shader.getUniformLocation("translate");
-        glUniformMatrix4fv(transformID, 1, GL_FALSE, &transform[0][0]);
-        glDrawElements(GL_TRIANGLES, item->getIndiciesSize(), GL_UNSIGNED_BYTE, NULL);
+        //glUniformMatrix4fv(transformID, 1, GL_FALSE, &transform[0][0]);
+        glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, NULL);
         //glDisableVertexAttribArray(positionAttributeIndex);
         i++;
-
+/*
         if (item->isLine()) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        }
+        }*/
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo->back());
@@ -209,7 +210,7 @@ void GraphicsCore::render(std::vector<DEPRECATED_SimpleGraphicsModel *> *objects
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo->back());
     GLuint transformID = shader.getUniformLocation("translate");
     glUniformMatrix4fv(transformID, 1, GL_FALSE, &Model[0][0]);
-    glDrawElements(GL_TRIANGLES, sizeof(floorIndicies), GL_UNSIGNED_BYTE, NULL);
+    glDrawElements(GL_TRIANGLES, sizeof(floorIndicies.data()), GL_UNSIGNED_BYTE, NULL);
 
 
     // Swap our buffers to make our changes visible
