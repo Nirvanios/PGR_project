@@ -9,9 +9,6 @@
 //
 #include <iostream>
 
-//#include "shader.h"
-#include "DEPRECATED_SimpleGraphicsModelCreator.h"
-
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -35,7 +32,7 @@ PGRsim::Simulation *simulation;
 
 
 void prepareSimulation() {
-  simulation = new PGRsim::Simulation();
+  /*simulation = new PGRsim::Simulation();
 
 
   auto passive1 = new PGRsim::SimpleObject(1000.0f,
@@ -112,7 +109,7 @@ void prepareSimulation() {
   air->setDragCoefficient(0.5f);
   simulation->addGlobalForce(air);
 
-  simulation->setConstraintIterations(0);
+  simulation->setConstraintIterations(0);*/
 }
 
 void updateSimulation() {

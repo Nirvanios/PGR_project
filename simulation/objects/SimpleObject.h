@@ -6,9 +6,9 @@
 #define PGR_PROJECT_SIMULATEDMODEL_H
 
 #include <collisions/CollisionObject.h>
-#include "DEPRECATED_SimpleGraphicsModel.h"
 #include "SimpleObject.h"
 #include <SimObject.h>
+#include <SimpleGraphicsModel.h>
 
 namespace PGRsim {
 
@@ -19,15 +19,15 @@ namespace PGRsim {
  */
  class SimpleObject : public SimObject, Collision::CollisionObject {
   protected:
-  DEPRECATED_SimpleGraphicsModel *model;
+  SimpleGraphicsModel *model;
  public:
-  SimpleObject(float mass, SimObjectType objectType, DEPRECATED_SimpleGraphicsModel *model);
+  SimpleObject(float mass, SimObjectType objectType, SimpleGraphicsModel *model);
 
-  void setObjectModel(DEPRECATED_SimpleGraphicsModel *model) {
+  void setObjectModel(SimpleGraphicsModel *model) {
     this->model = model;
   }
 
-  DEPRECATED_SimpleGraphicsModel *getObjectModel() {
+  SimpleGraphicsModel *getObjectModel() {
     return model;
   }
 

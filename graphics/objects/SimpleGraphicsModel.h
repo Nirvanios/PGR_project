@@ -48,6 +48,13 @@ class SimpleGraphicsModel : public GraphicsModel {
     return model;
   }
 
+  const glm::vec3 &getPosition() const {
+    return position;
+  }
+  void setPosition(const glm::vec3 &position) {
+    SimpleGraphicsModel::position = position;
+  }
+
   glm::mat4 getTranslationMatrix() {
     return glm::translate(model, position);
   }

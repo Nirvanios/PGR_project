@@ -8,7 +8,7 @@
 #include <iostream>
 #include <glm/vec3.hpp>
 #include <GL/glew.h>
-#include "DEPRECATED_SimpleGraphicsModel.h"
+#include "SimpleGraphicsModel.h"
 #include "GraphicsCore.h"
 #include "Shader.h"
 

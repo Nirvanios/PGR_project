@@ -6,17 +6,18 @@
 #define PGR_PROJECT_COMPLEXOBJECT_H
 #include <SimObject.h>
 #include <collisions/CollisionObject.h>
-#include <objects/DEPRECATED_SoftBodyGraphicsModel.h>
+#include <ComplexObject.h>
 #include "Vertex.h"
 #include "Constraint.h"
 #include <vector>
 #include <Spring.h>
+#include <ComplexGraphicsModel.h>
 
 namespace PGRsim {
 
 class ComplexObject : public SimObject, Collision::CollisionObject {
  protected:
-  DEPRECATED_SoftBodyGraphicsModel* model;
+  ComplexGraphicsModel* model;
   std::vector<Vertex*> simVertices;
 
   std::vector<Constraint*> constraints;
@@ -28,9 +29,9 @@ class ComplexObject : public SimObject, Collision::CollisionObject {
 
   void initSprings();
  public:
-  ComplexObject(float mass, DEPRECATED_SoftBodyGraphicsModel *model);
+  ComplexObject(float mass, ComplexGraphicsModel *model);
 
-  DEPRECATED_SoftBodyGraphicsModel *getObjectModel() {
+  ComplexGraphicsModel *getObjectModel() {
     return model;
   }
 

@@ -8,7 +8,6 @@
 
 #include <camera/Camera.h>
 #include <objects/GraphicsModel.h>
-#include "DEPRECATED_SimpleGraphicsModel.h"
 #include "Shader.h"
 
 class GraphicsCore {

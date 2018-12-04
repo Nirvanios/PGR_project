@@ -4,7 +4,7 @@
 
 #include "ComplexObject.h"
 
-PGRsim::ComplexObject::ComplexObject(float mass, DEPRECATED_SoftBodyGraphicsModel *model)
+PGRsim::ComplexObject::ComplexObject(float mass, ComplexGraphicsModel *model)
     : SimObject(mass, Active), model(model) {}
 
 void PGRsim::ComplexObject::update(PGRsim::SimTime time) {
@@ -12,23 +12,23 @@ void PGRsim::ComplexObject::update(PGRsim::SimTime time) {
 }
 
 void PGRsim::ComplexObject::calcBoundingBox() {
-  boundingBox.pointA = glm::vec3(model->getVertices()[0], model->getVertices()[1], model->getVertices()[2]);
+  boundingBox.pointA = model->getVertices()[0];
   glm::vec3 max = boundingBox.pointA;
-  for (int i = 0; i < model->getVerticesSize(); i += 3) {
-    if (boundingBox.pointA.x > model->getVertices()[i]) {
-      boundingBox.pointA.x = model->getVertices()[i];
-    } else if (boundingBox.pointB.x < model->getVertices()[i]) {
-      boundingBox.pointB.x = model->getVertices()[i];
+  for (int i = 0; i < model->getVertices().size(); i ++) {
+    if (boundingBox.pointA.x > model->getVertices()[i].x) {
+      boundingBox.pointA.x = model->getVertices()[i].x;
+    } else if (boundingBox.pointB.x < model->getVertices()[i].x) {
+      boundingBox.pointB.x = model->getVertices()[i].x;
     }
-    if (boundingBox.pointA.y > model->getVertices()[i + 1]) {
-      boundingBox.pointA.y = model->getVertices()[i + 1];
-    } else if (boundingBox.pointB.y < model->getVertices()[i + 1]) {
-      boundingBox.pointB.y = model->getVertices()[i + 1];
+    if (boundingBox.pointA.y > model->getVertices()[i + 1].y) {
+      boundingBox.pointA.y = model->getVertices()[i + 1].y;
+    } else if (boundingBox.pointB.y < model->getVertices()[i + 1].y) {
+      boundingBox.pointB.y = model->getVertices()[i + 1].y;
     }
-    if (boundingBox.pointA.z > model->getVertices()[i + 2]) {
-      boundingBox.pointA.z = model->getVertices()[i + 2];
-    } else if (boundingBox.pointB.z < model->getVertices()[i + 2]) {
-      boundingBox.pointB.z = model->getVertices()[i + 2];
+    if (boundingBox.pointA.z > model->getVertices()[i + 2].z) {
+      boundingBox.pointA.z = model->getVertices()[i + 2].z;
+    } else if (boundingBox.pointB.z < model->getVertices()[i + 2].z) {
+      boundingBox.pointB.z = model->getVertices()[i + 2].z;
     }
   }
 }

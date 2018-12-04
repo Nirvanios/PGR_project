@@ -3,7 +3,7 @@
 //
 
 #include "GoalSoftBodySimulation.h"
-PGRsim::GoalSoftBodySimulation::GoalSoftBodySimulation(DEPRECATED_SimpleGraphicsModel *model, DEPRECATED_SimpleGraphicsModel *goal)
+PGRsim::GoalSoftBodySimulation::GoalSoftBodySimulation(ComplexGraphicsModel *model, SimpleGraphicsModel *goal)
     : model(model), goal(goal) {
   createVertices();
 

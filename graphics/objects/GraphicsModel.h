@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <tiny_obj_loader.h>
+#include <iostream>
 
 /**
  * Base graphics model for rendering. Is build from OBJ file.

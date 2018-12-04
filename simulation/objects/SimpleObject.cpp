@@ -7,30 +7,30 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/vec4.hpp>
 
-PGRsim::SimpleObject::SimpleObject(float mass, PGRsim::SimObjectType objectType, DEPRECATED_SimpleGraphicsModel* model) : SimObject(mass,
+PGRsim::SimpleObject::SimpleObject(float mass, PGRsim::SimObjectType objectType, SimpleGraphicsModel* model) : SimObject(mass,
                                                                                                                 objectType),
                                                                                                 model(model) {
   currentPosition = model->getPosition();
 
   previousPosition = currentPosition;
 
-  boundingBox.pointA = glm::vec3(model->getVertices()[0], model->getVertices()[1], model->getVertices()[2]);
+  boundingBox.pointA = model->getVertices()[0];
   glm::vec3 max = boundingBox.pointA;
-  for (int i = 0; i < model->getVerticesSize(); i += 3) {
-    if (boundingBox.pointA.x > model->getVertices()[i]) {
-      boundingBox.pointA.x = model->getVertices()[i];
-    } else if (boundingBox.pointB.x < model->getVertices()[i]) {
-      boundingBox.pointB.x = model->getVertices()[i];
+  for (int i = 0; i < model->getVertices().size(); i ++) {
+    if (boundingBox.pointA.x > model->getVertices()[i].x) {
+      boundingBox.pointA.x = model->getVertices()[i].x;
+    } else if (boundingBox.pointB.x < model->getVertices()[i].x) {
+      boundingBox.pointB.x = model->getVertices()[i].x;
     }
-    if (boundingBox.pointA.y > model->getVertices()[i + 1]) {
-      boundingBox.pointA.y = model->getVertices()[i + 1];
-    } else if (boundingBox.pointB.y < model->getVertices()[i + 1]) {
-      boundingBox.pointB.y = model->getVertices()[i + 1];
+    if (boundingBox.pointA.y > model->getVertices()[i + 1].y) {
+      boundingBox.pointA.y = model->getVertices()[i + 1].y;
+    } else if (boundingBox.pointB.y < model->getVertices()[i + 1].y) {
+      boundingBox.pointB.y = model->getVertices()[i + 1].y;
     }
-    if (boundingBox.pointA.z > model->getVertices()[i + 2]) {
-      boundingBox.pointA.z = model->getVertices()[i + 2];
-    } else if (boundingBox.pointB.z < model->getVertices()[i + 2]) {
-      boundingBox.pointB.z = model->getVertices()[i + 2];
+    if (boundingBox.pointA.z > model->getVertices()[i + 2].z) {
+      boundingBox.pointA.z = model->getVertices()[i + 2].z;
+    } else if (boundingBox.pointB.z < model->getVertices()[i + 2].z) {
+      boundingBox.pointB.z = model->getVertices()[i + 2].z;
     }
   }
 }
@@ -41,7 +41,7 @@ void PGRsim::SimpleObject::update(PGRsim::SimTime time) {
 
 void PGRsim::SimpleObject::calcBoundingBox() {}
 PGRsim::Collision::BoundingBox PGRsim::SimpleObject::getBoundingBox() {
-  Collision::BoundingBox box;
+  Collision::BoundingBox box{};
   static auto model = glm::mat4(1.0f);
   auto translation = glm::translate(model, getCurrectPosition());
   box.pointA = translation * glm::vec4(boundingBox.pointA, 1.0);
