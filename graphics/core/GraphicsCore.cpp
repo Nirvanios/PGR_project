@@ -9,6 +9,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
+#include <StdoutLogger.h>
 #include "SimpleGraphicsModel.h"
 #include "GraphicsCore.h"
 
@@ -18,6 +19,8 @@ bool PGRgraphics::GraphicsCore::init() {
     std::cout << "Failed to init SDL\n";
     return false;
   }
+
+  StdoutLogger::getInstance().logTime("SDL: set attributes");
 
   SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
   SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
@@ -30,15 +33,17 @@ bool PGRgraphics::GraphicsCore::init() {
   SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
   SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
 
+  std::string logMsg = std::string("SDL: window size: " + std::to_string(width) + "x" + std::to_string(height));
+  StdoutLogger::getInstance().logTime(logMsg);
   mainWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                 width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
-  // Check that everything worked out okay
   if (!mainWindow) {
     std::cout << "Unable to create window\n" << std::endl;
     checkSDLError(__LINE__);
     return false;
   }
+  StdoutLogger::getInstance().logTime("SDL: window created");
 
   setOpenGLAttributes();
 
@@ -47,10 +52,11 @@ bool PGRgraphics::GraphicsCore::init() {
 
   SDL_GL_SetSwapInterval(1);
 
-  // Init GLEW
+  StdoutLogger::getInstance().logTime("Init glew");
   glewExperimental = GL_TRUE;
   glewInit();
 
+  StdoutLogger::getInstance().logTime("Set camera to 0, 0, 10");
   camera.Position = glm::vec3(0, 0, 10);
   camera.MovementSpeed = 1.0f;
 
@@ -147,7 +153,6 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
   modelViewGLUniform = shader.getUniformLocation("modelview");
   projGLUniform = shader.getUniformLocation("projection");
   normalMatGLUniform = shader.getUniformLocation("normalMat");
-  translateGLUniform = shader.getUniformLocation("translate");
   lightPosUniform = shader.getUniformLocation("lightPos");
 
   return true;

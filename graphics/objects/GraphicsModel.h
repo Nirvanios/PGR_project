@@ -56,12 +56,6 @@ class GraphicsModel {
     for (int i = 0; i < attribs.vertices.size(); i += 3) {
       model->vertices.emplace_back(floatsToVec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
     }
-
-    /*for (int i = 0; i < attribs.normals.size(); i += 3) {
-      model->normals.emplace_back(floatsToVec3(attribs.normals[i], attribs.normals[i + 1], attribs.normals[i + 2]));
-    }*/
-
-
     return model;
   }
 

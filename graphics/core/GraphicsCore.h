@@ -15,7 +15,7 @@ class GraphicsCore {
  private:
 
   // GL identifiers
-  GLuint normalMatGLUniform, translateGLUniform;
+  GLuint normalMatGLUniform;
   GLint projGLUniform;
   GLint modelViewGLUniform;
   GLint lightPosUniform;

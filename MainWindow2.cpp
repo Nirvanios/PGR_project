@@ -13,6 +13,7 @@
 #include <SimpleObject.h>
 #include <objects/GraphicsModel.h>
 #include <objects/SimpleGraphicsModel.h>
+#include <StdoutLogger.h>
 
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
@@ -60,17 +61,17 @@ void updateSimulation() {
 int main(int argc, char *argv[]) {
   PGRgraphics::GraphicsCore graphicsCore;
 
+  StdoutLogger::getInstance().logTime("Init graphics core");
   if (!graphicsCore.init())
     return -1;
 
 
-  std::cout << "Seting up VBO + VAO..." << std::endl;
-
   std::vector<PGRgraphics::GraphicsModel *> objects;
 
-
+  StdoutLogger::getInstance().logTime("Prepare simulation");
   prepareSimulation();
 
+  StdoutLogger::getInstance().logTime("Add objects");
   auto simObjects = simulation.getObjects();
   objects.reserve(simObjects.size());
   for (auto object : simObjects) {
@@ -82,7 +83,6 @@ int main(int argc, char *argv[]) {
   objects.emplace_back(model);
 
   objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("floor.obj"));
-  //objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("monkey.obj"));
 
   model = PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("male_head.obj");
   model->setPosition(glm::vec3(0, 0, -30));
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
 
-  std::cout << "Rendering..." << std::endl;
+  StdoutLogger::getInstance().logTime("Start main loop");
 
   bool is_running = true;
   bool is_simRunning = false;
