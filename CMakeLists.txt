@@ -46,7 +46,7 @@ add_executable(PGR_project test.cpp simulation/base/SimObject.h simulation/objec
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
         simulation/objects/Vertex.cpp simulation/objects/Vertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/objects/DEPRECATED_SimpleGraphicsModel.cpp graphics/objects/DEPRECATED_SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/objects/DEPRECATED_SimpleGraphicsModelCreator.cpp graphics/objects/DEPRECATED_SimpleGraphicsModelCreator.h graphics/camera/Camera.cpp graphics/camera/Camera.h graphics/ShadowCalc.cpp graphics/ShadowCalc.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h simulation/objects/ComplexObject.cpp simulation/objects/ComplexObject.h graphics/objects/GraphicsModel.h graphics/objects/SimpleGraphicsModel.cpp graphics/objects/SimpleGraphicsModel.h graphics/objects/OBJ_loader.cpp)
+        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/objects/DEPRECATED_SimpleGraphicsModel.cpp graphics/objects/DEPRECATED_SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp simulation/simulations/GoalSoftBodySimulation.h graphics/objects/DEPRECATED_SimpleGraphicsModelCreator.cpp graphics/objects/DEPRECATED_SimpleGraphicsModelCreator.h graphics/camera/Camera.cpp graphics/camera/Camera.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h simulation/objects/ComplexObject.cpp simulation/objects/ComplexObject.h graphics/objects/GraphicsModel.h graphics/objects/SimpleGraphicsModel.cpp graphics/objects/SimpleGraphicsModel.h graphics/objects/OBJ_loader.cpp)
 
 target_link_libraries(PGR_project ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
 
@@ -66,8 +66,8 @@ add_executable(Render_test MainWindow2.cpp shader.h
         simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h graphics/objects/DEPRECATED_SimpleGraphicsModel.cpp
         graphics/objects/DEPRECATED_SimpleGraphicsModel.h simulation/simulations/GoalSoftBodySimulation.cpp
         simulation/simulations/GoalSoftBodySimulation.h graphics/camera/Camera.cpp graphics/camera/Camera.h
-        graphics/ShadowCalc.cpp graphics/ShadowCalc.h simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h
-        graphics/GraphicsCore.cpp simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h
+        simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h
+        graphics/core/GraphicsCore.cpp simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h
         simulation/objects/ComplexObject.cpp simulation/objects/ComplexObject.h graphics/objects/OBJ_Loader.h
         graphics/objects/GraphicsModel.h simulation/objects/SimpleObject.h graphics/objects/OBJ_loader.cpp)
 

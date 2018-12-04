@@ -20,7 +20,7 @@
 #include <DragForce.h>
 #include "graphics/camera/Camera.h"
 #include <SnapableSpring.h>
-#include <GraphicsCore.h>
+#include <core/GraphicsCore.h>
 #include <SimObject.h>
 #include <SimpleObject.h>
 #include <objects/GraphicsModel.h>
