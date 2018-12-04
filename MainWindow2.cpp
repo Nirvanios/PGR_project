@@ -37,7 +37,7 @@ void prepareSimulation() {
 
   auto passive1 = new PGRsim::SimpleObject(1000.0f,
                                        PGRsim::Passive,
-                               SimpleGraphicsModel::LoadFromOBJ("test.obj"));
+                               SimpleGraphicsModel::LoadFromOBJ("donut.obj"));
   simulation->addObject(passive1);
 
   auto model = SimpleGraphicsModel::LoadFromOBJ("test.obj");
