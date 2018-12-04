@@ -124,7 +124,7 @@ void updateSimulation() {
 int main(int argc, char *argv[]) {
 
   // ukazka nacteni OBJ souboru:
-  /*// Initialize Loader
+  // Initialize Loader
   objl::Loader Loader;
 
   // Load .obj File
@@ -139,7 +139,7 @@ int main(int argc, char *argv[]) {
   // --  Loader.LoadedIndices
   // --  Loader.LoadedMaterials - ???
   // --  Loader.LoadedMeshes - ????????
-  */
+  Loader.LoadedIndices
 
     GraphicsCore graphicsCore;
 
