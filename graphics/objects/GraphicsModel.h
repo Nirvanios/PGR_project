@@ -14,12 +14,19 @@
  * Base graphics model for rendering. Is build from OBJ file.
  */
 class GraphicsModel {
- private:
  protected:
   std::vector<glm::vec3> vertices;
   std::vector<unsigned int> indices;
   std::vector<glm::vec3> normals;
-  std::vector<glm::vec3> texCoords;
+  std::vector<glm::vec2> texCoords;
+
+  static glm::vec3 vector3toGLMvec3(objl::Vector3 &vector3) {
+    return glm::vec3(vector3.X, vector3.Y, vector3.Z);
+  }
+
+  static glm::vec2 vector2toGLMvec2(objl::Vector2 &vector2) {
+    return glm::vec2(vector2.X, vector2.Y);
+  }
  public:
   static GraphicsModel* LoadFromOBJ(std::string path) {
     auto model = new GraphicsModel();
@@ -30,9 +37,9 @@ class GraphicsModel {
     model->indices = loader.LoadedIndices;
 
     for (auto vertex : loader.LoadedVertices) {
-      model->vertices.emplace_back(vertex.Position);
-      model->normals.emplace_back(vertex.Normal);
-      model->texCoords.emplace_back(vertex.TextureCoordinate);
+      model->vertices.emplace_back(vector3toGLMvec3(vertex.Position));
+      model->normals.emplace_back(vector3toGLMvec3(vertex.Normal));
+      model->texCoords.emplace_back(vector2toGLMvec2(vertex.TextureCoordinate));
     }
 
     return model;
@@ -62,11 +69,11 @@ class GraphicsModel {
     GraphicsModel::normals = normals;
   }
 
-  const std::vector<glm::vec3> &getTexCoords() const {
+  const std::vector<glm::vec2> &getTexCoords() const {
     return texCoords;
   }
 
-  void setTexCoords(const std::vector<glm::vec3> &texCoords) {
+  void setTexCoords(const std::vector<glm::vec2> &texCoords) {
     GraphicsModel::texCoords = texCoords;
   }
 };

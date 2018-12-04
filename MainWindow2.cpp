@@ -24,7 +24,6 @@
 #include <GraphicsCore.h>
 #include <SimObject.h>
 #include <SimpleObject.h>
-#include <objects/OBJ_Loader.h>
 #include <objects/GraphicsModel.h>
 
 auto gravity = new PGRsim::GravityForce;
@@ -132,7 +131,7 @@ int main(int argc, char *argv[]) {
 
   std::vector<GraphicsModel*> objects;
 
-  objects.emplace_back(GraphicsModel::LoadFromOBJ("../../resources/small_ball.obj"));
+  objects.emplace_back(GraphicsModel::LoadFromOBJ("small_ball.obj"));
 
   bool is_running = true;
   bool is_simRunning = false;
@@ -145,7 +144,7 @@ int main(int argc, char *argv[]) {
       case SDL_QUIT:is_running = false;
         break;
     }
-    graphicsCore.render(objects);
+    //graphicsCore.render(objects);
     SDL_Delay(1000/60);
   }
 
