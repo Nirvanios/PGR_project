@@ -7,8 +7,11 @@
 
 #include "GraphicsModel.h"
 
+namespace PGRgraphics {
+
 class ComplexGraphicsModel : public GraphicsModel {
 
 };
+}
 
 #endif //PGR_PROJECT_COMPLEXGRAPHICSMODEL_H

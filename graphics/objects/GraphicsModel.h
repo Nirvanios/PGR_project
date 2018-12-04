@@ -11,6 +11,8 @@
 #include <tiny_obj_loader.h>
 #include <iostream>
 
+namespace PGRgraphics {
+
 /**
  * Base graphics model for rendering. Is build from OBJ file.
  */
@@ -101,5 +103,6 @@ class GraphicsModel {
     return vertexIndices;
   }
 };
+}
 
 #endif //PGR_PROJECT_GRAPHICSMODEL_H

@@ -13,7 +13,7 @@
 #include "GraphicsCore.h"
 #include "Shader.h"
 
-bool GraphicsCore::init() {
+bool PGRgraphics::GraphicsCore::init() {
     // Initialize SDL's Video subsystem
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0) {
         std::cout << "Failed to init SDL\n";
@@ -62,7 +62,7 @@ bool GraphicsCore::init() {
     return true;
 }
 
-bool GraphicsCore::setOpenGLAttributes() {
+bool PGRgraphics::GraphicsCore::setOpenGLAttributes() {
     // Set our OpenGL version.
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
@@ -74,8 +74,7 @@ bool GraphicsCore::setOpenGLAttributes() {
     return true;
 }
 
-
-void GraphicsCore::checkSDLError(int line = -1) {
+void PGRgraphics::GraphicsCore::checkSDLError(int line = -1) {
     std::string error = SDL_GetError();
 
     if (!error.empty()) {
@@ -88,7 +87,7 @@ void GraphicsCore::checkSDLError(int line = -1) {
     }
 }
 
-bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>& objects) {
+bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> &objects) {
 
     GLuint tempVBO;
 
@@ -177,7 +176,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>& objects) {
     return true;
 }
 
-void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
+void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects) {
     // First, render a square without any colors ( all vertexes will be black )
     // ===================
     // Make our background grey
@@ -260,11 +259,7 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
 
 }
 
-void mainLoop(){
-
-}
-
-void GraphicsCore::cleanup() {
+void PGRgraphics::GraphicsCore::cleanup() {
     // Cleanup all the things we bound and allocated
     shader.CleanUp();
 
@@ -286,7 +281,7 @@ void GraphicsCore::cleanup() {
     SDL_Quit();
 }
 
-void GraphicsCore::deleteBuffers(std::vector<GLuint> &buff){
+void PGRgraphics::GraphicsCore::deleteBuffers(std::vector<GLuint> &buff) {
     int i = 0;
     for(auto item : buff) {
         glDeleteBuffers(i, &item);
@@ -294,12 +289,12 @@ void GraphicsCore::deleteBuffers(std::vector<GLuint> &buff){
     }
 }
 
-void GraphicsCore::handleResize() {
+void PGRgraphics::GraphicsCore::handleResize() {
     SDL_GetWindowSize(mainWindow, &width, &height);
     glViewport(0, 0, width, height);
 }
 
-void GraphicsCore::handleCameraMove(SDL_Keycode key) {
+void PGRgraphics::GraphicsCore::handleCameraMove(SDL_Keycode key) {
     switch(key) {
         case SDLK_w:
             camera.ProcessKeyboard(FORWARD, 1);
@@ -317,15 +312,15 @@ void GraphicsCore::handleCameraMove(SDL_Keycode key) {
 
 }
 
-void GraphicsCore::handleMouseMove(float xoffset, float yoffset, GLboolean constrainPitch) {
+void PGRgraphics::GraphicsCore::handleMouseMove(float xoffset, float yoffset, GLboolean constrainPitch) {
     camera.ProcessMouseMovement(xoffset, yoffset, constrainPitch);
 }
-const glm::vec3 &GraphicsCore::getLightPos() const {
+const glm::vec3 &PGRgraphics::GraphicsCore::getLightPos() const {
     return lightPos;
 }
-void GraphicsCore::setLightPos(const glm::vec3 &lightPos) {
+void PGRgraphics::GraphicsCore::setLightPos(const glm::vec3 &lightPos) {
     GraphicsCore::lightPos = lightPos;
 }
-void GraphicsCore::handleMouseWheel(float yOffset) {
+void PGRgraphics::GraphicsCore::handleMouseWheel(float yOffset) {
     camera.ProcessMouseScroll(yOffset);
 }

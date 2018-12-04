@@ -9,6 +9,8 @@
 #include <objects/GraphicsModel.h>
 #include "Shader.h"
 
+namespace PGRgraphics {
+
 class GraphicsCore {
  private:
 
@@ -79,5 +81,5 @@ class GraphicsCore {
   void setLightPos(const glm::vec3 &lightPos);
 
 };
-
+}
 #endif //PGR_PROJECT_GRAPHICSCORE_H

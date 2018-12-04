@@ -19,15 +19,15 @@ namespace PGRsim {
  */
  class SimpleObject : public SimObject, Collision::CollisionObject {
   protected:
-  SimpleGraphicsModel *model;
+   PGRgraphics::SimpleGraphicsModel *model;
  public:
-  SimpleObject(float mass, SimObjectType objectType, SimpleGraphicsModel *model);
+   SimpleObject(float mass, SimObjectType objectType, PGRgraphics::SimpleGraphicsModel *model);
 
-  void setObjectModel(SimpleGraphicsModel *model) {
+   void setObjectModel(PGRgraphics::SimpleGraphicsModel *model) {
     this->model = model;
   }
 
-  SimpleGraphicsModel *getObjectModel() {
+   PGRgraphics::SimpleGraphicsModel *getObjectModel() {
     return model;
   }
 

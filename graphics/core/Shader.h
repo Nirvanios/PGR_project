@@ -8,8 +8,9 @@
 #include <fstream>
 #include <iostream>
 
-class Shader
-{
+namespace PGRgraphics {
+
+class Shader {
 public:
     std::string ReadFile(const char* file)
     {
@@ -211,3 +212,4 @@ public:
     GLuint vertexshader, fragmentShader;
 
 };
+}

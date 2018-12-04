@@ -9,13 +9,15 @@
 #include <iostream>
 #include "GraphicsModel.h"
 
+namespace PGRgraphics {
+
 class SimpleGraphicsModel : public GraphicsModel {
  private:
   const glm::mat4 model = glm::mat4(1.f);
  protected:
   glm::vec3 position;
  public:
-  static SimpleGraphicsModel* LoadFromOBJ(std::string path) {
+  static SimpleGraphicsModel *LoadFromOBJ(std::string path) {
     std::cout << "Loading object from: " << path << std::endl;
     auto model = new SimpleGraphicsModel();
 
@@ -24,22 +26,19 @@ class SimpleGraphicsModel : public GraphicsModel {
     std::vector<tinyobj::material_t> materials;
 
     std::string error;
-    if(!tinyobj::LoadObj(&attribs, &shapes, &materials, nullptr, &error, path.c_str())) {
+    if (!tinyobj::LoadObj(&attribs, &shapes, &materials, nullptr, &error, path.c_str())) {
       std::cerr << "Loading object failed: " + error << std::endl;
       return nullptr;
     }
 
     model->indices = shapes[0].mesh.indices;
 
-
     model->normals.resize(attribs.vertices.size());
 
     std::for_each(model->normals.begin(), model->normals.end(),
-        [] (glm::vec3& value) {
-      value = glm::vec3(0.0f);
-    });
-
-
+                  [](glm::vec3 &value) {
+                    value = glm::vec3(0.0f);
+                  });
 
     for (auto indice : model->indices) {
       model->vertexIndices.emplace_back(indice.vertex_index);
@@ -49,11 +48,9 @@ class SimpleGraphicsModel : public GraphicsModel {
     }
 
     std::for_each(model->normals.begin(), model->normals.end(),
-                  [] (glm::vec3& value) {
+                  [](glm::vec3 &value) {
                     value = glm::normalize(value);
                   });
-
-
 
     for (int i = 0; i < attribs.vertices.size(); i += 3) {
       model->vertices.emplace_back(floatsToVec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
@@ -75,5 +72,5 @@ class SimpleGraphicsModel : public GraphicsModel {
     return glm::translate(model, position);
   }
 };
-
+}
 #endif //PGR_PROJECT_SIMPLEGRAPHICSMODEL_H

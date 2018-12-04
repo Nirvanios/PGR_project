@@ -36,11 +36,11 @@ void prepareSimulation() {
 
 
   auto passive1 = new PGRsim::SimpleObject(1000.0f,
-                                       PGRsim::Passive,
-                               SimpleGraphicsModel::LoadFromOBJ("donut.obj"));
+                                           PGRsim::Passive,
+                                           PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("donut.obj"));
   simulation->addObject(passive1);
 
-  auto model = SimpleGraphicsModel::LoadFromOBJ("test.obj");
+  auto model = PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("test.obj");
   model->setPosition(glm::vec3(0, -2.0f, 0));
   auto active1_onPassive1 = new PGRsim::SimpleObject(1.0f,
                                                  PGRsim::Active,
@@ -68,7 +68,7 @@ void updateSimulation() {
 }
 
 int main(int argc, char *argv[]) {
-  GraphicsCore graphicsCore;
+  PGRgraphics::GraphicsCore graphicsCore;
 
   if (!graphicsCore.init())
     return -1;
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
   std::cout << "Seting up VBO + VAO..." << std::endl;
 
-  std::vector<GraphicsModel*> objects;
+  std::vector<PGRgraphics::GraphicsModel *> objects;
 
 
   prepareSimulation();
@@ -87,12 +87,12 @@ int main(int argc, char *argv[]) {
     objects.emplace_back(dynamic_cast<PGRsim::SimpleObject *>(object)->getObjectModel());
   }
 
-  auto model = SimpleGraphicsModel::LoadFromOBJ("small_ball.obj");
+  auto model = PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("small_ball.obj");
   model->setPosition(graphicsCore.getLightPos());
   objects.emplace_back(model);
 
-  objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("floor.obj"));
-  objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("monkey.obj"));
+  objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("floor.obj"));
+  objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("monkey.obj"));
 
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;

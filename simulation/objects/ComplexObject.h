@@ -17,7 +17,7 @@ namespace PGRsim {
 
 class ComplexObject : public SimObject, Collision::CollisionObject {
  protected:
-  ComplexGraphicsModel* model;
+  PGRgraphics::ComplexGraphicsModel *model;
   std::vector<Vertex*> simVertices;
 
   std::vector<Constraint*> constraints;
@@ -29,9 +29,9 @@ class ComplexObject : public SimObject, Collision::CollisionObject {
 
   void initSprings();
  public:
-  ComplexObject(float mass, ComplexGraphicsModel *model);
+  ComplexObject(float mass, PGRgraphics::ComplexGraphicsModel *model);
 
-  ComplexGraphicsModel *getObjectModel() {
+  PGRgraphics::ComplexGraphicsModel *getObjectModel() {
     return model;
   }
 

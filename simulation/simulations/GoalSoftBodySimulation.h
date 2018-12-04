@@ -12,8 +12,8 @@
 namespace PGRsim {
 class GoalSoftBodySimulation : public Simulation {
  private:
-  ComplexGraphicsModel *model;
-  SimpleGraphicsModel *goal;
+  PGRgraphics::ComplexGraphicsModel *model;
+  PGRgraphics::SimpleGraphicsModel *goal;
 
   std::vector<Vertex *> modelVertices;
   std::vector<Vertex *> goalVertices;
@@ -26,7 +26,7 @@ class GoalSoftBodySimulation : public Simulation {
 
  protected:
  public:
-  GoalSoftBodySimulation(ComplexGraphicsModel *model, SimpleGraphicsModel *goal);
+  GoalSoftBodySimulation(PGRgraphics::ComplexGraphicsModel *model, PGRgraphics::SimpleGraphicsModel *goal);
 
 };
 }
