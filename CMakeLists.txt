@@ -28,8 +28,8 @@ add_executable(Render_test MainWindow2.cpp
         simulation/base/SimObject.h simulation/objects/SimpleObject.cpp simulation/objects/Constraint.h
         simulation/common/common.h simulation/objects/SimpleObject.h
         simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
-        simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/Spring.cpp
-        simulation/forces/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
+        simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/springs/Spring.cpp
+        simulation/forces/springs/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
         simulation/integrators/EulerIntegrator.h simulation/simulations/Simulation.cpp simulation/simulations/Simulation.h
         simulation/objects/PointConstraint.cpp simulation/objects/PointConstraint.h simulation/objects/LengthConstraint.cpp
         simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
@@ -38,11 +38,11 @@ add_executable(Render_test MainWindow2.cpp
         simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h
         simulation/simulations/GoalSoftBodySimulation.cpp
         simulation/simulations/GoalSoftBodySimulation.h third_party/Camera.cpp third_party/Camera.h
-        simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h
+        simulation/forces/springs/SnappableSpring.cpp simulation/forces/springs/SnappableSpring.h
         graphics/core/GraphicsCore.cpp simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h
         simulation/objects/ComplexObject.cpp simulation/objects/ComplexObject.h
         graphics/objects/GraphicsModel.h simulation/objects/SimpleObject.h
-        third_party/tiny_obj_loader.h third_party/tiny_obj_loader.cc graphics/objects/ComplexGraphicsModel.cpp graphics/objects/ComplexGraphicsModel.h)
+        third_party/tiny_obj_loader.h third_party/tiny_obj_loader.cc graphics/objects/ComplexGraphicsModel.cpp graphics/objects/ComplexGraphicsModel.h simulation/forces/springs/SnappableSpringGroup.cpp simulation/forces/springs/SnappableSpringGroup.h)
 
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})

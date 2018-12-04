@@ -7,7 +7,7 @@
 #include <GravityForce.h>
 #include <DragForce.h>
 #include "third_party/Camera.h"
-#include <SnapableSpring.h>
+#include <springs/SnappableSpring.h>
 #include <core/GraphicsCore.h>
 #include <SimObject.h>
 #include <SimpleObject.h>

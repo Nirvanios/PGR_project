@@ -9,7 +9,7 @@
 #include <SimpleObject.h>
 #include "SimObject.h"
 #include "ForceGenerator.h"
-#include "Spring.h"
+#include "springs/Spring.h"
 #include "Integrator.h"
 #include "EulerIntegrator.h"
 #include "VerletIntegrator.h"

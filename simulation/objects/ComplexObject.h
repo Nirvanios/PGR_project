@@ -10,7 +10,7 @@
 #include "Vertex.h"
 #include "Constraint.h"
 #include <vector>
-#include <Spring.h>
+#include <springs/Spring.h>
 #include <ComplexGraphicsModel.h>
 
 namespace PGRsim {
