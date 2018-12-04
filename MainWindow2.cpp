@@ -32,84 +32,33 @@ PGRsim::Simulation *simulation;
 
 
 void prepareSimulation() {
-  /*simulation = new PGRsim::Simulation();
+  simulation = new PGRsim::Simulation();
 
 
   auto passive1 = new PGRsim::SimpleObject(1000.0f,
                                        PGRsim::Passive,
-                               SimpleGraphicsModelCreator::CreateQuad(
-                                   0.5f, 0.5f, 0.5f,
-                                   0, 0, 0));
+                               SimpleGraphicsModel::LoadFromOBJ("small_ball.obj"));
   simulation->addObject(passive1);
-  passive1->getBoundingBox();
 
+  auto model = SimpleGraphicsModel::LoadFromOBJ("small_ball.obj");
+  model->setPosition(glm::vec3(0, 2.0f, 0));
   auto active1_onPassive1 = new PGRsim::SimpleObject(1.0f,
                                                  PGRsim::Active,
-                                         SimpleGraphicsModelCreator::CreateQuad(
-                                             0.3f, 0.3f, 0.3f,
-                                             1.0f, 0, 0));
+                                                     model);
   simulation->addObject(active1_onPassive1);
 
-  auto active2_onActive1 = new PGRsim::SimpleObject(1.0f,
-                                                PGRsim::Active,
-                                          SimpleGraphicsModelCreator::CreateQuad(
-                                              0.3f, 0.3f, 0.3f,
-                                              0.3f, 0, 0));
-  simulation->addObject(active2_onActive1);
-
-  auto active3_onPassive1 = new PGRsim::SimpleObject(0.5f,
-                                                 PGRsim::Active,
-                                          SimpleGraphicsModelCreator::CreateQuad(
-                                              0.2f, 0.2f, 0.2f,
-                                              3.0f, 0, 0));
-  simulation->addObject(active3_onPassive1);
-
-  auto active4_onPassive2Passive3 = new PGRsim::SimpleObject(0.5f,
-                                                         PGRsim::Active,
-                                         SimpleGraphicsModelCreator::CreateQuad(
-                                             0.2f, 0.2f, 0.2f,
-                                             2.0f, 0, 0.5f));
-  simulation->addObject(active4_onPassive2Passive3);
-
-  auto passive2 = new PGRsim::SimpleObject(1000.0f,
-                                       PGRsim::Passive,
-                               SimpleGraphicsModelCreator::CreateQuad(
-                                   0.1f, 0.1f, 0.05f,
-                                   1.8f, 0, 1.0f));
-  simulation->addObject(passive2);
-
-  auto passive3 = new PGRsim::SimpleObject(1000.0f,
-                                       PGRsim::Passive,
-                               SimpleGraphicsModelCreator::CreateQuad(
-                                   0.1f, 0.1f, 0.05f,
-                                   2.0f, 0, 0));
-  simulation->addObject(passive3);
 
   float stiffness = 8.0f;
   float damping = 0.1f;
   simulation->addSpring(stiffness, damping, passive1,
                         active1_onPassive1);
 
-  simulation->addSpring(stiffness, damping, active2_onActive1,
-                        active1_onPassive1);
-
-  simulation->addSpring(stiffness, damping, active3_onPassive1,
-                        passive1);
-
-  simulation->addSpring(6.0f, 0.2f, active4_onPassive2Passive3,
-                        passive2);
-
-  simulation->addSpring(new PGRsim::SnapableSpring(stiffness, damping, active4_onPassive2Passive3,
-                                   passive3, 7.0f));
-  //simulation->addSpring(4.5f, 0.3f, active4_onPassive2Passive3,
-  //                      passive3);
-
   simulation->addGlobalForce(gravity);
 
   air->setDragCoefficient(0.5f);
   simulation->addGlobalForce(air);
 
-  simulation->setConstraintIterations(0);*/
+  simulation->setConstraintIterations(0);
 }
 
 void updateSimulation() {
@@ -127,8 +76,7 @@ int main(int argc, char *argv[]) {
 
   std::cout << "Seting up VBO + VAO..." << std::endl;
 
-  std::vector<GraphicsModel*> objects;
-
+  /*
   objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("small_ball.obj"));
 
   if (!graphicsCore.setupBufferObjects(objects))
@@ -178,33 +126,18 @@ int main(int argc, char *argv[]) {
     }
     graphicsCore.render(objects);
     SDL_Delay(1000/60);
-  }
+  }*/
 
- /* auto objects = new std::vector<DEPRECATED_SimpleGraphicsModel *>();
+  std::vector<GraphicsModel*> objects;
 
 
   prepareSimulation();
 
   auto simObjects = simulation->getObjects();
+  objects.reserve(simObjects.size());
   for (auto object : simObjects) {
-    objects->emplace_back(dynamic_cast<PGRsim::SimpleObject *>(object)->getObjectModel());
+    objects.emplace_back(dynamic_cast<PGRsim::SimpleObject *>(object)->getObjectModel());
   }
-
-  auto line1 =
-      SimpleGraphicsModelCreator::createLine(simObjects[0]->getCurrectPosition(), simObjects[1]->getCurrectPosition());
-  objects->emplace_back(line1);
-  auto line2 =
-      SimpleGraphicsModelCreator::createLine(simObjects[1]->getCurrectPosition(), simObjects[2]->getCurrectPosition());
-  objects->emplace_back(line2);
-  auto line3 =
-      SimpleGraphicsModelCreator::createLine(simObjects[0]->getCurrectPosition(), simObjects[3]->getCurrectPosition());
-  objects->emplace_back(line3);
-  auto line4 =
-      SimpleGraphicsModelCreator::createLine(simObjects[4]->getCurrectPosition(), simObjects[5]->getCurrectPosition());
-  objects->emplace_back(line4);
-  auto line5 =
-      SimpleGraphicsModelCreator::createLine(simObjects[4]->getCurrectPosition(), simObjects[6]->getCurrectPosition());
-  objects->emplace_back(line5);
 
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
@@ -228,16 +161,16 @@ int main(int argc, char *argv[]) {
         case SDL_KEYDOWN:
           switch (event.key.keysym.sym) {
             case SDLK_LEFT:
-              simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
+              //simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
               break;
             case SDLK_RIGHT:
-              simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
+              //simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
               break;
             case SDLK_UP:
-              simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
+              //simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
               break;
             case SDLK_DOWN:
-              simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
+              //simObjects[6]->setCurrentPosition(simObjects[6]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
               break;
             case SDLK_w:
             case SDLK_s:
@@ -283,45 +216,11 @@ int main(int argc, char *argv[]) {
 
     if (is_simRunning) {
       updateSimulation();
-      line1->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
-      line1->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
-      line1->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
-      line1->getVertices()[3] = simObjects[1]->getCurrectPosition().x;
-      line1->getVertices()[4] = simObjects[1]->getCurrectPosition().y;
-      line1->getVertices()[5] = simObjects[1]->getCurrectPosition().z;
-
-      line2->getVertices()[0] = simObjects[1]->getCurrectPosition().x;
-      line2->getVertices()[1] = simObjects[1]->getCurrectPosition().y;
-      line2->getVertices()[2] = simObjects[1]->getCurrectPosition().z;
-      line2->getVertices()[3] = simObjects[2]->getCurrectPosition().x;
-      line2->getVertices()[4] = simObjects[2]->getCurrectPosition().y;
-      line2->getVertices()[5] = simObjects[2]->getCurrectPosition().z;
-
-      line3->getVertices()[0] = simObjects[0]->getCurrectPosition().x;
-      line3->getVertices()[1] = simObjects[0]->getCurrectPosition().y;
-      line3->getVertices()[2] = simObjects[0]->getCurrectPosition().z;
-      line3->getVertices()[3] = simObjects[3]->getCurrectPosition().x;
-      line3->getVertices()[4] = simObjects[3]->getCurrectPosition().y;
-      line3->getVertices()[5] = simObjects[3]->getCurrectPosition().z;
-
-      line4->getVertices()[0] = simObjects[4]->getCurrectPosition().x;
-      line4->getVertices()[1] = simObjects[4]->getCurrectPosition().y;
-      line4->getVertices()[2] = simObjects[4]->getCurrectPosition().z;
-      line4->getVertices()[3] = simObjects[5]->getCurrectPosition().x;
-      line4->getVertices()[4] = simObjects[5]->getCurrectPosition().y;
-      line4->getVertices()[5] = simObjects[5]->getCurrectPosition().z;
-
-      line5->getVertices()[0] = simObjects[4]->getCurrectPosition().x;
-      line5->getVertices()[1] = simObjects[4]->getCurrectPosition().y;
-      line5->getVertices()[2] = simObjects[4]->getCurrectPosition().z;
-      line5->getVertices()[3] = simObjects[6]->getCurrectPosition().x;
-      line5->getVertices()[4] = simObjects[6]->getCurrectPosition().y;
-      line5->getVertices()[5] = simObjects[6]->getCurrectPosition().z;
     }
 
     graphicsCore.render(objects);
     SDL_Delay(1000/60);
-  }*/
+  }
 
   graphicsCore.cleanup();
 

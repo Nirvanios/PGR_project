@@ -76,7 +76,7 @@ void GraphicsCore::checkSDLError(int line = -1) {
     }
 }
 
-bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>objects) {
+bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>& objects) {
 
     GLuint tempVBO;
 
@@ -93,7 +93,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>objects) {
         glGenBuffers(1, &tempVBO);
 
         glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-        vbo->push_back(tempVBO);
+        vbo.push_back(tempVBO);
 
 
         // Copy the vertex data from diamond to our buffer
@@ -104,7 +104,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>objects) {
 
     glGenBuffers(1, &tempVBO);
     glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-    vbo->push_back(tempVBO);
+    vbo.push_back(tempVBO);
     // Copy the vertex data from diamond to our buffer
     glBufferData(GL_ARRAY_BUFFER, sceneFloor.size() * sizeof(unsigned int), sceneFloor.data(),
                  GL_STATIC_DRAW);
@@ -113,7 +113,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>objects) {
     // =======================
     glGenBuffers(1, &tempVBO);
     glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-    vboC->push_back(tempVBO);
+    vboC.push_back(tempVBO);
 
     // Copy the vertex data from diamond to our buffer
     glBufferData(GL_ARRAY_BUFFER, floorColor.size() * sizeof(float), floorColor.data(), GL_STATIC_DRAW);
@@ -126,14 +126,14 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>objects) {
         glGenBuffers(1, &tempEBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, item->getVertexIndices().size() * sizeof(int), item->getVertexIndices().data(), GL_STATIC_DRAW);
-        ebo->push_back(tempEBO);
+        ebo.push_back(tempEBO);
     }
 
     glGenBuffers(1, &tempEBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
     //glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, floorIndicies.size() * sizeof(float), floorIndicies.data(), GL_STATIC_DRAW);
-    ebo->push_back(tempEBO);
+    ebo.push_back(tempEBO);
 
     // Set up shader ( will be covered in the next part )
     // ===================
@@ -147,7 +147,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>objects) {
     return true;
 }
 
-void GraphicsCore::render(std::vector<GraphicsModel*> objects) {
+void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
     // First, render a square without any colors ( all vertexes will be black )
     // ===================
     // Make our background grey
@@ -182,12 +182,12 @@ void GraphicsCore::render(std::vector<GraphicsModel*> objects) {
         }
         glm::mat4 transform = glm::translate(Model, item->getPosition());*/
 
-        glBindBuffer(GL_ARRAY_BUFFER, *vbo[i].data());
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
         glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size()* 3 * sizeof(float)), item->getVertices().data());
         glEnableVertexAttribArray(positionAttributeIndex);
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ebo[i].data());
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
         // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
         GLuint transformID = shader.getUniformLocation("translate");
@@ -201,13 +201,13 @@ void GraphicsCore::render(std::vector<GraphicsModel*> objects) {
         }*/
     }
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo->back());
+    glBindBuffer(GL_ARRAY_BUFFER, vbo.back());
     glEnableVertexAttribArray(positionAttributeIndex);
     glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, vboC->back());
+    glBindBuffer(GL_ARRAY_BUFFER, vboC.back());
     glEnableVertexAttribArray(colorAttributeIndex);
     glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo->back());
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo.back());
     GLuint transformID = shader.getUniformLocation("translate");
     glUniformMatrix4fv(transformID, 1, GL_FALSE, &Model[0][0]);
     glDrawElements(GL_TRIANGLES, sizeof(floorIndicies.data()), GL_UNSIGNED_BYTE, NULL);
@@ -244,9 +244,9 @@ void GraphicsCore::cleanup() {
     SDL_Quit();
 }
 
-void GraphicsCore::deleteBuffers(std::vector<GLuint> *buff){
+void GraphicsCore::deleteBuffers(std::vector<GLuint> &buff){
     int i = 0;
-    for(auto item : *buff) {
+    for(auto item : buff) {
         glDeleteBuffers(i, &item);
         i++;
     }

@@ -22,9 +22,9 @@ private:
     const GLuint positionAttributeIndex = 0, colorAttributeIndex = 1;
 
     GLuint vao[1];
-    std::vector<GLuint> *vbo = new std::vector<GLuint>();
-    std::vector<GLuint> *vboC = new std::vector<GLuint>();
-    std::vector<GLuint> *ebo = new std::vector<GLuint>();
+    std::vector<GLuint> vbo;
+    std::vector<GLuint> vboC;
+    std::vector<GLuint> ebo;
 
     const std::vector<float> sceneFloor={
             -100, -10, 100,
@@ -48,11 +48,11 @@ private:
 
     void checkSDLError(int);
     bool setOpenGLAttributes();
-    void deleteBuffers( std::vector<GLuint>*);
+    void deleteBuffers(std::vector<GLuint>&);
 public:
     bool init();
-    bool setupBufferObjects(std::vector<GraphicsModel*>);
-    void render(std::vector<GraphicsModel*>);
+    bool setupBufferObjects(std::vector<GraphicsModel*>&);
+    void render(std::vector<GraphicsModel*>&);
     void handleResize();
     void handleCameraMove(SDL_Keycode);
     void handleMouseMove(float, float, GLboolean);
