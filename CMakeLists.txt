@@ -69,7 +69,8 @@ add_executable(Render_test MainWindow2.cpp shader.h
         simulation/forces/SnapableSpring.cpp simulation/forces/SnapableSpring.h
         graphics/core/GraphicsCore.cpp simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h
         simulation/objects/ComplexObject.cpp simulation/objects/ComplexObject.h graphics/objects/OBJ_Loader.h
-        graphics/objects/GraphicsModel.h simulation/objects/SimpleObject.h graphics/objects/OBJ_loader.cpp)
+        graphics/objects/GraphicsModel.h simulation/objects/SimpleObject.h graphics/objects/OBJ_loader.cpp
+        graphics/objects/tiny_obj_loader.h graphics/objects/tiny_obj_loader.cc)
 
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})

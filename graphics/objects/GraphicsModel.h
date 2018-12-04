@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <string>
-#include <OBJ_Loader.h>
+#include <tiny_obj_loader.h>
 
 /**
  * Base graphics model for rendering. Is build from OBJ file.
@@ -16,34 +16,54 @@
 class GraphicsModel {
  protected:
   std::vector<glm::vec3> vertices;
-  std::vector<unsigned int> indices;
+  std::vector<tinyobj::index_t> indices;
   std::vector<glm::vec3> normals;
   std::vector<glm::vec2> texCoords;
 
-  static glm::vec3 vector3toGLMvec3(objl::Vector3 &vector3) {
-    return glm::vec3(vector3.X, vector3.Y, vector3.Z);
+  std::vector<int> vertexIndices;
+  std::vector<int> normalIndices;
+
+  static glm::vec3 floatsToVec3(float x, float y, float z) {
+    return glm::vec3(x, y, z);
   }
 
-  static glm::vec2 vector2toGLMvec2(objl::Vector2 &vector2) {
-    return glm::vec2(vector2.X, vector2.Y);
+  static glm::vec2 floatsToVec2(float x, float y) {
+    return glm::vec2(x, y);
   }
  public:
   static GraphicsModel* LoadFromOBJ(std::string path) {
+    std::cout << "Loading object from: " << path << std::endl;
     auto model = new GraphicsModel();
-    objl::Loader loader;
 
-    loader.LoadFile(path);
+    tinyobj::attrib_t attribs;
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
 
-    model->indices = loader.LoadedIndices;
-
-    for (auto vertex : loader.LoadedVertices) {
-      model->vertices.emplace_back(vector3toGLMvec3(vertex.Position));
-      model->normals.emplace_back(vector3toGLMvec3(vertex.Normal));
-      model->texCoords.emplace_back(vector2toGLMvec2(vertex.TextureCoordinate));
+    if(!tinyobj::LoadObj(&attribs, &shapes, &materials, nullptr, nullptr, path.c_str())) {
+      std::cerr << "Loading object failed" << std::endl;
+      return nullptr;
     }
+
+    model->indices = shapes[0].mesh.indices;
+
+    for (auto indice : model->indices) {
+      model->vertexIndices.emplace_back(indice.vertex_index);
+      model->normalIndices.emplace_back(indice.normal_index);
+    }
+
+    for (int i = 0; i < attribs.vertices.size(); i += 3) {
+      model->vertices.emplace_back(floatsToVec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
+    }
+
+    for (int i = 0; i < attribs.normals.size(); i += 3) {
+      model->normals.emplace_back(floatsToVec3(attribs.normals[i], attribs.normals[i + 1], attribs.normals[i + 2]));
+    }
+
 
     return model;
   }
+
+  virtual ~GraphicsModel() = default;
 
   const std::vector<glm::vec3> &getVertices() const {
     return vertices;
@@ -53,11 +73,11 @@ class GraphicsModel {
     GraphicsModel::vertices = vertices;
   }
 
-  const std::vector<unsigned int> &getIndices() const {
+  const std::vector<tinyobj::index_t> &getIndices() const {
     return indices;
   }
 
-  void setIndices(const std::vector<unsigned int> &indices) {
+  void setIndices(const std::vector<tinyobj::index_t> &indices) {
     GraphicsModel::indices = indices;
   }
 
@@ -75,6 +95,13 @@ class GraphicsModel {
 
   void setTexCoords(const std::vector<glm::vec2> &texCoords) {
     GraphicsModel::texCoords = texCoords;
+  }
+
+  const std::vector<int> &getVertexIndices() const {
+    return vertexIndices;
+  }
+  const std::vector<int> &getNormalIndices() const {
+    return normalIndices;
   }
 };
 

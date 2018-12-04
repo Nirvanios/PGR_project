@@ -133,6 +133,7 @@ int main(int argc, char *argv[]) {
 
   objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("small_ball.obj"));
 
+
   bool is_running = true;
   bool is_simRunning = false;
   bool enableCameraMovement = false;
