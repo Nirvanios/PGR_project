@@ -97,7 +97,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>& objects) {
 
 
         // Copy the vertex data from diamond to our buffer
-        glBufferData(GL_ARRAY_BUFFER, (item->getVertices().size() * sizeof(float)), item->getVertices().data(),
+        glBufferData(GL_ARRAY_BUFFER, (item->getVertices().size() * 3 * sizeof(float)), item->getVertices().data(),
                      GL_DYNAMIC_DRAW);
 
     }
