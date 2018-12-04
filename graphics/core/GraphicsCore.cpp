@@ -6,7 +6,8 @@
 #include <SDL.h>
 #include <string>
 #include <iostream>
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 #include "SimpleGraphicsModel.h"
 #include "GraphicsCore.h"
@@ -179,8 +180,7 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
     for (auto item : objects) {
         /*if (item->isLine()) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        }
-        glm::mat4 transform = glm::translate(Model, item->getPosition());*/
+        }*/
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
         glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size()* 3 * sizeof(float)), item->getVertices().data());
@@ -190,8 +190,10 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
         // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
-        GLuint transformID = shader.getUniformLocation("translate");
-        //glUniformMatrix4fv(transformID, 1, GL_FALSE, &transform[0][0]);
+        if (dynamic_cast<SimpleGraphicsModel*>(item) != nullptr) {
+            GLuint transformID = shader.getUniformLocation("translate");
+            glUniformMatrix4fv(transformID, 1, GL_FALSE, glm::value_ptr(dynamic_cast<SimpleGraphicsModel*>(item)->getTranslationMatrix()));
+        }
         glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, NULL);
         //glDisableVertexAttribArray(positionAttributeIndex);
         i++;
