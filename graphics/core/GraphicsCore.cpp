@@ -190,10 +190,13 @@ void GraphicsCore::render(std::vector<GraphicsModel*>& objects) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
         // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCDFAInspection"
         if (dynamic_cast<SimpleGraphicsModel*>(item) != nullptr) {
             GLuint transformID = shader.getUniformLocation("translate");
             glUniformMatrix4fv(transformID, 1, GL_FALSE, glm::value_ptr(dynamic_cast<SimpleGraphicsModel*>(item)->getTranslationMatrix()));
         }
+#pragma clang diagnostic pop
         glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, NULL);
         //glDisableVertexAttribArray(positionAttributeIndex);
         i++;
