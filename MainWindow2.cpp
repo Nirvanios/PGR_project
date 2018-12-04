@@ -141,6 +141,10 @@ int main(int argc, char *argv[]) {
   SDL_Event event;
 
   while (is_running) {
+    switch (event.type) {
+      case SDL_QUIT:is_running = false;
+        break;
+    }
     graphicsCore.render(objects);
     SDL_Delay(1000/60);
   }
