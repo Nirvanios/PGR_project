@@ -53,10 +53,10 @@ public:
         BindAttributeLocation(1, "inputColor");
         BindAttributeLocation(2, "inputNormal");
 
-        if (!LoadVertexShader("../tutorial2.vert"))
+        if (!LoadVertexShader("../main_vertex_shader.glsl"))
             return false;
 
-        if (!LoadFragmentShader("../tutorial3.frag"))
+        if (!LoadFragmentShader("../main_fragment_shader.glsl"))
             return false;
 
         // All shaders has been create, now we must put them together into one large object

@@ -22,7 +22,7 @@ include_directories(simulation/simulations simulation/base
         simulation/common simulation/forces simulation/integrators
         simulation/objects simulation graphics graphics/Camera graphics/objects)
 
-add_executable(Render_test MainWindow2.cpp shader.h
+add_executable(Render_test MainWindow2.cpp
         graphics/objects/SimpleGraphicsModel.cpp
         graphics/objects/SimpleGraphicsModel.h
         simulation/base/SimObject.h simulation/objects/SimpleObject.cpp simulation/objects/Constraint.h
