@@ -263,8 +263,8 @@ void PGRgraphics::GraphicsCore::handleCameraMove(SDL_Keycode key) {
 
 }
 
-void PGRgraphics::GraphicsCore::handleMouseMove(float xoffset, float yoffset, GLboolean constrainPitch) {
-  camera.ProcessMouseMovement(xoffset, yoffset, constrainPitch);
+void PGRgraphics::GraphicsCore::handleMouseMove(float xoffset, float yoffset) {
+  camera.ProcessMouseMovement(xoffset, yoffset, false);
 }
 const glm::vec3 &PGRgraphics::GraphicsCore::getLightPos() const {
   return lightPos;

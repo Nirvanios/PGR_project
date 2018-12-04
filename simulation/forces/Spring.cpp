@@ -12,7 +12,10 @@ PGRsim::Spring::Spring(float stiffness, float damping, SimObject *simulatedObjec
   currentLength = restLength;
 }
 
-void PGRsim::Spring::applyForce(SimObject *object) {
+void PGRsim::Spring::applyForce(SimObject &object) {
+  applyForce();
+}
+void PGRsim::Spring::applyForce() {
   direction = simulatedObjectA->getCurrectPosition() - simulatedObjectB->getCurrectPosition();
 
   if (direction != glm::vec3(0, 0, 0)) {

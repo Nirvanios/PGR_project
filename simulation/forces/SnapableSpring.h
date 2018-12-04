@@ -29,7 +29,9 @@ class SnapableSpring : public Spring {
                  SimObject *simulatedObjectB,
                  float snapLimit);
 
-  void applyForce(SimObject *object) override;
+  void applyForce(SimObject &object) override;
+
+  void applyForce() override;
 };
 }
 

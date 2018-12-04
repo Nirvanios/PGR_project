@@ -11,11 +11,15 @@ PGRsim::SnapableSpring::SnapableSpring(float stiffness,
                                        PGRsim::SimObject *simulatedObjectB,
                                float snapLimit) : Spring(stiffness, damping, simulatedObjectA, simulatedObjectB),
                                                   snapLimit(snapLimit) {}
-void PGRsim::SnapableSpring::applyForce(SimObject *object) {
+
+void PGRsim::SnapableSpring::applyForce(SimObject &object) {
+  applyForce();
+}
+void PGRsim::SnapableSpring::applyForce() {
   if (snapped) {
     return;
   }
-  Spring::applyForce(object);
+  Spring::applyForce();
 
   // check for force limit
   if (abs(force[0]) > snapLimit || abs(force[1]) > snapLimit || abs(force[2]) > snapLimit) {

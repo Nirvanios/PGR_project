@@ -25,7 +25,7 @@ class DragForce : public ForceGenerator {
     this->dragCoefficient = coefficient;
   }
 
-  void applyForce(SimObject *object) override;
+  void applyForce(SimObject &object) override;
 };
 }
 

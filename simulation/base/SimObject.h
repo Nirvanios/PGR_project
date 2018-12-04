@@ -20,7 +20,6 @@ enum SimObjectType {
   Passive, Active
 };
 
-
 /**
  * Base class for simulated objects.
  */
@@ -40,63 +39,63 @@ class SimObject {
    * @param mass mass of an object
    * @param objectType type - Passive/Active
    */
-  SimObject(float mass, SimObjectType objectType) : mass(mass), objectType(objectType) {
-      currentPosition = glm::vec3(0, 0, 0);
-      previousPosition = currentPosition;
-      velocity = glm::vec3(0, 0, 0);
-      resultantForce = glm::vec3(0, 0, 0);
-  }
+  SimObject(float mass, SimObjectType objectType) : mass(mass),
+                                                    objectType(objectType),
+                                                    currentPosition(glm::vec3(0, 0, 0)),
+                                                    velocity(glm::vec3(0, 0, 0)),
+                                                    resultantForce(glm::vec3(0, 0, 0)),
+                                                    previousPosition(currentPosition) {}
 
   void setMass(float newMass) {
-      mass = newMass;
+    mass = newMass;
   }
 
   float getMass() {
-      return mass;
+    return mass;
   }
 
   void setSimulatedObjectType(SimObjectType type) {
-      this->objectType = type;
+    this->objectType = type;
   }
 
   SimObjectType getSimulatedObjectType() {
-      return objectType;
+    return objectType;
   }
 
   void setCurrentPosition(glm::vec3 position) {
-      this->currentPosition = position;
+    this->currentPosition = position;
   }
 
   glm::vec3 getCurrectPosition() {
-      return currentPosition;
+    return currentPosition;
   }
 
   void setPreviousPosition(glm::vec3 position) {
-      this->previousPosition = position;
+    this->previousPosition = position;
   }
 
   glm::vec3 getPreviousPosition() {
-      return previousPosition;
+    return previousPosition;
   }
 
   void setVelocity(glm::vec3 velocity) {
-      this->velocity = velocity;
+    this->velocity = velocity;
   }
 
   glm::vec3 getVelocity() {
-      return velocity;
+    return velocity;
   }
 
   void setResultantForce(glm::vec3 force) {
-      this->resultantForce = force;
+    this->resultantForce = force;
   }
 
   glm::vec3 getResultantForce() {
-      return resultantForce;
+    return resultantForce;
   }
 
   void resetForces() {
-      resultantForce = glm::vec3(0, 0, 0);
+    resultantForce = glm::vec3(0, 0, 0);
   }
 
   /**

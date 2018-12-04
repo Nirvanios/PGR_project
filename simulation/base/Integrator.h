@@ -31,7 +31,7 @@ class Integrator {
     return timeStep;
   }
 
-  virtual void integrate(glm::vec3 acceleration, SimObject *object) = 0;
+  virtual void integrate(glm::vec3 acceleration, SimObject &object) = 0;
 };
 }
 

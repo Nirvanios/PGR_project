@@ -22,7 +22,7 @@ class GravityForce final : public ForceGenerator {
  public:
   GravityForce();
 
-  void applyForce(SimObject *object) override;
+  void applyForce(SimObject &object) override;
 
   glm::vec3 getAcceleration() {
     return acceleration;

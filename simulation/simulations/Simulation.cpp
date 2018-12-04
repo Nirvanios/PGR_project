@@ -23,14 +23,14 @@ void PGRsim::Simulation::addGlobalForce(ForceGenerator *force) {
 
 void PGRsim::Simulation::update(SimTime time) {
     for (auto spring : springs) {
-        spring->applyForce(nullptr);
+        spring->applyForce();
     }
 
     glm::vec3 acceleration;
     for (auto object : objects) {
         if (object->getSimulatedObjectType() == Active) {
             for (auto forceGenerator : forces) {
-                forceGenerator->applyForce(object);
+                forceGenerator->applyForce(*object);
             }
         }
     }
@@ -39,7 +39,7 @@ void PGRsim::Simulation::update(SimTime time) {
         if (object->getSimulatedObjectType() == Active) {
             acceleration = object->getResultantForce() / object->getMass();
 
-            integrator->integrate(acceleration, object);
+            integrator->integrate(acceleration, *object);
         }
     }
 

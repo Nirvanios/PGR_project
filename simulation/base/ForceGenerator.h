@@ -21,7 +21,7 @@ class ForceGenerator {
    * Apply effects to a simulated object
    * @param object
    */
-  virtual void applyForce(SimObject *object) = 0;
+  virtual void applyForce(SimObject &object) = 0;
 };
 }
 

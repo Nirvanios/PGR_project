@@ -6,6 +6,7 @@
 #define PGR_PROJECT_SIMULATION_H
 
 #include <vector>
+#include <SimpleObject.h>
 #include "SimObject.h"
 #include "ForceGenerator.h"
 #include "Spring.h"
@@ -16,7 +17,6 @@
 
 namespace PGRsim {
 class Simulation {
- private:
  protected:
   std::vector<SimObject *> objects;
   std::vector<ForceGenerator *> forces;

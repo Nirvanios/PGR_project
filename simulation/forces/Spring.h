@@ -65,7 +65,9 @@ class Spring : public ForceGenerator {
     return stiffness;
   }
 
-  void applyForce(SimObject *object) override;
+  void applyForce(SimObject &object) override;
+
+  virtual void applyForce();
 };
 }
 

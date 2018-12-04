@@ -46,7 +46,7 @@ class GraphicsCore {
   void render(std::vector<GraphicsModel *> &);
   void handleResize();
   void handleCameraMove(SDL_Keycode);
-  void handleMouseMove(float, float, GLboolean);
+  void handleMouseMove(float, float);
   void handleMouseWheel(float yOffset);
   void mainLoop();
   void cleanup();

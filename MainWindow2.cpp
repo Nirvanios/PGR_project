@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
           }
         case SDL_MOUSEMOTION:
           if (enableCameraMovement) {
-            graphicsCore.handleMouseMove(event.motion.xrel, event.motion.yrel, false);
+            graphicsCore.handleMouseMove(event.motion.xrel, event.motion.yrel);
           }
           break;
       }

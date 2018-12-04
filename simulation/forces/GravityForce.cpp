@@ -4,8 +4,8 @@
 
 #include "GravityForce.h"
 
-void PGRsim::GravityForce::applyForce(SimObject* object) {
-    object->setResultantForce(object->getResultantForce() + acceleration * object->getMass());
+void PGRsim::GravityForce::applyForce(SimObject &object) {
+  object.setResultantForce(object.getResultantForce() + acceleration * object.getMass());
 }
 
 PGRsim::GravityForce::GravityForce() : acceleration(glm::vec3(0, -9.8f, 0)) {}

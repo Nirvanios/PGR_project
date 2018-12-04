@@ -15,7 +15,7 @@ class VerletIntegrator : public Integrator {
  public:
   explicit VerletIntegrator(float timeStep);
 
-  void integrate(glm::vec3 acceleration, SimObject *object) override;
+  void integrate(glm::vec3 acceleration, SimObject &object) override;
 };
 }
 
