@@ -26,7 +26,7 @@ public:
         return fileContent;
     }
 
-    GLint getUniformLocation(const std::string uniform) {
+    GLuint getUniformLocation(const std::string uniform) {
         return glGetUniformLocation(shaderProgram, uniform.c_str());
     }
 

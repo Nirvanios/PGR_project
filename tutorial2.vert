@@ -18,7 +18,7 @@ void main(void) {
 }*/
 
 in vec3 inputPosition;
-in vec2 inputTexCoord;
+in vec4 inputColor;
 in vec3 inputNormal;
 
 uniform mat4 projection, modelview, normalMat;
@@ -27,7 +27,7 @@ uniform mat4 translate;
 
 out vec4 forFragColor;
 
-const vec3 lightPos = vec3(1.0, 1.0, 1.0);
+const vec3 lightPos = vec3(1.0, -3.0, 1.0);
 const vec3 diffuseColor = vec3(0.5, 0.0, 0.0);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
 
@@ -60,5 +60,5 @@ void main(){
     if(mode == 4) specular *= 0.0;
   }
 
-  forFragColor = vec4(lambertian*diffuseColor + specular*specColor, 1.0);
+  forFragColor = inputColor * vec4(lambertian*diffuseColor + specular*specColor, 1.0);
 }

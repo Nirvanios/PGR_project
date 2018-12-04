@@ -26,7 +26,7 @@ public:
         return fileContent;
     }
 
-    GLint getUniformLocation(const std::string uniform) {
+    GLuint getUniformLocation(const std::string uniform) {
         return glGetUniformLocation(shaderProgram, uniform.c_str());
     }
 
@@ -49,9 +49,9 @@ public:
         shaderProgram = glCreateProgram();
 
         // Bind the location of our attributes
-        BindAttributeLocation(0, "in_Position");
-        BindAttributeLocation(1, "in_Color");
-        BindAttributeLocation(3, "translate");
+        BindAttributeLocation(0, "inputPosition");
+        BindAttributeLocation(1, "inputColor");
+        BindAttributeLocation(2, "inputNormal");
 
         if (!LoadVertexShader("../tutorial2.vert"))
             return false;

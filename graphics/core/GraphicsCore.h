@@ -14,16 +14,20 @@ class GraphicsCore {
 private:
 
   // GL identifiers
-  GLuint projGLUniform, modelViewGLUniform, normalMatGLUniform, translateGLUniform, modeGLUniform;
+  GLuint normalMatGLUniform, translateGLUniform;
+  // GL identifiers
+  GLint projGLUniform;
+  // GL identifiers
+  GLint modelViewGLUniform;
 
-    std::string programName;
+  std::string programName;
     SDL_Window *mainWindow;
     SDL_GLContext mainContext;
     int width = 1200, height = 700;
     Camera camera;
     Shader shader;
 
-    const GLuint positionAttributeIndex = 0, colorAttributeIndex = 1;
+    const GLuint positionAttributeIndex = 0, colorAttributeIndex = 1, normalAttributeIndex = 2;
 
     GLuint vao[1];
     std::vector<GLuint> vbo;
