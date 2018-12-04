@@ -97,7 +97,7 @@ bool GraphicsCore::setupBufferObjects(std::vector<GraphicsModel*>objects) {
 
 
         // Copy the vertex data from diamond to our buffer
-        glBufferData(GL_ARRAY_BUFFER, (item->getVertices().size() * sizeof(float)), item->getVertices().data(),
+        glBufferData(GL_ARRAY_BUFFER, (item->getVertices().size() * 3 * sizeof(float)), item->getVertices().data(),
                      GL_DYNAMIC_DRAW);
 
     }
@@ -183,7 +183,7 @@ void GraphicsCore::render(std::vector<GraphicsModel*> objects) {
         glm::mat4 transform = glm::translate(Model, item->getPosition());*/
 
         glBindBuffer(GL_ARRAY_BUFFER, *vbo[i].data());
-        glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size()* 3 * sizeof(float)), item->getVertices().data());
+        glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size() * 3 * sizeof(float)), item->getVertices().data());
         glEnableVertexAttribArray(positionAttributeIndex);
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 

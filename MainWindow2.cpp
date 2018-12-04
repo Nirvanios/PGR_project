@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
 
   std::vector<GraphicsModel*> objects;
 
-  objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("small_ball.obj"));
+  objects.emplace_back(SimpleGraphicsModel::LoadFromOBJ("flag.obj"));
 
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
