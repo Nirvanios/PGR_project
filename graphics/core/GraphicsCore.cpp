@@ -189,22 +189,25 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects) {
 
   glEnable(GL_MULTISAMPLE);
 
+
   // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
   int i = 0;
   for (auto item : objects) {
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
     if (dynamic_cast<SimpleGraphicsModel *>(item) != nullptr) {
       modelView =
           camera.GetViewMatrix() * Model * reinterpret_cast<SimpleGraphicsModel *>(item)->getTranslationMatrix();
     } else {
       modelView = camera.GetViewMatrix() * Model;
+      glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size() * 3 * sizeof(float)), item->getVertices().data());
     }
     normalMV = glm::transpose(glm::inverse(modelView));
     glUniformMatrix4fv(normalMatGLUniform, 1, GL_FALSE, glm::value_ptr(normalMV));
 
     glUniformMatrix4fv(modelViewGLUniform, 1, GL_FALSE, glm::value_ptr(modelView));
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getVertices().size() * 3 * sizeof(float)), item->getVertices().data());
+
+
     glEnableVertexAttribArray(positionAttributeIndex);
     glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
@@ -292,4 +295,12 @@ PGRgraphics::GraphicsCore::~GraphicsCore() {
 
 PGRgraphics::GraphicsCore::GraphicsCore() {
     srand(time(NULL));
+}
+
+void PGRgraphics::GraphicsCore::handleModelFill() {
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void PGRgraphics::GraphicsCore::handleModelWireframe() {
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }

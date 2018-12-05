@@ -66,7 +66,12 @@ public:
     void handleCameraMove(SDL_Keycode);
 
     void handleMouseMove(float, float);
-  void handleMouseWheel(float yOffset);
+
+    void handleMouseWheel(float yOffset);
+
+    void handleModelFill();
+
+    void handleModelWireframe();
 
     void mainLoop();
 
