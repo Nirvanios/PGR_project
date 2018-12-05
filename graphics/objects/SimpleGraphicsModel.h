@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include "GraphicsModel.h"
+#include <algorithm>
 
 namespace PGRgraphics {
 

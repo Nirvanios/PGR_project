@@ -12,6 +12,7 @@
 #include <StdoutLogger.h>
 #include "SimpleGraphicsModel.h"
 #include "GraphicsCore.h"
+#include "Shader.h"
 
 bool PGRgraphics::GraphicsCore::init() {
   // Initialize SDL's Video subsystem
@@ -108,18 +109,14 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
   for (auto item : objects) {
     glGenBuffers(1, &tempVBO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-    vbo.push_back(tempVBO);
+        glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
+        vbo.push_back(tempVBO);
+        // Copy the vertex data from diamond to our buffer
+        glBufferData(GL_ARRAY_BUFFER, (item->getVertices().size() * 3 * sizeof(float)), item->getVertices().data(),
+                     GL_DYNAMIC_DRAW);
+        vboC.emplace_back(getRandColor());
+    }
 
-
-    // Copy the vertex data from diamond to our buffer
-    glBufferData(GL_ARRAY_BUFFER, (item->getVertices().size() * 3 * sizeof(float)), item->getVertices().data(),
-                 GL_DYNAMIC_DRAW);
-
-  }
-
-  // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
-  //glVertexAttribPointer(colorAttributeIndex, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
   GLuint tempEBO;
   for (auto item : objects) {
@@ -154,8 +151,13 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
   projGLUniform = shader.getUniformLocation("projection");
   normalMatGLUniform = shader.getUniformLocation("normalMat");
   lightPosUniform = shader.getUniformLocation("lightPos");
+    inputColorUniform = shader.getUniformLocation("inputColor");
 
   return true;
+}
+
+glm::vec3 PGRgraphics::GraphicsCore::getRandColor() {
+    return glm::vec3(rand()/(double)RAND_MAX, rand()/(double)RAND_MAX, rand()/(double)RAND_MAX);
 }
 
 void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects) {
@@ -210,7 +212,11 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects) {
     glEnableVertexAttribArray(normalAttributeIndex);
     glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
+
+        glUniform3fv(inputColorUniform, 1, glm::value_ptr(vboC[i]));
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
+        // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
     glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, NULL);
     i++;
@@ -225,9 +231,8 @@ void PGRgraphics::GraphicsCore::cleanup() {
 
   glDisableVertexAttribArray(0);
 
-  deleteBuffers(vbo);
-  deleteBuffers(vboC);
-  deleteBuffers(ebo);
+    deleteBuffers(vbo);
+    deleteBuffers(ebo);
 
   glDeleteVertexArrays(1, vao);
 
@@ -279,4 +284,12 @@ void PGRgraphics::GraphicsCore::setLightPos(const glm::vec3 &lightPos) {
 }
 void PGRgraphics::GraphicsCore::handleMouseWheel(float yOffset) {
   camera.ProcessMouseScroll(yOffset);
+}
+
+PGRgraphics::GraphicsCore::~GraphicsCore() {
+    cleanup();
+}
+
+PGRgraphics::GraphicsCore::GraphicsCore() {
+    srand(time(NULL));
 }

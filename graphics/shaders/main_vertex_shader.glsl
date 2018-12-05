@@ -1,7 +1,7 @@
 #version 150
 
 in vec3 inputPosition;
-in vec4 inputColor;
+uniform vec3 inputColor;
 in vec3 inputNormal;
 
 uniform mat4 projection, modelview, normalMat;
@@ -15,7 +15,7 @@ const vec3 specColor = vec3(1.0, 1.0, 1.0);
 void main(){
   gl_Position = projection * modelview * vec4(inputPosition, 1.0);
 
-  vec3 ambient = 0.2 * specColor;
+  vec3 ambient = 0.1 * specColor;
 
   // all following gemetric computations are performed in the
   // camera coordinate system (aka eye coordinates)
@@ -37,5 +37,5 @@ void main(){
 
   }
 
-  forFragColor = inputColor + vec4(lambertian*diffuseColor + specular*specColor + ambient, 1.0);
+  forFragColor = vec4(inputColor, 1.0) + vec4(lambertian*diffuseColor + specular*specColor + ambient, 1.0);
 }

@@ -32,7 +32,9 @@ class GraphicsModel {
   static glm::vec2 floatsToVec2(float x, float y) {
     return glm::vec2(x, y);
   }
- public:
+public:
+
+
   static GraphicsModel* LoadFromOBJ(std::string path) {
     std::cout << "Loading object from: " << path << std::endl;
     auto model = new GraphicsModel();
