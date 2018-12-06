@@ -3,6 +3,7 @@
 //
 
 #include "SnappableSpringGroup.h"
+#include <algorithm>
 
 void PGRsim::SnappableSpringGroup::snapAll() {
   for (auto spring : springs) {

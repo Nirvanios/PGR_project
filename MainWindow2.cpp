@@ -145,6 +145,12 @@ int main(int argc, char *argv[]) {
             case SDLK_p:
               air->setDragCoefficient(air->getDragCoefficient() + 0.05f);
               break;
+              case SDLK_n:
+                graphicsCore.handleModelFill();
+                break;
+              case SDLK_m:
+                graphicsCore.handleModelWireframe();
+                break;
             case SDLK_SPACE: is_simRunning = !is_simRunning;
               break;
           }
@@ -179,8 +185,6 @@ int main(int argc, char *argv[]) {
     }
     SDL_Delay(1);
   }
-
-  graphicsCore.cleanup();
 
   return 0;
 }
