@@ -124,6 +124,7 @@ int main(int argc, char *argv[]) {
   bool is_simRunning = false;
   bool enableCameraMovement = false;
   bool gravityEnabled = true;
+  int selectedObject = 0;
   SDL_Event event;
 
   uint32_t time1 = 0;
@@ -140,16 +141,16 @@ int main(int argc, char *argv[]) {
         case SDL_KEYDOWN:
           switch (event.key.keysym.sym) {
             case SDLK_LEFT:movableConstraint->setPosition(movableConstraint->getPosition() + glm::vec3(-0.05f, 0, 0));
-              //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
+              //simObjects[selectedObject]->setCurrentPosition(simObjects[selectedObject]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
               break;
             case SDLK_RIGHT:movableConstraint->setPosition(movableConstraint->getPosition() + glm::vec3(0.05f, 0, 0));
-              //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
+              //simObjects[selectedObject]->setCurrentPosition(simObjects[selectedObject]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
               break;
             case SDLK_UP:movableConstraint->setPosition(movableConstraint->getPosition() + glm::vec3(0, 0.05f, 0));
-              //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
+              //simObjects[selectedObject]->setCurrentPosition(simObjects[selectedObject]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
               break;
             case SDLK_DOWN:movableConstraint->setPosition(movableConstraint->getPosition() + glm::vec3(0, -0.05f, 0));
-              //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
+              //simObjects[selectedObject]->setCurrentPosition(simObjects[selectedObject]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
               break;
             case SDLK_w:
             case SDLK_s:
@@ -189,6 +190,9 @@ int main(int argc, char *argv[]) {
         case SDL_MOUSEBUTTONDOWN:
           if (event.button.button == SDL_BUTTON_LEFT) {
             enableCameraMovement = true;
+          }
+          else if(event.button.button == SDL_BUTTON_RIGHT){
+            selectedObject = graphicsCore.selectObject(event.button.x, event.button.y, objects);
           }
           break;
         case SDL_MOUSEBUTTONUP:

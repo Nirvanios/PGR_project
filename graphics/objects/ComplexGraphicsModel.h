@@ -7,6 +7,7 @@
 
 #include <StdoutLogger.h>
 #include "GraphicsModel.h"
+#include <algorithm>
 
 namespace PGRgraphics {
 
