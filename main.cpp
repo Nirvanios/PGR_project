@@ -31,7 +31,7 @@ std::vector<PGRgraphics::GraphicsModel *> objects;
 void prepareSimulation() {
   simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
 
-  simulation.prepareClothObject("big_cloth.obj");
+  simulation.prepareClothObject("medium_cloth.obj");
 
   simulation.addGlobalForce(gravity);
 
@@ -47,14 +47,14 @@ void prepareSimulation() {
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
           - 1])->getConstraints()[1]);
-
+/*
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
           - 1])->getConstraints()[2]);
 
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[3]);
+          - 1])->getConstraints()[3]);*/
 
 }
 
