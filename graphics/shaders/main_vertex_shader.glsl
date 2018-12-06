@@ -10,7 +10,7 @@ uniform vec3 lightPos;
 out vec4 forFragColor;
 
 const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
-const vec3 specColor = vec3(1.0, 1.0, 1.0);
+const vec3 specColor = vec3(0.4, 0.4, 0.4);
 
 uniform int select;
 

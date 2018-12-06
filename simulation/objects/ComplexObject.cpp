@@ -46,7 +46,7 @@ void PGRsim::ComplexObject::calcBoundingBox() {
 }
 
 void PGRsim::ComplexObject::addSpring(float stiffness, float damping, int vertexID1, int vertexID2) {
-  springs.emplace_back(new Spring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2]));
+  springs.emplace_back(new SnappableSpring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2], .8f));
 }
 
 void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexID) {

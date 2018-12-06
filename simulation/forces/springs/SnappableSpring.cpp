@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <StdoutLogger.h>
 #include "SnappableSpring.h"
 
 PGRsim::SnappableSpring::SnappableSpring(float stiffness,
@@ -22,7 +23,7 @@ void PGRsim::SnappableSpring::applyForce() {
   Spring::applyForce();
 
   // check for force limit
-  if (abs(force[0]) > snapLimit || abs(force[1]) > snapLimit || abs(force[2]) > snapLimit) {
+  if (abs(glm::length(force)) > snapLimit) {
     snapped = true;
   }
 }

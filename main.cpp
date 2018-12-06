@@ -21,6 +21,8 @@
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
 
+bool tearDemo = false;
+
 PGRsim::ClothSim simulation;
 
 std::vector<PGRsim::PointConstraint *> constraints;
@@ -47,20 +49,33 @@ void prepareSimulation() {
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
           - 1])->getConstraints()[1]);
-/*
+
+  simulation.prepareClothObject("big_cloth.obj");
+
+  constraints.emplace_back(
+      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+          - 1])->getConstraints()[0]);
+
+  constraints.emplace_back(
+      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+          - 1])->getConstraints()[1]);
+
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
           - 1])->getConstraints()[2]);
 
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[3]);*/
+          - 1])->getConstraints()[3]);
 
 }
 
 void updateSimulation() {
   static PGRsim::SimTime simTime = 0.0f;
   simTime += 1 / 60.0f;
+  if (tearDemo) {
+    simulation.tear();
+  }
   simulation.update(simTime);
 }
 
@@ -152,6 +167,8 @@ int main(int argc, char *argv[]) {
 
   uint32_t time1 = 0;
   uint32_t time2;
+
+  bool updatedSim = false;
   while (is_running) {
     while (SDL_PollEvent(&event)) {
       switch (event.type) {
@@ -204,6 +221,12 @@ int main(int argc, char *argv[]) {
                 break;
             case SDLK_SPACE: is_simRunning = !is_simRunning;
               break;
+            case SDLK_t:
+              if (tearDemo == true) {
+                simulation.stopTearDemo();
+              }
+              tearDemo = true;
+              break;
           }
           break;
         case SDL_MOUSEWHEEL:
@@ -231,19 +254,25 @@ int main(int argc, char *argv[]) {
           if (enableCameraMovement) {
             graphicsCore.handleMouseMove(event.motion.xrel, event.motion.yrel);
           } else if (moveWithCamera) {
-            handleMovement(selectedObjects, event.motion.xrel / 100.0, -event.motion.yrel / 100.0);
+            handleMovement(selectedObjects, event.motion.xrel / 100.0f, -event.motion.yrel / 100.0f);
           }
           break;
       }
     }
 
     time2 = SDL_GetTicks();
-    if (time2 - time1 > 16) {
-      time1 = time2;
-      graphicsCore.render(objects);
+
+    if (!updatedSim) {
       if (is_simRunning) {
         updateSimulation();
       }
+      updatedSim = true;
+    }
+
+    if (time2 - time1 > 16) {
+      time1 = time2;
+      graphicsCore.render(objects);
+      updatedSim = false;
     }
     SDL_Delay(1);
   }

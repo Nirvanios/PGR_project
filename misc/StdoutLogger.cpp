@@ -44,5 +44,10 @@ void StdoutLogger::log(int val) {
   std::cout << "integer" << ":\t" << val << std::endl;
 #endif
 }
+void StdoutLogger::log(glm::vec3 vector) {
+#ifdef PGR_LOG
+  std::cout << "vec3" << ":\t" << vector.x << " " << vector.y << " " << vector.z << std::endl;
+#endif
+}
 
 

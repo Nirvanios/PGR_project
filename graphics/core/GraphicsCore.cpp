@@ -65,9 +65,9 @@ bool PGRgraphics::GraphicsCore::init() {
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);
-    glFrontFace(GL_CW);
+  /*glEnable(GL_CULL_FACE);
+  glCullFace(GL_FRONT);
+  glFrontFace(GL_CW);*/
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
@@ -216,6 +216,10 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
         glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
         glBindBuffer(GL_ARRAY_BUFFER, nbo[i]);
+      if (dynamic_cast<SimpleGraphicsModel *>(item) == nullptr) {
+        glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getNormals().size() * 3 * sizeof(float)),
+                        item->getNormals().data());
+      }
         glEnableVertexAttribArray(normalAttributeIndex);
         glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 

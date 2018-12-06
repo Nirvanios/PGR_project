@@ -7,6 +7,7 @@
 
 #include "Logger.h"
 #include <iostream>
+#include <glm/glm.hpp>
 
 class StdoutLogger : public Logger {
  private:
@@ -25,6 +26,7 @@ class StdoutLogger : public Logger {
   void logTime(char *str) override;
   void log(int val) override;
 
+  void log(glm::vec3 vector);
 };
 
 #endif //PGR_PROJECT_STDOUTLOGGER_H

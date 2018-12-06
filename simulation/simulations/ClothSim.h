@@ -6,13 +6,28 @@
 #define PGR_PROJECT_CLOTHSIM_H
 
 #include <Simulation.h>
+#include <springs/LimitedSnappableSpringGroup.h>
+#include <constraints/PointConstraint.h>
+#include <vector>
+
 
 namespace PGRsim {
 
 class ClothSim : public Simulation {
  private:
+  std::vector<SnappableSpringGroup *> groups;
+
+  std::vector<PointConstraint *> tearDemoLeft;
+  std::vector<PointConstraint *> tearDemoRight;
+
  public:
   void prepareClothObject(std::string filePath);
+
+  void update(SimTime time) override;
+
+  void tear();
+
+  void stopTearDemo();
 };
 }
 
