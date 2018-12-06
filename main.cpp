@@ -23,50 +23,12 @@ auto air = new PGRsim::DragForce();
 
 PGRsim::ClothSim simulation;
 
-PGRsim::PointConstraint *movableConstraint;
+PGRsim::Constraint *movableConstraint;
 
 void prepareSimulation() {
+  simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
 
-
-  /*auto passive1 = new PGRsim::SimpleObject(1000.0f,
-                                           PGRsim::Passive,
-                                           PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("donut.obj"));
-  simulation.addObject(passive1);
-
-  auto model = PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("test.obj");
-  model->setPosition(glm::vec3(0, -8.0f, 0));
-  auto active1_onPassive1 = new PGRsim::SimpleObject(1.0f,
-                                                 PGRsim::Active,
-                                                     model);
-  simulation.addObject(active1_onPassive1);
-
-
-  float stiffness = 8.0f;
-  float damping = 0.1f;
-  simulation.addSpring(stiffness, damping, passive1,
-                       active1_onPassive1);*/
-
-  auto model = PGRgraphics::ComplexGraphicsModel::LoadFromOBJ("simple_cloth.obj");
-  auto simObject = new PGRsim::ComplexObject(1.0f, model);
-  simObject->addConstraint(glm::vec3(-1, 0.984808, -0.173648), 2);
-  movableConstraint = dynamic_cast<PGRsim::PointConstraint *>(simObject->getConstraints()[0]);
-
-  simObject->initSprings(2.0f, 0.02f);
-  simulation.addObject(simObject);
-
-  simObject->addConstraint(glm::vec3(1, 0.984808, -0.173648), 3);
-
-  for (auto constr : simObject->getConstraints()) {
-    simulation.addConstraint(constr);
-  }
-
-  for (auto spring : simObject->getSprings()) {
-    simulation.addSpring(spring);
-  }
-
-  for (auto simVertex : simObject->getSimVertices()) {
-    simulation.addObject(simVertex);
-  }
+  simulation.prepareClothObject("big_cloth.obj");
 
   simulation.addGlobalForce(gravity);
 
@@ -75,6 +37,8 @@ void prepareSimulation() {
 
   simulation.setConstraintIterations(10);
 
+  movableConstraint =
+      ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size() - 1])->getConstraints()[0];
 
 }
 
@@ -139,16 +103,24 @@ int main(int argc, char *argv[]) {
           break;
         case SDL_KEYDOWN:
           switch (event.key.keysym.sym) {
-            case SDLK_LEFT:movableConstraint->setPosition(movableConstraint->getPosition() + glm::vec3(-0.05f, 0, 0));
+            case SDLK_LEFT:
+              ((PGRsim::PointConstraint *) movableConstraint)->setPosition(
+                  ((PGRsim::PointConstraint *) movableConstraint)->getPosition() + glm::vec3(-0.05f, 0, 0));
               //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
               break;
-            case SDLK_RIGHT:movableConstraint->setPosition(movableConstraint->getPosition() + glm::vec3(0.05f, 0, 0));
+            case SDLK_RIGHT:
+              ((PGRsim::PointConstraint *) movableConstraint)->setPosition(
+                  ((PGRsim::PointConstraint *) movableConstraint)->getPosition() + glm::vec3(0.05f, 0, 0));
               //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
               break;
-            case SDLK_UP:movableConstraint->setPosition(movableConstraint->getPosition() + glm::vec3(0, 0.05f, 0));
+            case SDLK_UP:
+              ((PGRsim::PointConstraint *) movableConstraint)->setPosition(
+                  ((PGRsim::PointConstraint *) movableConstraint)->getPosition() + glm::vec3(0, 0.05f, 0));
               //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
               break;
-            case SDLK_DOWN:movableConstraint->setPosition(movableConstraint->getPosition() + glm::vec3(0, -0.05f, 0));
+            case SDLK_DOWN:
+              ((PGRsim::PointConstraint *) movableConstraint)->setPosition(
+                  ((PGRsim::PointConstraint *) movableConstraint)->getPosition() + glm::vec3(0, -0.05f, 0));
               //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
               break;
             case SDLK_w:

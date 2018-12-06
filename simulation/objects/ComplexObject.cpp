@@ -2,6 +2,7 @@
 // Created by Petr Flajsingr on 2018-12-03.
 //
 
+#include <springs/SnappableSpring.h>
 #include "ComplexObject.h"
 
 PGRsim::ComplexObject::ComplexObject(float mass, PGRgraphics::ComplexGraphicsModel *model)
@@ -56,30 +57,7 @@ void PGRsim::ComplexObject::addConstraint(float length, int vertexID1, int verte
 }
 
 void PGRsim::ComplexObject::initSprings(float stiffness, float damping) {
-  int mod = 0;
-  for (int i = 0; i < model->getVertexIndices().size(); i += 3) {
-    addSpring(stiffness, damping, model->getVertexIndices()[i], model->getVertexIndices()[i + 1]);
-    addConstraint(
-        glm::distance(model->getVertices()[model->getVertexIndices()[i]],
-                      model->getVertices()[model->getVertexIndices()[i + 1]]),
-        model->getVertexIndices()[i],
-        model->getVertexIndices()[i + 1]);
 
-    addSpring(stiffness, damping, model->getVertexIndices()[i + 1], model->getVertexIndices()[i + 2]);
-    addConstraint(
-        glm::distance(model->getVertices()[model->getVertexIndices()[i]],
-                      model->getVertices()[model->getVertexIndices()[i + 1]]),
-        model->getVertexIndices()[i + 1],
-        model->getVertexIndices()[i + 2]);
-
-    addSpring(stiffness, damping, model->getVertexIndices()[i + 2], model->getVertexIndices()[i]);
-    addConstraint(
-        glm::distance(model->getVertices()[model->getVertexIndices()[i]],
-                      model->getVertices()[model->getVertexIndices()[i + 1]]),
-        model->getVertexIndices()[i + 2],
-        model->getVertexIndices()[i]);
-    mod++;
-  }
 }
 
 void PGRsim::ComplexObject::recalcNormals() {

@@ -12,8 +12,7 @@ namespace PGRsim {
 class ClothSim : public Simulation {
  private:
  public:
-
-  void addObject(SimObject *object) override;
+  void prepareClothObject(std::string filePath);
 };
 }
 
