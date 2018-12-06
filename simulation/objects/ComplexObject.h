@@ -44,8 +44,6 @@ class ComplexObject : public SimObjectWithModel, public Collision::CollisionObje
 
   void calcBoundingBox() override;
 
-  void initSprings(float stiffness, float damping);
-
   void addSpring(float stiffness, float damping, int vertexID1, int vertexID2);
 
   void addConstraint(const glm::vec3 &position, int vertexID);
@@ -56,7 +54,7 @@ class ComplexObject : public SimObjectWithModel, public Collision::CollisionObje
     return simVertices;
   }
 
-  void recalcNormals();
+  void removeIndices(int vertexID);
 };
 }
 

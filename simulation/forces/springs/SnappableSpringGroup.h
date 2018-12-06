@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <constraints/Constraint.h>
+#include <ComplexObject.h>
 #include "SnappableSpring.h"
 
 namespace PGRsim {
@@ -14,6 +15,12 @@ class SnappableSpringGroup {
  private:
   std::vector<SnappableSpring *> springs;
   std::vector<Constraint *> constraints;
+
+  int vertexID;
+
+  ComplexObject *owner;
+
+  bool snapped = false;
 
  protected:
   void snapAll();
@@ -24,6 +31,13 @@ class SnappableSpringGroup {
   void addConstraint(Constraint *constraint);
 
   virtual bool check();
+
+  void setVertexID(int id);
+
+  int getVertexID();
+
+  ComplexObject *getOwner() const;
+  void setOwner(ComplexObject *owner);
 };
 }
 

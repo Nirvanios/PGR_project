@@ -56,11 +56,21 @@ void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexI
 void PGRsim::ComplexObject::addConstraint(float length, int vertexID1, int vertexID2) {
   constraints.emplace_back(new LengthConstraint(simVertices[vertexID1], simVertices[vertexID2], length));
 }
+void PGRsim::ComplexObject::removeIndices(int vertexID) {
+  std::vector<int> newIndices;
+  auto oldIndices = model->getVertexIndices();
+  newIndices.reserve(oldIndices.size());
 
-void PGRsim::ComplexObject::initSprings(float stiffness, float damping) {
+  for (int i = 0; i < oldIndices.size(); i += 3) {
+    if (oldIndices[i] == vertexID ||
+        oldIndices[i + 1] == vertexID ||
+        oldIndices[i + 2] == vertexID) {
+      continue;
+    }
 
-}
-
-void PGRsim::ComplexObject::recalcNormals() {
-
+    newIndices.emplace_back(oldIndices[i]);
+    newIndices.emplace_back(oldIndices[i + 1]);
+    newIndices.emplace_back(oldIndices[i + 2]);
+  }
+  model->setVertexIndices(newIndices);
 }

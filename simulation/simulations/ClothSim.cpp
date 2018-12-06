@@ -130,6 +130,9 @@ void PGRsim::ClothSim::prepareClothObject(std::string filePath) {
                                    index + 2 * width);
         group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
       }
+
+      group->setVertexID(index);
+      group->setOwner(clothObject);
       groups.emplace_back(group);
     }
   }
@@ -152,7 +155,12 @@ void PGRsim::ClothSim::prepareClothObject(std::string filePath) {
 }
 void PGRsim::ClothSim::update(PGRsim::SimTime time) {
   for (auto group : groups) {
-    group->check();
+    if (group->check()) {
+      group->getOwner()->removeIndices(group->getVertexID());
+      objects.erase(std::find(objects.begin(),
+                              objects.end(),
+                              group->getOwner()->getSimVertices()[group->getVertexID()]));
+    }
   }
 
   PGRsim::Simulation::update(time);

@@ -99,6 +99,10 @@ public:
   const std::vector<int> &getVertexIndices() const {
     return vertexIndices;
   }
+
+  void setVertexIndices(const std::vector<int> &vertexIndices) {
+    GraphicsModel::vertexIndices = vertexIndices;
+  }
 };
 }
 
