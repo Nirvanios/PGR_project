@@ -343,12 +343,18 @@ int PGRgraphics::GraphicsCore::selectObject(int x, int y, std::vector<GraphicsMo
 
     if(id <= vboC.size()) {
         if(selectedObject != -1) {
-            vboC[selectedObject] = getRandColor();
+            vboC[selectedObject] = previousColor;
         }
         selectedObject = id;
+        previousColor = vboC[id];
         vboC[id] = glm::vec3(1, 0, 0);
+        return selectedObject;
     }
-    return selectedObject;
+    else{
+        return -1;
+    }
+
+
 }
 
 glm::vec3 PGRgraphics::GraphicsCore::getIDColor(GLuint ID) {

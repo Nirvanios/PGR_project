@@ -30,6 +30,7 @@ private:
     Shader shader;
 
     int selectedObject = -1;
+    glm::vec3 previousColor;
 
     const GLuint positionAttributeIndex = 0, colorAttributeIndex = 1, normalAttributeIndex = 2;
 
