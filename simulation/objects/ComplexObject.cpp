@@ -18,6 +18,7 @@ void PGRsim::ComplexObject::update(PGRsim::SimTime time) {
   for (int i = 0; i < model->getVertices().size(); i++) {
     model->setVertex(i, simVertices[i]->getCurrectPosition());
   }
+  model->computeNormals();
 }
 
 void PGRsim::ComplexObject::calcBoundingBox() {

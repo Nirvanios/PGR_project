@@ -16,6 +16,26 @@ class ComplexGraphicsModel : public GraphicsModel {
  protected:
  public:
 
+    void computeNormals(){
+        std::for_each(normals.begin(), normals.end(),
+                      [](glm::vec3 &value) {
+                          value = glm::vec3(0.0f);
+                      });
+
+        for(int i = 0; i < indices.size(); i += 3){
+            glm::vec3 tmpVec = glm::normalize(glm::cross(vertices[indices[i+1].vertex_index] - vertices[indices[i].vertex_index], vertices[indices[i+2].vertex_index] - vertices[indices[i].vertex_index]));
+            normals[indices[i].vertex_index] += tmpVec;
+            normals[indices[i+1].vertex_index] += tmpVec;
+            normals[indices[i+2].vertex_index] += tmpVec;
+        }
+
+        std::for_each(normals.begin(), normals.end(),
+                      [](glm::vec3 &value) {
+                          value = glm::normalize(value);
+                      });
+
+ }
+
   static ComplexGraphicsModel *LoadFromOBJ(std::string path) {
     std::string msg = "Loading object from: " + path;
     StdoutLogger::getInstance().logTime(msg);
