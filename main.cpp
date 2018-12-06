@@ -92,6 +92,22 @@ void handleMovement(std::vector<int> &selectedObjects, Dir direction) {
   }
 }
 
+void handleMovement(std::vector<int> &selectedObjects, float x, float y) {
+  if (selectedObjects.empty()) {
+    return;
+  }
+
+  for (auto selectedObject : selectedObjects) {
+    auto res = std::find(constraintModelIDs.begin(), constraintModelIDs.end(), selectedObject);
+    if (res != std::end(constraintModelIDs)) {
+      long index = std::distance(constraintModelIDs.begin(), res);
+      constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(x, y, 0));
+
+      dynamic_cast<PGRgraphics::SimpleGraphicsModel *>(objects[*res])->setPosition(constraints[index]->getPosition());
+    }
+  }
+}
+
 int main(int argc, char *argv[]) {
   PGRgraphics::GraphicsCore graphicsCore;
 
@@ -130,6 +146,7 @@ int main(int argc, char *argv[]) {
   bool is_simRunning = false;
   bool enableCameraMovement = false;
   bool gravityEnabled = true;
+  bool moveWithCamera = false;
   std::vector<int> selectedObjects;
   SDL_Event event;
 
@@ -197,6 +214,7 @@ int main(int argc, char *argv[]) {
             enableCameraMovement = true;
           }
           else if(event.button.button == SDL_BUTTON_RIGHT){
+            moveWithCamera = true;
             auto tmp = graphicsCore.selectObject(event.button.x, event.button.y, objects);
             if (tmp != -1) {
               selectedObjects.emplace_back(tmp);
@@ -206,10 +224,14 @@ int main(int argc, char *argv[]) {
         case SDL_MOUSEBUTTONUP:
           if (event.button.button == SDL_BUTTON_LEFT) {
             enableCameraMovement = false;
+          } else if (event.button.button == SDL_BUTTON_RIGHT) {
+            moveWithCamera = false;
           }
         case SDL_MOUSEMOTION:
           if (enableCameraMovement) {
             graphicsCore.handleMouseMove(event.motion.xrel, event.motion.yrel);
+          } else if (moveWithCamera) {
+            handleMovement(selectedObjects, event.motion.xrel / 100.0, -event.motion.yrel / 100.0);
           }
           break;
       }
