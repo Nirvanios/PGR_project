@@ -12,6 +12,8 @@ out vec4 forFragColor;
 const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
 
+uniform int select;
+
 void main(){
   gl_Position = projection * modelview * vec4(inputPosition, 1.0);
 
@@ -36,6 +38,10 @@ void main(){
     specular *= lambertian;
 
   }
-
+    if(select == 0){
   forFragColor = vec4(inputColor, 1.0) + vec4(lambertian*diffuseColor + specular*specColor + ambient, 1.0);
+  }
+  else {
+    forFragColor = vec4(inputColor, 1.0);
+  }
 }

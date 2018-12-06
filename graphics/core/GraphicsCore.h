@@ -20,6 +20,7 @@ private:
     GLint modelViewGLUniform;
     GLint lightPosUniform;
     GLuint inputColorUniform;
+    GLuint selectUniform;
 
     std::string programName;
     SDL_Window *mainWindow;
@@ -28,6 +29,8 @@ private:
     Camera camera;
     Shader shader;
 
+    int selectedObject = -1;
+
     const GLuint positionAttributeIndex = 0, colorAttributeIndex = 1, normalAttributeIndex = 2;
 
     GLuint vao[1];
@@ -35,6 +38,7 @@ private:
     std::vector<glm::vec3> vboC;
     std::vector<GLuint> ebo;
     std::vector<GLuint> nbo;
+    std::vector<glm::vec3> colorIDs;
 
     glm::vec3 lightPos = glm::vec3(0, -2, 0);
 public:
@@ -51,6 +55,10 @@ private:
 
     glm::vec3 getRandColor();
 
+    glm::vec3 getIDColor(GLuint ID);
+
+
+
 public:
     GraphicsCore();
 
@@ -59,7 +67,7 @@ public:
 
     bool setupBufferObjects(std::vector<GraphicsModel *> &);
 
-    void render(std::vector<GraphicsModel *> &);
+    void render(std::vector<GraphicsModel *> &, bool selectRender = false);
 
     void handleResize();
 
@@ -79,6 +87,7 @@ public:
 
     void setLightPos(const glm::vec3 &lightPos);
 
+    int selectObject(int x, int y, std::vector<GraphicsModel *> &objects);
 };
 }
 #endif //PGR_PROJECT_GRAPHICSCORE_H
