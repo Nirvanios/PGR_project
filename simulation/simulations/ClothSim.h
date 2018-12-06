@@ -28,6 +28,8 @@ class ClothSim : public Simulation {
   void tear();
 
   void stopTearDemo();
+
+  void deleteDemoConstraints();
 };
 }
 

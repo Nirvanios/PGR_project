@@ -27,6 +27,8 @@ class StdoutLogger : public Logger {
   void log(int val) override;
 
   void log(glm::vec3 vector);
+
+  void log(float value);
 };
 
 #endif //PGR_PROJECT_STDOUTLOGGER_H

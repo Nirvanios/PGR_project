@@ -15,8 +15,8 @@ void PGRsim::ClothSim::prepareClothObject(std::string filePath) {
   auto vertices = clothObject->getSimVertices();
 
   if (tmp == 0) {
-    clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, 1), 0);
-    clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, -1.000000), 272);
+    //clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, 1), 0);
+    //clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, -1.000000), 272);
   } else {
     clothObject->addConstraint(glm::vec3(-4.37113, 4.24692, 0), 0);
     clothObject->addConstraint(glm::vec3(4.12272, 4.24692, 0), 4160);
@@ -182,4 +182,7 @@ void PGRsim::ClothSim::stopTearDemo() {
   for (auto constraint : tearDemoRight) {
     constraint->disable();
   }
+}
+void PGRsim::ClothSim::deleteDemoConstraints() {
+
 }

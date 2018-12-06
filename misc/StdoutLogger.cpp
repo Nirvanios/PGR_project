@@ -49,5 +49,10 @@ void StdoutLogger::log(glm::vec3 vector) {
   std::cout << "vec3" << ":\t" << vector.x << " " << vector.y << " " << vector.z << std::endl;
 #endif
 }
+void StdoutLogger::log(float value) {
+#ifdef PGR_LOG
+  std::cout << "float" << ":\t" << value << std::endl;
+#endif
+}
 
 

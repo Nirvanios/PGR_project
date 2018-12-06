@@ -17,6 +17,7 @@
 #include <objects/ComplexGraphicsModel.h>
 #include <ClothSim.h>
 #include <ComplexObject.h>
+#include <LocationLimit.h>
 
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
@@ -31,6 +32,8 @@ std::vector<int> constraintModelIDs;
 std::vector<PGRgraphics::GraphicsModel *> objects;
 
 void prepareSimulation() {
+  auto floorLimit = new PGRsim::LocationLimit(-9.98f, PGRsim::Yplus);
+  simulation.addLateGlobalForce(floorLimit);
   simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
 
   simulation.prepareClothObject("medium_cloth.obj");
@@ -42,13 +45,13 @@ void prepareSimulation() {
 
   simulation.setConstraintIterations(10);
 
-  constraints.emplace_back(
+  /*constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
           - 1])->getConstraints()[0]);
 
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[1]);
+          - 1])->getConstraints()[1]);*/
 
   simulation.prepareClothObject("big_cloth.obj");
 
@@ -224,6 +227,7 @@ int main(int argc, char *argv[]) {
             case SDLK_t:
               if (tearDemo == true) {
                 simulation.stopTearDemo();
+                simulation.deleteDemoConstraints();
               }
               tearDemo = true;
               break;
