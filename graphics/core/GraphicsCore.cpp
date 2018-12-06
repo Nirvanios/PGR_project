@@ -136,7 +136,7 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                      item->getVertexIndices().size() * sizeof(int),
                      item->getVertexIndices().data(),
-                     GL_STATIC_DRAW);
+                     GL_DYNAMIC_DRAW);
         ebo.push_back(tempEBO);
     }
 
@@ -233,7 +233,12 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
             glUniform1i(selectUniform, 1);
         }
 
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
+        if (dynamic_cast<SimpleGraphicsModel *>(item) == nullptr) {
+            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, item->getVertexIndices().size() * sizeof(int),
+                            item->getVertexIndices().data());
+        }
         // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
         glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, NULL);
