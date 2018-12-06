@@ -1,9 +1,9 @@
 #version 150
 
 in vec3 inputPosition;
-uniform vec3 inputColor;
 in vec3 inputNormal;
 
+uniform vec3 inputColor;
 uniform mat4 projection, modelview, normalMat;
 uniform vec3 lightPos;
 

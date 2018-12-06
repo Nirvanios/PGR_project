@@ -51,8 +51,8 @@ public:
 
         // Bind the location of our attributes
         BindAttributeLocation(0, "inputPosition");
-        BindAttributeLocation(1, "inputColor");
-        BindAttributeLocation(2, "inputNormal");
+        BindAttributeLocation(2, "inputColor");
+        BindAttributeLocation(1, "inputNormal");
 
         if (!LoadVertexShader("../graphics/shaders/main_vertex_shader.glsl"))
             return false;

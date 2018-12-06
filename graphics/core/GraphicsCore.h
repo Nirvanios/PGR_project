@@ -32,7 +32,7 @@ private:
     int selectedObject = -1;
     glm::vec3 previousColor;
 
-    const GLuint positionAttributeIndex = 0, colorAttributeIndex = 1, normalAttributeIndex = 2;
+  const GLuint positionAttributeIndex = 0, colorAttributeIndex = 2, normalAttributeIndex = 1;
 
     GLuint vao[1];
     std::vector<GLuint> vbo;
