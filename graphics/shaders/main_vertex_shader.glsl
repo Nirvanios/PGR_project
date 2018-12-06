@@ -32,9 +32,8 @@ void main(){
   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
   vec3 specular = specularStrength * spec * lightColor;
 
-    if(select == 0){
-
-  forFragColor = vec4(((ambient + diffuse + specular) * inputColor), 1);
+  if(select == 0){
+    forFragColor = vec4(((ambient + diffuse + specular) * inputColor), 1);
   }
   else {
     forFragColor = vec4(inputColor, 1.0);

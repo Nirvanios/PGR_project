@@ -40,7 +40,7 @@ private:
     std::vector<GLuint> nbo;
     std::vector<glm::vec3> colorIDs;
 
-    glm::vec3 lightPos = glm::vec3(0, 30, 0);
+    glm::vec3 lightPos = glm::vec3(-10, 4, 2);
 public:
     virtual ~GraphicsCore();
 
