@@ -13,7 +13,7 @@
 #include "Integrator.h"
 #include "EulerIntegrator.h"
 #include "VerletIntegrator.h"
-#include "Constraint.h"
+#include "constraints/Constraint.h"
 
 namespace PGRsim {
 class Simulation {

@@ -67,7 +67,7 @@ public:
 
     bool LoadVertexShader(const std::string &filename)
     {
-        std::cout << "Linking Vertex shader" << std::endl;
+      std::cout << "Linking SimVertex shader" << std::endl;
 
         // Read file as std::string
         std::string str = ReadFile(filename.c_str());

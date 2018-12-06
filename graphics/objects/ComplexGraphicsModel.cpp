@@ -3,3 +3,7 @@
 //
 
 #include "ComplexGraphicsModel.h"
+
+void PGRgraphics::ComplexGraphicsModel::setVertex(int index, glm::vec3 value) {
+  vertices[index] = value;
+}

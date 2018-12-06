@@ -34,7 +34,8 @@ class GraphicsModel {
   }
  public:
   static GraphicsModel* LoadFromOBJ(std::string path) {
-    std::cout << "Loading object from: " << path << std::endl;
+    std::string msg = "Loading object from: " + path;
+    StdoutLogger::getInstance().logTime(msg);
     auto model = new GraphicsModel();
 
     tinyobj::attrib_t attribs;

@@ -262,7 +262,7 @@ typedef struct {
   path_t path;
 } shape_t;
 
-// Vertex attributes
+// SimVertex attributes
 typedef struct {
   std::vector<real_t> vertices;   // 'v'
   std::vector<real_t> normals;    // 'vn'
@@ -2218,7 +2218,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
   if (greatest_v_idx >= static_cast<int>(v.size() / 3)) {
     if (warn) {
       std::stringstream ss;
-      ss << "Vertex indices out of bounds (line " << line_num << ".)\n"
+      ss << "SimVertex indices out of bounds (line " << line_num << ".)\n"
          << std::endl;
       (*warn) += ss.str();
     }
@@ -2226,7 +2226,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
   if (greatest_vn_idx >= static_cast<int>(vn.size() / 3)) {
     if (warn) {
       std::stringstream ss;
-      ss << "Vertex normal indices out of bounds (line " << line_num << ".)\n"
+      ss << "SimVertex normal indices out of bounds (line " << line_num << ".)\n"
          << std::endl;
       (*warn) += ss.str();
     }
@@ -2234,7 +2234,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
   if (greatest_vt_idx >= static_cast<int>(vt.size() / 2)) {
     if (warn) {
       std::stringstream ss;
-      ss << "Vertex texcoord indices out of bounds (line " << line_num << ".)\n"
+      ss << "SimVertex texcoord indices out of bounds (line " << line_num << ".)\n"
          << std::endl;
       (*warn) += ss.str();
     }

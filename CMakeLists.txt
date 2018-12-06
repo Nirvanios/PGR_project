@@ -26,15 +26,15 @@ include_directories(simulation/simulations simulation/base
 add_executable(Render_test MainWindow2.cpp
         graphics/objects/SimpleGraphicsModel.cpp
         graphics/objects/SimpleGraphicsModel.h
-        simulation/base/SimObject.h simulation/objects/SimpleObject.cpp simulation/objects/Constraint.h
+        simulation/base/SimObject.h simulation/objects/SimpleObject.cpp simulation/forces/constraints/Constraint.h
         simulation/common/common.h simulation/objects/SimpleObject.h
         simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
         simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/springs/Spring.cpp
         simulation/forces/springs/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
         simulation/integrators/EulerIntegrator.h simulation/simulations/Simulation.cpp simulation/simulations/Simulation.h
-        simulation/objects/PointConstraint.cpp simulation/objects/PointConstraint.h simulation/objects/LengthConstraint.cpp
-        simulation/objects/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
-        simulation/objects/Vertex.cpp simulation/objects/Vertex.h simulation/simulations/SoftBodySimulation.cpp
+        simulation/forces/constraints/PointConstraint.cpp simulation/forces/constraints/PointConstraint.h simulation/forces/constraints/LengthConstraint.cpp
+        simulation/forces/constraints/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
+        simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
         simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
         simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h
         simulation/simulations/GoalSoftBodySimulation.cpp

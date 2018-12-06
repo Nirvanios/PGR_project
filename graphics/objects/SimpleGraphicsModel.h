@@ -7,6 +7,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <StdoutLogger.h>
 #include "GraphicsModel.h"
 
 namespace PGRgraphics {
@@ -18,7 +19,8 @@ class SimpleGraphicsModel : public GraphicsModel {
   glm::vec3 position;
  public:
   static SimpleGraphicsModel *LoadFromOBJ(std::string path) {
-    std::cout << "Loading object from: " << path << std::endl;
+    std::string msg = "Loading object from: " + path;
+    StdoutLogger::getInstance().logTime(msg);
     auto model = new SimpleGraphicsModel();
 
     tinyobj::attrib_t attribs;

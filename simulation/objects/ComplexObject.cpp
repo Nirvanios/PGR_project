@@ -5,10 +5,18 @@
 #include "ComplexObject.h"
 
 PGRsim::ComplexObject::ComplexObject(float mass, PGRgraphics::ComplexGraphicsModel *model)
-    : SimObject(mass, Active), model(model) {}
+    : SimObject(mass, Active), model(model) {
+  simVertices.reserve(model->getVertices().size());
+  float vertexMass = mass / model->getVertices().size();
+  for (int i = 0; i < model->getVertices().size(); i++) {
+    simVertices.emplace_back(new SimVertex(vertexMass, Active, i, model->getVertices()[i]));
+  }
+}
 
 void PGRsim::ComplexObject::update(PGRsim::SimTime time) {
-  // TODO: nastavit vertexy při kroku simulace
+  for (int i = 0; i < model->getVertices().size(); i++) {
+    model->setVertex(i, simVertices[i]->getCurrectPosition());
+  }
 }
 
 void PGRsim::ComplexObject::calcBoundingBox() {
@@ -31,4 +39,16 @@ void PGRsim::ComplexObject::calcBoundingBox() {
       boundingBox.pointB.z = model->getVertices()[i + 2].z;
     }
   }
+}
+
+void PGRsim::ComplexObject::addSpring(float stiffness, float damping, int vertexID1, int vertexID2) {
+  springs.emplace_back(new Spring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2]));
+}
+
+void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexID) {
+  constraints.emplace_back(new PointConstraint(position, simVertices[vertexID]));
+}
+
+void PGRsim::ComplexObject::addConstraint(float length, int vertexID1, int vertexID2) {
+  constraints.emplace_back(new LengthConstraint(simVertices[vertexID1], simVertices[vertexID2], length));
 }

@@ -7,8 +7,10 @@
 #include <SimObject.h>
 #include <collisions/CollisionObject.h>
 #include <ComplexObject.h>
-#include "Vertex.h"
-#include "Constraint.h"
+#include "SimVertex.h"
+#include "constraints/Constraint.h"
+#include "constraints/PointConstraint.h"
+#include "constraints/LengthConstraint.h"
 #include <vector>
 #include <springs/Spring.h>
 #include <ComplexGraphicsModel.h>
@@ -18,16 +20,10 @@ namespace PGRsim {
 class ComplexObject : public SimObject, Collision::CollisionObject {
  protected:
   PGRgraphics::ComplexGraphicsModel *model;
-  std::vector<Vertex*> simVertices;
+  std::vector<SimVertex *> simVertices;
 
   std::vector<Constraint*> constraints;
   std::vector<Spring*> springs;
-
-  void initVertices();
-
-  void initConstraints();
-
-  void initSprings();
  public:
   ComplexObject(float mass, PGRgraphics::ComplexGraphicsModel *model);
 
@@ -46,6 +42,12 @@ class ComplexObject : public SimObject, Collision::CollisionObject {
   void update(SimTime time) override;
 
   void calcBoundingBox() override;
+
+  void addSpring(float stiffness, float damping, int vertexID1, int vertexID2);
+
+  void addConstraint(const glm::vec3 &position, int vertexID);
+
+  void addConstraint(float length, int vertexID1, int vertexID2);
 };
 }
 

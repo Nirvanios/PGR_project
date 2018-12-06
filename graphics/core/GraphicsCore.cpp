@@ -96,10 +96,10 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
 
   GLuint tempVBO;
 
-  // Generate and assign a Vertex Array Object to our handle
+  // Generate and assign a SimVertex Array Object to our handle
   glGenVertexArrays(1, vao);
 
-  // Bind our Vertex Array Object as the current used object
+  // Bind our SimVertex Array Object as the current used object
   glBindVertexArray(vao[0]);
 
   // Positions

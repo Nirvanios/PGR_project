@@ -12,13 +12,13 @@ namespace PGRsim {
 /**
  * Simulation of a single vertex which may be a part of a more complicated object.
  */
-class Vertex : public SimObject {
+class SimVertex : public SimObject {
  private:
   int vertexId;
 
  protected:
  public:
-  Vertex(float mass, SimObjectType objectType, int vertexId, glm::vec3 position);
+  SimVertex(float mass, SimObjectType objectType, int vertexId, glm::vec3 position);
 
   void setVertexId(int id) {
     this->vertexId = id;

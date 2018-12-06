@@ -8,6 +8,10 @@
 
 namespace PGRsim {
 
+enum ConstraintType {
+  Point, Length
+};
+
 /**
  * Interface for constraints that are checked at the end of each time step.
  */
