@@ -33,7 +33,7 @@ std::vector<PGRgraphics::GraphicsModel *> objects;
 
 void prepareSimulation() {
   auto floorLimit = new PGRsim::LocationLimit(-9.98f, PGRsim::Yplus);
-  simulation.addLateGlobalForce(floorLimit);
+  simulation.addGlobalForce(floorLimit);
   simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
 
   simulation.prepareClothObject("medium_cloth.obj");

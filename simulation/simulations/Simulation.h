@@ -20,7 +20,6 @@ class Simulation {
  protected:
   std::vector<SimObject *> objects;
   std::vector<ForceGenerator *> forces;
-  std::vector<ForceGenerator *> lateForces;
   std::vector<Spring *> springs;
   std::vector<Constraint *> constraints;
   int constraintIterations;
