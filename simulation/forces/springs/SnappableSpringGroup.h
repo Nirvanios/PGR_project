@@ -6,18 +6,22 @@
 #define PGR_PROJECT_SNAPPABLESPRINGGROUP_H
 
 #include <vector>
+#include <constraints/Constraint.h>
 #include "SnappableSpring.h"
 
 namespace PGRsim {
 class SnappableSpringGroup {
  private:
   std::vector<SnappableSpring *> springs;
+  std::vector<Constraint *> constraints;
 
  protected:
   void snapAll();
 
  public:
   void addSpring(SnappableSpring *spring);
+
+  void addConstraint(Constraint *constraint);
 
   virtual bool check();
 };

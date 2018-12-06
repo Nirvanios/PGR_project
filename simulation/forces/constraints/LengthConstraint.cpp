@@ -9,6 +9,9 @@ PGRsim::LengthConstraint::LengthConstraint(PGRsim::SimObject *objectA, PGRsim::S
     : objectA(objectA), objectB(objectB), length(length), currentLength(length) {}
 
 void PGRsim::LengthConstraint::satisfyConstraint() {
+  if (!isEnabled()) {
+    return;
+  }
   direction = objectB->getCurrectPosition() - objectA->getCurrectPosition();
 
   currentLength = glm::length(direction);

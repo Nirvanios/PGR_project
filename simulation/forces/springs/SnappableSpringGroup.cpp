@@ -9,6 +9,10 @@ void PGRsim::SnappableSpringGroup::snapAll() {
   for (auto spring : springs) {
     spring->snapped = true;
   }
+
+  for (auto constraint : constraints) {
+    constraint->disable();
+  }
 }
 
 void PGRsim::SnappableSpringGroup::addSpring(PGRsim::SnappableSpring *spring) {
@@ -25,4 +29,7 @@ bool PGRsim::SnappableSpringGroup::check() {
     return true;
   }
   return false;
+}
+void PGRsim::SnappableSpringGroup::addConstraint(PGRsim::Constraint *constraint) {
+  constraints.emplace_back(constraint);
 }

@@ -55,6 +55,8 @@ class ComplexObject : public SimObjectWithModel, public Collision::CollisionObje
   const std::vector<SimVertex *> &getSimVertices() {
     return simVertices;
   }
+
+  void recalcNormals();
 };
 }
 

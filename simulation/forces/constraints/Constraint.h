@@ -16,8 +16,22 @@ enum ConstraintType {
  * Interface for constraints that are checked at the end of each time step.
  */
 class Constraint {
+ private:
+  bool enabled = true;
  public:
   virtual void satisfyConstraint() = 0;
+
+  void enable() {
+    enabled = true;
+  }
+
+  void disable() {
+    enabled = false;
+  }
+
+  bool isEnabled() {
+    return enabled;
+  }
 };
 }
 

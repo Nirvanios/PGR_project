@@ -48,11 +48,11 @@ void prepareSimulation() {
 
   auto model = PGRgraphics::ComplexGraphicsModel::LoadFromOBJ("simple_cloth.obj");
   auto simObject = new PGRsim::ComplexObject(1.0f, model);
-  simObject->initSprings(5.0f, 0.0f);
-  simulation.addObject(simObject);
-
   simObject->addConstraint(glm::vec3(-1, 0.984808, -0.173648), 2);
   movableConstraint = dynamic_cast<PGRsim::PointConstraint *>(simObject->getConstraints()[0]);
+
+  simObject->initSprings(2.0f, 0.02f);
+  simulation.addObject(simObject);
 
   simObject->addConstraint(glm::vec3(1, 0.984808, -0.173648), 3);
 
@@ -73,7 +73,7 @@ void prepareSimulation() {
   air->setDragCoefficient(0.5f);
   simulation.addGlobalForce(air);
 
-  simulation.setConstraintIterations(1);
+  simulation.setConstraintIterations(10);
 
 
 }

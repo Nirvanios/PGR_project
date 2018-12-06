@@ -28,11 +28,13 @@ void PGRsim::ComplexObject::calcBoundingBox() {
     } else if (boundingBox.pointB.x < model->getVertices()[i].x) {
       boundingBox.pointB.x = model->getVertices()[i].x;
     }
+
     if (boundingBox.pointA.y > model->getVertices()[i + 1].y) {
       boundingBox.pointA.y = model->getVertices()[i + 1].y;
     } else if (boundingBox.pointB.y < model->getVertices()[i + 1].y) {
       boundingBox.pointB.y = model->getVertices()[i + 1].y;
     }
+
     if (boundingBox.pointA.z > model->getVertices()[i + 2].z) {
       boundingBox.pointA.z = model->getVertices()[i + 2].z;
     } else if (boundingBox.pointB.z < model->getVertices()[i + 2].z) {
@@ -54,9 +56,32 @@ void PGRsim::ComplexObject::addConstraint(float length, int vertexID1, int verte
 }
 
 void PGRsim::ComplexObject::initSprings(float stiffness, float damping) {
+  int mod = 0;
   for (int i = 0; i < model->getVertexIndices().size(); i += 3) {
     addSpring(stiffness, damping, model->getVertexIndices()[i], model->getVertexIndices()[i + 1]);
+    addConstraint(
+        glm::distance(model->getVertices()[model->getVertexIndices()[i]],
+                      model->getVertices()[model->getVertexIndices()[i + 1]]),
+        model->getVertexIndices()[i],
+        model->getVertexIndices()[i + 1]);
+
     addSpring(stiffness, damping, model->getVertexIndices()[i + 1], model->getVertexIndices()[i + 2]);
+    addConstraint(
+        glm::distance(model->getVertices()[model->getVertexIndices()[i]],
+                      model->getVertices()[model->getVertexIndices()[i + 1]]),
+        model->getVertexIndices()[i + 1],
+        model->getVertexIndices()[i + 2]);
+
     addSpring(stiffness, damping, model->getVertexIndices()[i + 2], model->getVertexIndices()[i]);
+    addConstraint(
+        glm::distance(model->getVertices()[model->getVertexIndices()[i]],
+                      model->getVertices()[model->getVertexIndices()[i + 1]]),
+        model->getVertexIndices()[i + 2],
+        model->getVertexIndices()[i]);
+    mod++;
   }
+}
+
+void PGRsim::ComplexObject::recalcNormals() {
+
 }
