@@ -23,7 +23,10 @@ auto air = new PGRsim::DragForce();
 
 PGRsim::ClothSim simulation;
 
-PGRsim::Constraint *movableConstraint;
+std::vector<PGRsim::PointConstraint *> constraints;
+std::vector<int> constraintModelIDs;
+
+std::vector<PGRgraphics::GraphicsModel *> objects;
 
 void prepareSimulation() {
   simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
@@ -37,8 +40,21 @@ void prepareSimulation() {
 
   simulation.setConstraintIterations(10);
 
-  movableConstraint =
-      ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size() - 1])->getConstraints()[0];
+  constraints.emplace_back(
+      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+          - 1])->getConstraints()[0]);
+
+  constraints.emplace_back(
+      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+          - 1])->getConstraints()[1]);
+
+  constraints.emplace_back(
+      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+          - 1])->getConstraints()[2]);
+
+  constraints.emplace_back(
+      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+          - 1])->getConstraints()[3]);
 
 }
 
@@ -48,15 +64,40 @@ void updateSimulation() {
   simulation.update(simTime);
 }
 
+enum Dir {
+  Left, Right, Up, Down
+};
+
+void handleMovement(std::vector<int> &selectedObjects, Dir direction) {
+  if (selectedObjects.empty()) {
+    return;
+  }
+
+  for (auto selectedObject : selectedObjects) {
+    auto res = std::find(constraintModelIDs.begin(), constraintModelIDs.end(), selectedObject);
+    if (res != std::end(constraintModelIDs)) {
+      long index = std::distance(constraintModelIDs.begin(), res);
+      switch (direction) {
+        case Left:constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(-0.05f, 0, 0));
+          break;
+        case Right:constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(0.05f, 0, 0));
+          break;
+        case Up:constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(0, 0.05f, 0));
+          break;
+        case Down:constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(0, -0.05f, 0));
+          break;
+      }
+      dynamic_cast<PGRgraphics::SimpleGraphicsModel *>(objects[*res])->setPosition(constraints[index]->getPosition());
+    }
+  }
+}
+
 int main(int argc, char *argv[]) {
   PGRgraphics::GraphicsCore graphicsCore;
 
   StdoutLogger::getInstance().logTime("Init graphics core");
   if (!graphicsCore.init())
     return -1;
-
-
-  std::vector<PGRgraphics::GraphicsModel *> objects;
 
   StdoutLogger::getInstance().logTime("Prepare simulation");
   prepareSimulation();
@@ -71,14 +112,15 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  /*auto model = PGRgraphics::ComplexGraphicsModel::LoadFromOBJ("simple_cloth.obj");
-  objects.emplace_back(model);*/
+  for (int i = 0; i < constraints.size(); i++) {
+    constraintModelIDs.emplace_back(objects.size());
+    auto model = PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("smaller_ball.obj");
+    model->setPosition(constraints[i]->getPosition());
+    objects.emplace_back(model);
+  }
 
   objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("floor.obj"));
 
-  /*auto model2 = PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("male_head.obj");
-  model2->setPosition(glm::vec3(0, 0, -30));
-  objects.emplace_back(model2);*/
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
 
@@ -88,7 +130,7 @@ int main(int argc, char *argv[]) {
   bool is_simRunning = false;
   bool enableCameraMovement = false;
   bool gravityEnabled = true;
-  int selectedObject = 0;
+  std::vector<int> selectedObjects;
   SDL_Event event;
 
   uint32_t time1 = 0;
@@ -103,32 +145,23 @@ int main(int argc, char *argv[]) {
             graphicsCore.handleResize();
           break;
         case SDL_KEYDOWN:
+
           switch (event.key.keysym.sym) {
-            case SDLK_LEFT:
-              ((PGRsim::PointConstraint *) movableConstraint)->setPosition(
-                  ((PGRsim::PointConstraint *) movableConstraint)->getPosition() + glm::vec3(-0.05f, 0, 0));
-              //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(-0.05f, 0, 0));
+            case SDLK_LEFT:handleMovement(selectedObjects, Left);
               break;
-            case SDLK_RIGHT:
-              ((PGRsim::PointConstraint *) movableConstraint)->setPosition(
-                  ((PGRsim::PointConstraint *) movableConstraint)->getPosition() + glm::vec3(0.05f, 0, 0));
-              //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0.05f, 0, 0));
+            case SDLK_RIGHT:handleMovement(selectedObjects, Right);
               break;
-            case SDLK_UP:
-              ((PGRsim::PointConstraint *) movableConstraint)->setPosition(
-                  ((PGRsim::PointConstraint *) movableConstraint)->getPosition() + glm::vec3(0, 0.05f, 0));
-              //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, 0.05f, 0));
+            case SDLK_UP:handleMovement(selectedObjects, Up);
               break;
-            case SDLK_DOWN:
-              ((PGRsim::PointConstraint *) movableConstraint)->setPosition(
-                  ((PGRsim::PointConstraint *) movableConstraint)->getPosition() + glm::vec3(0, -0.05f, 0));
-              //simObjects[0]->setCurrentPosition(simObjects[0]->getCurrectPosition() + glm::vec3(0, -0.05f, 0));
+            case SDLK_DOWN:handleMovement(selectedObjects, Down);
               break;
             case SDLK_w:
             case SDLK_s:
             case SDLK_a:
             case SDLK_d:
               graphicsCore.handleCameraMove(event.key.keysym.sym);
+              break;
+            case SDLK_r:selectedObjects.clear();
               break;
             case SDLK_g:
               if (gravityEnabled) {
@@ -164,7 +197,10 @@ int main(int argc, char *argv[]) {
             enableCameraMovement = true;
           }
           else if(event.button.button == SDL_BUTTON_RIGHT){
-            selectedObject = graphicsCore.selectObject(event.button.x, event.button.y, objects);
+            auto tmp = graphicsCore.selectObject(event.button.x, event.button.y, objects);
+            if (tmp != -1) {
+              selectedObjects.emplace_back(tmp);
+            }
           }
           break;
         case SDL_MOUSEBUTTONUP:

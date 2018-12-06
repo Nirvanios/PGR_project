@@ -15,6 +15,8 @@ class Logger {
 
   virtual void log(char *str) = 0;
 
+  virtual void log(int val) = 0;
+
   virtual void logTime(char *str) = 0;
 };
 

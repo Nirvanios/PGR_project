@@ -59,34 +59,6 @@ void PGRsim::ClothSim::prepareClothObject(std::string filePath) {
     }
   }
 
-  /*
-  for(int i = 0; i < vertexIndices.size(); i += 3) {
-    clothObject->addSpring(s, d,
-                           vertexIndices[i],
-                           vertexIndices[i + 1]);
-    clothObject->addConstraint(glm::distance(vertices[vertexIndices[i]]->getCurrectPosition(), vertices[vertexIndices[i + 1]]->getCurrectPosition()),
-        vertexIndices[i],
-        vertexIndices[i + 1]);
-
-
-    clothObject->addSpring(s, d,
-                           vertexIndices[i + 1],
-                           vertexIndices[i + 2]);
-    clothObject->addConstraint(glm::distance(vertices[vertexIndices[i + 1]]->getCurrectPosition(), vertices[vertexIndices[i + 2]]->getCurrectPosition()),
-                               vertexIndices[i + 1],
-                               vertexIndices[i + 2]);
-
-    clothObject->addSpring(d, s,
-                           vertexIndices[i + 2],
-                           vertexIndices[i]);
-    clothObject->addConstraint(glm::distance(vertices[vertexIndices[i + 2]]->getCurrectPosition(), vertices[vertexIndices[i]]->getCurrectPosition()),
-                               vertexIndices[i + 2],
-                               vertexIndices[i]);
-
-  }*/
-
-
-
   for (auto constr : clothObject->getConstraints()) {
     addConstraint(constr);
   }

@@ -23,6 +23,7 @@ class StdoutLogger : public Logger {
   void logTime(std::string &str) override;
   void log(char *str) override;
   void logTime(char *str) override;
+  void log(int val) override;
 
 };
 

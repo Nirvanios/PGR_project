@@ -39,5 +39,10 @@ void StdoutLogger::logTime(char *str) {
   std::cout << timenow << ":\t" << str << std::endl;
 #endif
 }
+void StdoutLogger::log(int val) {
+#ifdef PGR_LOG
+  std::cout << "integer" << ":\t" << val << std::endl;
+#endif
+}
 
 
