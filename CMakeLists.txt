@@ -23,27 +23,13 @@ include_directories(simulation/simulations simulation/base
         simulation/common simulation/forces simulation/integrators
         simulation/objects simulation graphics graphics/Camera graphics/objects misc)
 
-add_executable(Render_test MainWindow2.cpp
-        graphics/objects/SimpleGraphicsModel.cpp
-        graphics/objects/SimpleGraphicsModel.h
-        simulation/base/SimObject.h simulation/objects/SimpleObject.cpp simulation/forces/constraints/Constraint.h
-        simulation/common/common.h simulation/objects/SimpleObject.h
-        simulation/base/ForceGenerator.h simulation/forces/GravityForce.cpp simulation/forces/GravityForce.h
-        simulation/forces/DragForce.cpp simulation/forces/DragForce.h simulation/forces/springs/Spring.cpp
-        simulation/forces/springs/Spring.h simulation/base/Integrator.h simulation/integrators/EulerIntegrator.cpp
-        simulation/integrators/EulerIntegrator.h simulation/simulations/Simulation.cpp simulation/simulations/Simulation.h
-        simulation/forces/constraints/PointConstraint.cpp simulation/forces/constraints/PointConstraint.h simulation/forces/constraints/LengthConstraint.cpp
-        simulation/forces/constraints/LengthConstraint.h simulation/integrators/VerletIntegrator.cpp simulation/integrators/VerletIntegrator.h
-        simulation/objects/SimVertex.cpp simulation/objects/SimVertex.h simulation/simulations/SoftBodySimulation.cpp
-        simulation/simulations/SoftBodySimulation.h simulation/simulations/ClothSimulation.cpp simulation/simulations/ClothSimulation.h
-        simulation/forces/ConstantForce.cpp simulation/forces/ConstantForce.h
-        simulation/simulations/GoalSoftBodySimulation.cpp
-        simulation/simulations/GoalSoftBodySimulation.h third_party/Camera.cpp third_party/Camera.h
-        simulation/forces/springs/SnappableSpring.cpp simulation/forces/springs/SnappableSpring.h
-        graphics/core/GraphicsCore.cpp simulation/collisions/CollisionObject.cpp simulation/collisions/CollisionObject.h
-        simulation/objects/ComplexObject.cpp simulation/objects/ComplexObject.h
-        graphics/objects/GraphicsModel.h simulation/objects/SimpleObject.h
-        third_party/tiny_obj_loader.h third_party/tiny_obj_loader.cc graphics/objects/ComplexGraphicsModel.cpp graphics/objects/ComplexGraphicsModel.h simulation/forces/springs/SnappableSpringGroup.cpp simulation/forces/springs/SnappableSpringGroup.h misc/Logger.h misc/StdoutLogger.cpp misc/StdoutLogger.h simulation/forces/springs/LimitedSnappableSpringGroup.cpp simulation/forces/springs/LimitedSnappableSpringGroup.h)
+FILE(GLOB_RECURSE SOURCE_FILES graphics/*.cpp misc/*.cpp simulation/*.cpp third_party/*.cpp)
+FILE(GLOB_RECURSE HEADER_FILES graphics/*.h misc/*.h simulation/*.h third_party/*.h)
+
+message(${SOURCE_FILES})
+
+add_executable(Render_test main.cpp
+        ${SOURCE_FILES} ${HEADER_FILES})
 
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
