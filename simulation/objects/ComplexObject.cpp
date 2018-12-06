@@ -5,7 +5,7 @@
 #include "ComplexObject.h"
 
 PGRsim::ComplexObject::ComplexObject(float mass, PGRgraphics::ComplexGraphicsModel *model)
-    : SimObject(mass, Active), model(model) {
+    : SimObjectWithModel(mass, Active), model(model) {
   simVertices.reserve(model->getVertices().size());
   float vertexMass = mass / model->getVertices().size();
   for (int i = 0; i < model->getVertices().size(); i++) {
@@ -51,4 +51,12 @@ void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexI
 
 void PGRsim::ComplexObject::addConstraint(float length, int vertexID1, int vertexID2) {
   constraints.emplace_back(new LengthConstraint(simVertices[vertexID1], simVertices[vertexID2], length));
+}
+
+void PGRsim::ComplexObject::initSprings(float stiffness, float damping) {
+  for (int i = 0; i < model->getVertexIndices().size(); i += 3) {
+    addSpring(stiffness, damping, model->getVertexIndices()[i], model->getVertexIndices()[i + 1]);
+    addSpring(stiffness, damping, model->getVertexIndices()[i + 1], model->getVertexIndices()[i + 2]);
+    addSpring(stiffness, damping, model->getVertexIndices()[i + 2], model->getVertexIndices()[i]);
+  }
 }

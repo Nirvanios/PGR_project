@@ -9,8 +9,8 @@
 
 PGRsim::SimpleObject::SimpleObject(float mass,
                                    PGRsim::SimObjectType objectType,
-                                   PGRgraphics::SimpleGraphicsModel *model) : SimObject(mass,
-                                                                                        objectType),
+                                   PGRgraphics::SimpleGraphicsModel *model) : SimObjectWithModel(mass,
+                                                                                                 objectType),
                                                                               model(model) {
   currentPosition = model->getPosition();
 

@@ -14,10 +14,11 @@
 #include <vector>
 #include <springs/Spring.h>
 #include <ComplexGraphicsModel.h>
+#include <SimObjectWithModel.h>
 
 namespace PGRsim {
 
-class ComplexObject : public SimObject, Collision::CollisionObject {
+class ComplexObject : public SimObjectWithModel, public Collision::CollisionObject {
  protected:
   PGRgraphics::ComplexGraphicsModel *model;
   std::vector<SimVertex *> simVertices;
@@ -27,7 +28,7 @@ class ComplexObject : public SimObject, Collision::CollisionObject {
  public:
   ComplexObject(float mass, PGRgraphics::ComplexGraphicsModel *model);
 
-  PGRgraphics::ComplexGraphicsModel *getObjectModel() {
+  PGRgraphics::GraphicsModel *getObjectModel() override {
     return model;
   }
 
@@ -43,11 +44,17 @@ class ComplexObject : public SimObject, Collision::CollisionObject {
 
   void calcBoundingBox() override;
 
+  void initSprings(float stiffness, float damping);
+
   void addSpring(float stiffness, float damping, int vertexID1, int vertexID2);
 
   void addConstraint(const glm::vec3 &position, int vertexID);
 
   void addConstraint(float length, int vertexID1, int vertexID2);
+
+  const std::vector<SimVertex *> &getSimVertices() {
+    return simVertices;
+  }
 };
 }
 

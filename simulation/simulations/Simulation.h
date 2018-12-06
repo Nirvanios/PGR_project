@@ -32,7 +32,7 @@ class Simulation {
 
   void addSpring(Spring *spring);
 
-  void addObject(SimObject *object);
+  virtual void addObject(SimObject *object);
 
   const std::vector<SimObject *> &getObjects() {
     return objects;
