@@ -158,10 +158,10 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
 
   modelViewGLUniform = shader.getUniformLocation("modelview");
   projGLUniform = shader.getUniformLocation("projection");
-  normalMatGLUniform = shader.getUniformLocation("normalMat");
   lightPosUniform = shader.getUniformLocation("lightPos");
   inputColorUniform = shader.getUniformLocation("inputColor");
   selectUniform = shader.getUniformLocation("select");
+  cameraPosUniform = shader.getUniformLocation("cameraPos");
 
   return true;
 }
@@ -181,8 +181,8 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
 
   glUniform3fv(lightPosUniform, 1, glm::value_ptr(lightPos));
   glUniformMatrix4fv(projGLUniform, 1, GL_FALSE, glm::value_ptr(Projection));
+  glUniform3fv(cameraPosUniform, 1, glm::value_ptr(camera.Position));
 
-  glm::mat4 normalMV;
 
 
 
@@ -200,8 +200,6 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
                       (item->getVertices().size() * 3 * sizeof(float)),
                       item->getVertices().data());
     }
-    normalMV = glm::transpose(glm::inverse(modelView));
-    glUniformMatrix4fv(normalMatGLUniform, 1, GL_FALSE, glm::value_ptr(normalMV));
 
     glUniformMatrix4fv(modelViewGLUniform, 1, GL_FALSE, glm::value_ptr(modelView));
 

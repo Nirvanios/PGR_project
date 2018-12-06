@@ -14,13 +14,12 @@ namespace PGRgraphics {
 class GraphicsCore {
 private:
 
-    // GL identifiers
-    GLuint normalMatGLUniform;
     GLint projGLUniform;
     GLint modelViewGLUniform;
     GLint lightPosUniform;
     GLuint inputColorUniform;
     GLuint selectUniform;
+    GLuint cameraPosUniform;
 
     std::string programName;
     SDL_Window *mainWindow;
@@ -32,7 +31,7 @@ private:
     int selectedObject = -1;
     glm::vec3 previousColor;
 
-  const GLuint positionAttributeIndex = 0, colorAttributeIndex = 2, normalAttributeIndex = 1;
+  const GLuint positionAttributeIndex = 0, normalAttributeIndex = 1;
 
     GLuint vao[1];
     std::vector<GLuint> vbo;
@@ -41,7 +40,7 @@ private:
     std::vector<GLuint> nbo;
     std::vector<glm::vec3> colorIDs;
 
-    glm::vec3 lightPos = glm::vec3(0, -2, 0);
+    glm::vec3 lightPos = glm::vec3(0, 30, 0);
 public:
     virtual ~GraphicsCore();
 
@@ -89,6 +88,8 @@ public:
     void setLightPos(const glm::vec3 &lightPos);
 
     int selectObject(int x, int y, std::vector<GraphicsModel *> &objects);
+
+
 };
 }
 #endif //PGR_PROJECT_GRAPHICSCORE_H

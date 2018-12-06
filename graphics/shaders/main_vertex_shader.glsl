@@ -4,42 +4,37 @@ in vec3 inputPosition;
 in vec3 inputNormal;
 
 uniform vec3 inputColor;
-uniform mat4 projection, modelview, normalMat;
+uniform mat4 projection, modelview;
 uniform vec3 lightPos;
+uniform vec3 cameraPos;
 
 out vec4 forFragColor;
 
-const vec3 diffuseColor = vec3(0.2, 0.2, 0.2);
-const vec3 specColor = vec3(0.4, 0.4, 0.4);
+const vec3 lightColor = vec3(1, 1, 1);
 
 uniform int select;
 
 void main(){
   gl_Position = projection * modelview * vec4(inputPosition, 1.0);
 
-  vec3 ambient = 0.1 * specColor;
+  float specularStrength = 0.5;
 
-  // all following gemetric computations are performed in the
-  // camera coordinate system (aka eye coordinates)
-  vec3 normal = vec3(normalMat * vec4(inputNormal, 0.0));
-  vec4 vertPos4 = modelview * vec4(inputPosition, 1.0);
-  vec3 vertPos = vec3(vertPos4) / vertPos4.w;
-  vec3 lightDir = normalize(lightPos - vertPos);
-  vec3 reflectDir = reflect(-lightDir, normal);
-  vec3 viewDir = normalize(-vertPos);
+  vec3 ambient = 0.1 * lightColor;
+  vec3 norm = normalize(inputNormal);
+  vec3 lightDir = normalize(lightPos - inputPosition);
 
-  float lambertian = max(dot(lightDir,normal), 0.0);
-  float specular = 0.0;
+  float diff = max(dot(norm, lightDir), 0.0);
+  vec3 diffuse = diff * lightColor;
 
-  if(lambertian > 0.0) {
-    float specAngle = max(dot(reflectDir, viewDir), 0.0);
-    specular = pow(specAngle, 4.0);
+  vec3 viewDir = normalize(cameraPos - inputPosition);
+  vec3 reflectDir = reflect(-lightDir, norm);
 
-    specular *= lambertian;
+  float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+  vec3 specular = specularStrength * spec * lightColor;
 
-  }
     if(select == 0){
-  forFragColor = vec4(inputColor, 1.0) + vec4(lambertian*diffuseColor + specular*specColor + ambient, 1.0);
+
+  forFragColor = vec4(((ambient + diffuse + specular) * inputColor), 1);
   }
   else {
     forFragColor = vec4(inputColor, 1.0);
