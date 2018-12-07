@@ -166,7 +166,7 @@ public:
 
         /* Handle the error in an appropriate way such as displaying a message or writing to a log file. */
         /* In this simple program, we'll just leave */
-        delete shaderProgramInfoLog;
+      delete[] shaderProgramInfoLog;
         return;
     }
 
@@ -188,7 +188,7 @@ public:
         std::cout << "\tError info : " << shaderInfoLog << std::endl;
 
         std::cout << "=======================================\n\n";
-        delete shaderInfoLog;
+      delete[] shaderInfoLog;
     }
 
     void CleanUp()

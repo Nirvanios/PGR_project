@@ -72,3 +72,12 @@ PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOB
 
   return model;
 }
+PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::clone() {
+  auto result = new PGRgraphics::ComplexGraphicsModel();
+  result->setVertexIndices(getVertexIndices());
+  result->setIndices(getIndices());
+  result->setNormals(getNormals());
+  result->setTexCoords(getTexCoords());
+  result->setVertices(getVertices());
+  return result;
+}

@@ -26,8 +26,6 @@ include_directories(simulation/simulations simulation/base
 FILE(GLOB_RECURSE SOURCE_FILES graphics/*.cpp misc/*.cpp simulation/*.cpp third_party/*.cpp)
 FILE(GLOB_RECURSE HEADER_FILES graphics/*.h misc/*.h simulation/*.h third_party/*.h)
 
-message(${SOURCE_FILES})
-
 add_executable(Render_test main.cpp
         ${SOURCE_FILES} ${HEADER_FILES})
 

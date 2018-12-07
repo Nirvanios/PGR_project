@@ -5,12 +5,12 @@
 #include <springs/SnappableSpring.h>
 #include "ComplexObject.h"
 
-PGRsim::ComplexObject::ComplexObject(float mass, PGRgraphics::ComplexGraphicsModel *model)
-    : SimObjectWithModel(mass, Active), model(model) {
+PGRsim::ComplexObject::ComplexObject(float mass, PGRsim::SimObjectType type, PGRgraphics::ComplexGraphicsModel *model)
+    : SimObjectWithModel(mass, type), model(model) {
   simVertices.reserve(model->getVertices().size());
   float vertexMass = mass / model->getVertices().size();
   for (int i = 0; i < model->getVertices().size(); i++) {
-    simVertices.emplace_back(new SimVertex(vertexMass, Active, i, model->getVertices()[i]));
+    simVertices.emplace_back(new SimVertex(vertexMass, type, i, model->getVertices()[i]));
   }
 }
 
@@ -74,3 +74,10 @@ void PGRsim::ComplexObject::removeIndices(int vertexID) {
   }
   model->setVertexIndices(newIndices);
 }
+
+PGRsim::ComplexObject *PGRsim::ComplexObject::clone(PGRsim::SimObjectType type) {
+  auto result = new ComplexObject(getMass(), type, model->clone());
+  return result;
+}
+
+

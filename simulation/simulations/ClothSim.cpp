@@ -9,7 +9,7 @@ int width = 17, height = 17;
 
 int tmp = 0;
 void PGRsim::ClothSim::prepareClothObject(std::string filePath) {
-  auto clothObject = new ComplexObject(10.0f, PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(filePath));
+  auto clothObject = new ComplexObject(10.0f, Active, PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(filePath));
 
   auto vertexIndices = clothObject->getObjectModel()->getVertexIndices();
   auto vertices = clothObject->getSimVertices();

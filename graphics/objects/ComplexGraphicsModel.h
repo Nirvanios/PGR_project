@@ -21,6 +21,8 @@ class ComplexGraphicsModel : public GraphicsModel {
   static ComplexGraphicsModel *LoadFromOBJ(std::string path);
 
   void setVertex(int index, glm::vec3 value);
+
+  ComplexGraphicsModel *clone();
 };
 }
 

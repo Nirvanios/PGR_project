@@ -26,7 +26,9 @@ class ComplexObject : public SimObjectWithModel, public Collision::CollisionObje
   std::vector<Constraint*> constraints;
   std::vector<Spring*> springs;
  public:
-  ComplexObject(float mass, PGRgraphics::ComplexGraphicsModel *model);
+  ComplexObject(float mass, SimObjectType type, PGRgraphics::ComplexGraphicsModel *model);
+
+  ComplexObject *clone(SimObjectType type);
 
   PGRgraphics::GraphicsModel *getObjectModel() override {
     return model;
