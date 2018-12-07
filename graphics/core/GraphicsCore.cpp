@@ -263,7 +263,7 @@ void PGRgraphics::GraphicsCore::deleteBuffers(std::vector<GLuint> &buff) {
 }
 
 void PGRgraphics::GraphicsCore::handleResize() {
-  SDL_GetWindowSize(mainWindow, &width, &height);
+    SDL_GL_GetDrawableSize(mainWindow, &width, &height);
   glViewport(0, 0, width, height);
 }
 

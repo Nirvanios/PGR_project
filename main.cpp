@@ -220,7 +220,7 @@ int main(int argc, char *argv[]) {
         case SDL_QUIT:is_running = false;
           break;
         case SDL_WINDOWEVENT:
-          if (event.window.type == SDL_WINDOWEVENT_RESIZED)
+            if (event.window.event == SDL_WINDOWEVENT_RESIZED)
             graphicsCore.handleResize();
           break;
         case SDL_KEYDOWN:

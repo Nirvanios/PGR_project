@@ -7,6 +7,8 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 add_compile_definitions(PGR_LOG)
 
+find_package( Threads )
+
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
@@ -30,4 +32,4 @@ add_executable(Render_test main.cpp
         ${SOURCE_FILES} ${HEADER_FILES} misc/RandomGenerator.h)
 
 
-target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
+target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
