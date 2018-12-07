@@ -2,6 +2,7 @@
 // Created by Petr on 29.11.2018.
 //
 
+#include <thread>
 #include "Simulation.h"
 
 PGRsim::Simulation::Simulation() {
@@ -43,11 +44,17 @@ void PGRsim::Simulation::update(SimTime time) {
         }
     }
 
-    for (int i = 0; i < constraintIterations; i++) {
+    /*for (int i = 0; i < constraintIterations; i++) {
         for (auto constraint : constraints) {
             constraint->satisfyConstraint();
         }
-    }
+    }*/
+
+    std::thread thread(&Simulation::threadConstraints, this, 0, constraints.size() / 2);
+
+    threadConstraints(constraints.size() / 2, constraints.size());
+
+    thread.join();
 
 
     for (auto object : objects) {
@@ -65,4 +72,12 @@ void PGRsim::Simulation::addConstraint(Constraint *constraint) {
 
 void PGRsim::Simulation::addSpring(Spring *spring) {
     springs.emplace_back(spring);
+}
+
+void PGRsim::Simulation::threadConstraints(int start, int end) {
+    for (int i = 0; i < constraintIterations; i++) {
+        for (int j = start; j < end; j++) {
+            constraints[j]->satisfyConstraint();
+        }
+    }
 }

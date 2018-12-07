@@ -25,6 +25,8 @@ class Simulation {
   int constraintIterations;
 
   Integrator *integrator;
+
+  void threadConstraints(int start, int end);
  public:
   Simulation();
 
