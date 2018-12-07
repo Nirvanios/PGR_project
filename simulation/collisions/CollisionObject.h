@@ -14,6 +14,11 @@ namespace PGRsim::Collision {
  */
 struct BoundingBox {
   glm::vec3 pointA, pointB;
+
+  bool isIn(glm::vec3 point) {
+    return pointA.x < point.x && pointA.y < point.y && pointA.z < point.z
+        && pointB.x > point.x && pointB.y > point.y && pointB.z > point.z;
+  }
 };
 
 /**
@@ -28,6 +33,8 @@ class CollisionObject {
   virtual BoundingBox getBoundingBox() {
     return boundingBox;
   }
+
+  virtual glm::vec3 getPosition() = 0;
 };
 }
 #endif //PGR_PROJECT_COLLISIONOBJECT_H

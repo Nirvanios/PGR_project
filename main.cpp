@@ -18,9 +18,17 @@
 #include <ClothSim.h>
 #include <ComplexObject.h>
 #include <LocationLimit.h>
+#include <ShapedComplexObject.h>
+#include <collisions/CollisionBins.h>
 
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
+
+PGRsim::Collision::BoundingBox collisionArea{
+    .pointA = glm::vec3(-5, -5, -5),
+    .pointB = glm::vec3(5, 5, 5)
+};
+PGRsim::Collision::CollisionBins bins(5, 5, 5, collisionArea);
 
 bool tearDemo = false;
 
@@ -43,7 +51,7 @@ void prepareSimulation() {
   air->setDragCoefficient(0.5f);
   simulation.addGlobalForce(air);
 
-  simulation.setConstraintIterations(10);
+  simulation.setConstraintIterations(8);
 
   /*constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
@@ -71,6 +79,38 @@ void prepareSimulation() {
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
           - 1])->getConstraints()[3]);
 
+  /*auto testObject = new PGRsim::ShapedComplexObject(10.0f, PGRsim::Active, PGRgraphics::ComplexGraphicsModel::LoadFromOBJ("small_ball.obj"));
+
+  simulation.addObject(testObject);
+  simulation.addObject(testObject->getShape());
+
+  for (auto vertex : testObject->getSimVertices()) {
+    simulation.addObject(vertex);
+  }
+
+  for (auto vertex : testObject->getShape()->getSimVertices()) {
+    simulation.addObject(vertex);
+  }
+
+  for (auto spring : testObject->getShapeSprings()) {
+    simulation.addSpring(spring);
+  }
+
+  for (auto spring : testObject->getSprings()) {
+    simulation.addSpring(spring);
+  }
+
+  for (auto constraint : testObject->getShapeConstraints()) {
+    simulation.addConstraint(constraint);
+  }*/
+
+  auto clothObject = dynamic_cast<PGRsim::ComplexObject *>(simulation.getObjects()[simulation.getObjects().size() - 1]);
+  for (auto object : clothObject->getSimVertices()) {
+    auto collObject = dynamic_cast<PGRsim::Collision::CollisionObject *>(object);
+    if (collObject != nullptr) {
+      bins.addCollisionObject(collObject);
+    }
+  }
 }
 
 void updateSimulation() {
@@ -171,6 +211,8 @@ int main(int argc, char *argv[]) {
   uint32_t time1 = 0;
   uint32_t time2;
 
+  bins.recalculateBins();
+
   bool updatedSim = false;
   while (is_running) {
     while (SDL_PollEvent(&event)) {
@@ -182,7 +224,6 @@ int main(int argc, char *argv[]) {
             graphicsCore.handleResize();
           break;
         case SDL_KEYDOWN:
-
           switch (event.key.keysym.sym) {
             case SDLK_LEFT:handleMovement(selectedObjects, Left);
               break;

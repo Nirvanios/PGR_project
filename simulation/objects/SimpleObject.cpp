@@ -49,3 +49,7 @@ PGRsim::Collision::BoundingBox PGRsim::SimpleObject::getBoundingBox() {
   box.pointA = translation * glm::vec4(boundingBox.pointA, 1.0);
   box.pointB = translation * glm::vec4(boundingBox.pointB, 1.0);
 }
+
+glm::vec3 PGRsim::SimpleObject::getPosition() {
+  return currentPosition;
+}

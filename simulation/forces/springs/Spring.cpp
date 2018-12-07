@@ -2,6 +2,7 @@
 // Created by Petr on 29.11.2018.
 //
 
+#include <StdoutLogger.h>
 #include "Spring.h"
 
 PGRsim::Spring::Spring(float stiffness, float damping, SimObject *simulatedObjectA,
@@ -26,7 +27,11 @@ void PGRsim::Spring::applyForce() {
     force +=
         -damping * glm::dot(simulatedObjectA->getVelocity() - simulatedObjectB->getVelocity(), direction) * direction;
 
-    simulatedObjectA->setResultantForce(simulatedObjectA->getResultantForce() + force);
-    simulatedObjectB->setResultantForce(simulatedObjectB->getResultantForce() - force);
+    if (simulatedObjectA->getSimulatedObjectType() != Shape) {
+      simulatedObjectA->setResultantForce(simulatedObjectA->getResultantForce() + force);
+    }
+    if (simulatedObjectB->getSimulatedObjectType() != Shape) {
+      simulatedObjectB->setResultantForce(simulatedObjectB->getResultantForce() - force);
+    }
   }
 }

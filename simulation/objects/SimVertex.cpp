@@ -15,3 +15,10 @@ PGRsim::SimVertex::SimVertex(float mass, PGRsim::SimObjectType objectType, int v
 void PGRsim::SimVertex::update(SimTime time) {
 }
 
+void PGRsim::SimVertex::calcBoundingBox() {
+
+}
+glm::vec3 PGRsim::SimVertex::getPosition() {
+  return currentPosition;
+}
+

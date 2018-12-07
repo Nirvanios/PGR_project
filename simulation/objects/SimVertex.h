@@ -12,7 +12,7 @@ namespace PGRsim {
 /**
  * Simulation of a single vertex which may be a part of a more complicated object.
  */
-class SimVertex : public SimObject {
+class SimVertex : public SimObject, public Collision::CollisionObject {
  private:
   int vertexId;
 
@@ -28,6 +28,10 @@ class SimVertex : public SimObject {
     return vertexId;
   }
   void update(SimTime time) override;
+
+ private:
+  void calcBoundingBox() override;
+  glm::vec3 getPosition() override;
 };
 }
 

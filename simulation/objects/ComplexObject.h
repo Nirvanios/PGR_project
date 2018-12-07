@@ -57,6 +57,8 @@ class ComplexObject : public SimObjectWithModel, public Collision::CollisionObje
   }
 
   void removeIndices(int vertexID);
+
+  glm::vec3 getPosition() override;
 };
 }
 

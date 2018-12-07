@@ -17,7 +17,7 @@ namespace PGRsim {
  *  -   Active  - object affected by the simulation
  */
 enum SimObjectType {
-  Passive, Active
+  Passive, Active, Shape
 };
 
 /**

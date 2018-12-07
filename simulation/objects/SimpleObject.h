@@ -37,7 +37,9 @@ class SimpleObject : public SimObjectWithModel, public Collision::CollisionObjec
   void calcBoundingBox() override;
 
   Collision::BoundingBox getBoundingBox() override;
- };
+
+  glm::vec3 getPosition() override;
+};
 }
 
 #endif //PGR_PROJECT_SIMULATEDMODEL_H

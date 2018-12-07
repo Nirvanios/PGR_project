@@ -9,10 +9,27 @@ PGRsim::ShapedComplexObject::ShapedComplexObject(float mass,
                                                  PGRgraphics::ComplexGraphicsModel *model) : ComplexObject(mass,
                                                                                                            type,
                                                                                                            model) {
-  shape = this->clone(Passive);
+  shape = this->clone(Shape);
 
   for (auto index : shape->getObjectModel()->getVertexIndices()) {
-    addShapeSpring(2.0f, 0.2f, index);
+    addShapeSpring(1.0f, 0.05f, index);
+  }
+
+  for (int i = 0; i < shape->getObjectModel()->getVertexIndices().size(); i += 3) {
+    addSpring(1.0f,
+              0.05f,
+              getObjectModel()->getVertexIndices()[i],
+              getObjectModel()->getVertexIndices()[i + 1]);
+
+    addSpring(1.0f,
+              0.05f,
+              getObjectModel()->getVertexIndices()[i + 1],
+              getObjectModel()->getVertexIndices()[i + 2]);
+
+    addSpring(1.0f,
+              0.05f,
+              getObjectModel()->getVertexIndices()[i + 2],
+              getObjectModel()->getVertexIndices()[i]);
   }
 }
 
@@ -41,5 +58,9 @@ const std::vector<PGRsim::Spring *> &PGRsim::ShapedComplexObject::getShapeSpring
 
 const std::vector<PGRsim::Constraint *> &PGRsim::ShapedComplexObject::getShapeConstraints() const {
   return shapeConstraints;
+}
+
+PGRsim::ComplexObject *PGRsim::ShapedComplexObject::getShape() const {
+  return shape;
 }
 

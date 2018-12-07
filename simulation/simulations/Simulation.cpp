@@ -29,7 +29,7 @@ void PGRsim::Simulation::update(SimTime time) {
 
     glm::vec3 acceleration;
     for (auto object : objects) {
-        if (object->getSimulatedObjectType() == Active) {
+        if (object->getSimulatedObjectType() == Active || object->getSimulatedObjectType() == Shape) {
             for (auto forceGenerator : forces) {
                 forceGenerator->applyForce(*object);
             }
@@ -37,18 +37,12 @@ void PGRsim::Simulation::update(SimTime time) {
     }
 
     for (auto object : objects) {
-        if (object->getSimulatedObjectType() == Active) {
+        if (object->getSimulatedObjectType() == Active || object->getSimulatedObjectType() == Shape) {
             acceleration = object->getResultantForce() / object->getMass();
 
             integrator->integrate(acceleration, *object);
         }
     }
-
-    /*for (int i = 0; i < constraintIterations; i++) {
-        for (auto constraint : constraints) {
-            constraint->satisfyConstraint();
-        }
-    }*/
 
     std::thread thread(&Simulation::threadConstraints, this, 0, constraints.size() / 2);
 
@@ -60,7 +54,7 @@ void PGRsim::Simulation::update(SimTime time) {
     for (auto object : objects) {
         object->update(time);
 
-        if (object->getSimulatedObjectType() == Active) {
+        if (object->getSimulatedObjectType() == Active || object->getSimulatedObjectType() == Shape) {
             object->resetForces();
         }
     }

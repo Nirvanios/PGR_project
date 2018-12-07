@@ -63,7 +63,7 @@ PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOB
 
   std::for_each(model->normals.begin(), model->normals.end(),
                 [](glm::vec3 &value) {
-                  value = glm::vec3(0, 1, 1);// glm::normalize(value);
+                  value = glm::normalize(value);
                 });
 
   for (int i = 0; i < attribs.vertices.size(); i += 3) {

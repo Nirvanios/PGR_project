@@ -23,8 +23,10 @@ class ShapedComplexObject : public ComplexObject {
   ShapedComplexObject(float mass, SimObjectType type, PGRgraphics::ComplexGraphicsModel *model);
 
   const std::vector<Spring *> &getShapeSprings() const;
+
   const std::vector<Constraint *> &getShapeConstraints() const;
 
+  ComplexObject *getShape() const;
 };
 }
 
