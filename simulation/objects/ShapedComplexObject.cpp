@@ -32,7 +32,7 @@ void PGRsim::ShapedComplexObject::addShapeLengthConstraint(float length, int ver
 void PGRsim::ShapedComplexObject::addShapePointConstraint(glm::vec3 position, int vertexID) {
   shapeConstraints.emplace_back(new PointConstraint(position, shape->getSimVertices()[vertexID]));
 
-  shapeConstraints.emplace_back(new PointConstraint(position, > getSimVertices()[vertexID]));
+  shapeConstraints.emplace_back(new PointConstraint(position, getSimVertices()[vertexID]));
 }
 
 const std::vector<PGRsim::Spring *> &PGRsim::ShapedComplexObject::getShapeSprings() const {
