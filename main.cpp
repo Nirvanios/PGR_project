@@ -126,13 +126,13 @@ enum Dir {
   Left, Right, Up, Down
 };
 
-void handleMovement(std::vector<int> &selectedObjects, Dir direction) {
+void handleMovement(std::vector<PGRgraphics::GraphicsCore::selectedObject> &selectedObjects, Dir direction) {
   if (selectedObjects.empty()) {
     return;
   }
 
   for (auto selectedObject : selectedObjects) {
-    auto res = std::find(constraintModelIDs.begin(), constraintModelIDs.end(), selectedObject);
+    auto res = std::find(constraintModelIDs.begin(), constraintModelIDs.end(), selectedObject.objectId);
     if (res != std::end(constraintModelIDs)) {
       long index = std::distance(constraintModelIDs.begin(), res);
       switch (direction) {
@@ -150,13 +150,13 @@ void handleMovement(std::vector<int> &selectedObjects, Dir direction) {
   }
 }
 
-void handleMovement(std::vector<int> &selectedObjects, float x, float y) {
+void handleMovement(std::vector<PGRgraphics::GraphicsCore::selectedObject> &selectedObjects, float x, float y) {
   if (selectedObjects.empty()) {
     return;
   }
 
   for (auto selectedObject : selectedObjects) {
-    auto res = std::find(constraintModelIDs.begin(), constraintModelIDs.end(), selectedObject);
+    auto res = std::find(constraintModelIDs.begin(), constraintModelIDs.end(), selectedObject.objectId);
     if (res != std::end(constraintModelIDs)) {
       long index = std::distance(constraintModelIDs.begin(), res);
       constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(x, y, 0));
@@ -193,7 +193,7 @@ int main(int argc, char *argv[]) {
     objects.emplace_back(model);
   }
 
-  objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("floor.obj"));
+  objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("floor.obj", glm::vec3(0, 0.2, 0)));
 
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
@@ -205,7 +205,7 @@ int main(int argc, char *argv[]) {
   bool enableCameraMovement = false;
   bool gravityEnabled = true;
   bool moveWithCamera = false;
-  std::vector<int> selectedObjects;
+  auto selectedObjects = graphicsCore.getSelectedObjects();
   SDL_Event event;
 
   uint32_t time1 = 0;
@@ -239,7 +239,9 @@ int main(int argc, char *argv[]) {
             case SDLK_d:
               graphicsCore.handleCameraMove(event.key.keysym.sym);
               break;
-            case SDLK_r:selectedObjects.clear();
+            case SDLK_r:
+              graphicsCore.clearSelectedObjects(objects);
+              selectedObjects = graphicsCore.getSelectedObjects();
               break;
             case SDLK_g:
               if (gravityEnabled) {
@@ -283,10 +285,8 @@ int main(int argc, char *argv[]) {
           }
           else if(event.button.button == SDL_BUTTON_RIGHT){
             moveWithCamera = true;
-            auto tmp = graphicsCore.selectObject(event.button.x, event.button.y, objects);
-            if (tmp != -1) {
-              selectedObjects.emplace_back(tmp);
-            }
+            graphicsCore.handleSelectObject(event.button.x, event.button.y, objects);
+            selectedObjects = graphicsCore.getSelectedObjects();
           }
           break;
         case SDL_MOUSEBUTTONUP:

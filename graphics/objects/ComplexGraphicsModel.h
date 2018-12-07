@@ -13,12 +13,15 @@ namespace PGRgraphics {
 
 class ComplexGraphicsModel : public GraphicsModel {
  private:
+    static ComplexGraphicsModel *LoadFromFile(std::string path);
  protected:
  public:
+    static ComplexGraphicsModel *LoadFromOBJ(std::string path);
+    static ComplexGraphicsModel *LoadFromOBJ(std::string path, glm::vec3 color);
 
   void computeNormals();
 
-  static ComplexGraphicsModel *LoadFromOBJ(std::string path);
+
 
   void setVertex(int index, glm::vec3 value);
 

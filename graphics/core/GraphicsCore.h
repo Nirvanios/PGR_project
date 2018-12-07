@@ -28,10 +28,18 @@ private:
     Camera camera;
     Shader shader;
 
-    int selectedObject = -1;
-    glm::vec3 previousColor;
+public:
+    struct selectedObject {
+        int objectId;
+        glm::vec3 previousColor;
+    };
 
-  const GLuint positionAttributeIndex = 0, normalAttributeIndex = 1;
+    const std::vector<selectedObject> &getSelectedObjects() const;
+
+private:
+    std::vector<selectedObject> selectedObjects;
+
+    const GLuint positionAttributeIndex = 0, normalAttributeIndex = 1;
 
     GLuint vao[1];
     std::vector<GLuint> vbo;
@@ -43,7 +51,6 @@ private:
   glm::vec3 lightPos = glm::vec3(-2.0f, 0.0f, 3.0f);
 public:
     virtual ~GraphicsCore();
-
 private:
     void cleanup();
 
@@ -53,14 +60,12 @@ private:
 
     void deleteBuffers(std::vector<GLuint> &);
 
-    glm::vec3 getRandColor();
-
     glm::vec3 getIDColor(GLuint ID);
 
 
 
 public:
-    GraphicsCore();
+    GraphicsCore() {};
 
 public:
     bool init();
@@ -87,7 +92,9 @@ public:
 
     void setLightPos(const glm::vec3 &lightPos);
 
-    int selectObject(int x, int y, std::vector<GraphicsModel *> &objects);
+    void handleSelectObject(int x, int y, std::vector<GraphicsModel *> &objects);
+
+    void clearSelectedObjects(std::vector<GraphicsModel*> &objects);
 
 
 };

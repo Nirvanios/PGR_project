@@ -122,7 +122,6 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
                  (item->getVertices().size() * 3 * sizeof(float)),
                  item->getVertices().data(),
                  GL_DYNAMIC_DRAW);
-    vboC.emplace_back(getRandColor());
     colorIDs.emplace_back(getIDColor(i));
     i++;
   }
@@ -164,10 +163,6 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
   cameraPosUniform = shader.getUniformLocation("cameraPos");
 
   return true;
-}
-
-glm::vec3 PGRgraphics::GraphicsCore::getRandColor() {
-  return glm::vec3(rand() / (double) RAND_MAX, rand() / (double) RAND_MAX, rand() / (double) RAND_MAX);
 }
 
 void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bool selectRender) {
@@ -215,7 +210,7 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
     glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     if (!selectRender) {
-      glUniform3fv(inputColorUniform, 1, glm::value_ptr(vboC[i]));
+      glUniform3fv(inputColorUniform, 1, glm::value_ptr(item->getColor()));
       glUniform1i(selectUniform, 0);
     } else {
       glUniform3fv(inputColorUniform, 1, glm::value_ptr(colorIDs[i]));
@@ -306,10 +301,6 @@ PGRgraphics::GraphicsCore::~GraphicsCore() {
   cleanup();
 }
 
-PGRgraphics::GraphicsCore::GraphicsCore() {
-  srand(time(NULL));
-}
-
 void PGRgraphics::GraphicsCore::handleModelFill() {
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
@@ -318,7 +309,7 @@ void PGRgraphics::GraphicsCore::handleModelWireframe() {
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
-int PGRgraphics::GraphicsCore::selectObject(int x, int y, std::vector<GraphicsModel *> &objects) {
+void PGRgraphics::GraphicsCore::handleSelectObject(int x, int y, std::vector<GraphicsModel *> &objects) {
   glDisable(GL_MULTISAMPLE);
   render(objects, true);
   glEnable(GL_MULTISAMPLE);
@@ -333,18 +324,18 @@ int PGRgraphics::GraphicsCore::selectObject(int x, int y, std::vector<GraphicsMo
 
   int id = data[0] + (data[1] >> 8) + (data[2] >> 16);
 
-  if (id <= vboC.size()) {
-    if (selectedObject != -1) {
-      vboC[selectedObject] = previousColor;
-    }
-    selectedObject = id;
-    previousColor = vboC[id];
-    vboC[id] = glm::vec3(1, 0, 0);
-    return selectedObject;
-  } else {
-    return -1;
+  if (id <= objects.size()) {
+    auto foundObject = std::find_if(selectedObjects.begin(), selectedObjects.end(), [id](selectedObject i)-> bool {return i.objectId == id;});
+      if(foundObject == selectedObjects.end()){
+        selectedObjects.emplace_back(selectedObject{.objectId = id,
+                                                    .previousColor = objects[id]->getColor()});
+        objects[id]->setColor(glm::vec3(1, 0, 0));
+      }
+      else{
+        objects[id]->setColor(foundObject.base()->previousColor);
+        selectedObjects.erase(foundObject);
+      }
   }
-
 }
 
 glm::vec3 PGRgraphics::GraphicsCore::getIDColor(GLuint ID) {
@@ -352,3 +343,15 @@ glm::vec3 PGRgraphics::GraphicsCore::getIDColor(GLuint ID) {
                    static_cast<float>(((ID & 0x0000FF00) >> 8) / 255.0),
                    static_cast<float>(((ID & 0x00FF0000) >> 16) / 255.0));
 }
+
+const std::vector<PGRgraphics::GraphicsCore::selectedObject> &PGRgraphics::GraphicsCore::getSelectedObjects() const {
+  return selectedObjects;
+}
+
+void PGRgraphics::GraphicsCore::clearSelectedObjects(std::vector<PGRgraphics::GraphicsModel *> &objects) {
+  for(auto item : selectedObjects){
+    objects[item.objectId]->setColor(item.previousColor);
+  }
+  selectedObjects.clear();
+}
+

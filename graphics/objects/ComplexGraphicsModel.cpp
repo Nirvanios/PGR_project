@@ -2,6 +2,7 @@
 // Created by Petr Flajsingr on 2018-12-04.
 //
 
+#include <RandomGenerator.h>
 #include "ComplexGraphicsModel.h"
 
 void PGRgraphics::ComplexGraphicsModel::setVertex(int index, glm::vec3 value) {
@@ -30,7 +31,21 @@ void PGRgraphics::ComplexGraphicsModel::computeNormals() {
 
 }
 
-PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(std::string path) {
+PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(std::string path){
+    auto model = LoadFromFile(path);
+    model->color = glm::vec3(RandomGenerator::getInstance().getRandomNumber(),
+            RandomGenerator::getInstance().getRandomNumber(),
+            RandomGenerator::getInstance().getRandomNumber());
+    return model;
+}
+
+PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(std::string path, glm::vec3 color){
+    auto model = LoadFromFile(path);
+    model->color = color;
+    return model;
+}
+
+PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromFile(std::string path) {
   std::string msg = "Loading object from: " + path;
   StdoutLogger::getInstance().logTime(msg);
   auto model = new ComplexGraphicsModel();

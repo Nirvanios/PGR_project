@@ -27,7 +27,7 @@ FILE(GLOB_RECURSE SOURCE_FILES graphics/*.cpp misc/*.cpp simulation/*.cpp third_
 FILE(GLOB_RECURSE HEADER_FILES graphics/*.h misc/*.h simulation/*.h third_party/*.h)
 
 add_executable(Render_test main.cpp
-        ${SOURCE_FILES} ${HEADER_FILES})
+        ${SOURCE_FILES} ${HEADER_FILES} misc/RandomGenerator.h)
 
 
 target_link_libraries(Render_test ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES}  ${GLM_LIBRARIES})
