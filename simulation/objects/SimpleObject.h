@@ -18,7 +18,7 @@ namespace PGRsim {
  *
  * Position may be used to create translation matrix for model's vertices.
  */
-class SimpleObject : public SimObjectWithModel, public Collision::CollisionObject {
+class SimpleObject : public SimObjectWithModel/*, public Collision::CollisionObject*/ {
   protected:
    PGRgraphics::SimpleGraphicsModel *model;
  public:
@@ -34,11 +34,11 @@ class SimpleObject : public SimObjectWithModel, public Collision::CollisionObjec
 
   void update(SimTime time) override;
 
-  void calcBoundingBox() override;
+//  void calcBoundingBox() override;
 
-  Collision::BoundingBox getBoundingBox() override;
+  // Collision::RectArea getBoundingBox() override;
 
-  glm::vec3 getPosition() override;
+  // glm::vec3 getPosition() override;
 };
 }
 

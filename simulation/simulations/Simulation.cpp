@@ -15,6 +15,10 @@ void PGRsim::Simulation::addSpring(float stiffness, float damping, SimObject* ob
 
 
 void PGRsim::Simulation::addObject(SimObject *object)  {
+    auto vertex = dynamic_cast<SimVertex *>(object);
+    if (vertex != nullptr) {
+        collisionChecker.addObject(vertex);
+    }
     objects.emplace_back(object);
 }
 
@@ -44,11 +48,25 @@ void PGRsim::Simulation::update(SimTime time) {
         }
     }
 
-    std::thread thread(&Simulation::threadConstraints, this, 0, constraints.size() / 2);
+    for (int i = 0; i < constraintIterations; i++) {
+        for (auto &constraint : constraints) {
+            constraint->satisfyConstraint();
+        }
+    }
+
+    collisionChecker.checkCollisions();
+
+    collisionChecker.applyChanges();
+
+    /*std::thread thread(&Simulation::threadConstraints, this, 0, constraints.size() / 2);
 
     threadConstraints(constraints.size() / 2, constraints.size());
 
-    thread.join();
+    thread.join();*/
+
+
+
+
 
 
     for (auto object : objects) {

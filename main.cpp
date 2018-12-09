@@ -19,16 +19,10 @@
 #include <ComplexObject.h>
 #include <LocationLimit.h>
 #include <ShapedComplexObject.h>
-#include <collisions/CollisionBins.h>
+#include <collisions/VertexCollisionBins.h>
 
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
-
-PGRsim::Collision::BoundingBox collisionArea{
-    .pointA = glm::vec3(-5, -5, -5),
-    .pointB = glm::vec3(5, 5, 5)
-};
-PGRsim::Collision::CollisionBins bins(5, 5, 5, collisionArea);
 
 bool tearDemo = false;
 
@@ -44,8 +38,6 @@ void prepareSimulation() {
   simulation.addGlobalForce(floorLimit);
   simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
 
-  simulation.prepareClothObject("medium_cloth.obj");
-
   simulation.addGlobalForce(gravity);
 
   air->setDragCoefficient(0.5f);
@@ -53,15 +45,27 @@ void prepareSimulation() {
 
   simulation.setConstraintIterations(8);
 
-  /*constraints.emplace_back(
+  simulation.prepareClothObject("medium_cloth.obj");
+
+  constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
           - 1])->getConstraints()[0]);
 
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[1]);*/
+          - 1])->getConstraints()[1]);
 
-  simulation.prepareClothObject("big_cloth.obj");
+  simulation.prepareClothObject("medium_cloth.obj");
+
+  constraints.emplace_back(
+      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+          - 1])->getConstraints()[0]);
+
+  constraints.emplace_back(
+      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+          - 1])->getConstraints()[1]);
+
+  /*simulation.prepareClothObject("big_cloth.obj");
 
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
@@ -77,7 +81,7 @@ void prepareSimulation() {
 
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[3]);
+          - 1])->getConstraints()[3]);*/
 
   /*auto testObject = new PGRsim::ShapedComplexObject(10.0f, PGRsim::Active, PGRgraphics::ComplexGraphicsModel::LoadFromOBJ("small_ball.obj"));
 
@@ -104,13 +108,6 @@ void prepareSimulation() {
     simulation.addConstraint(constraint);
   }*/
 
-  auto clothObject = dynamic_cast<PGRsim::ComplexObject *>(simulation.getObjects()[simulation.getObjects().size() - 1]);
-  for (auto object : clothObject->getSimVertices()) {
-    auto collObject = dynamic_cast<PGRsim::Collision::CollisionObject *>(object);
-    if (collObject != nullptr) {
-      bins.addCollisionObject(collObject);
-    }
-  }
 }
 
 void updateSimulation() {
@@ -123,7 +120,7 @@ void updateSimulation() {
 }
 
 enum Dir {
-  Left, Right, Up, Down
+  Left, Right, Up, Down, Forward, Backward
 };
 
 void handleMovement(std::vector<PGRgraphics::GraphicsCore::selectedObject> &selectedObjects, Dir direction) {
@@ -143,6 +140,10 @@ void handleMovement(std::vector<PGRgraphics::GraphicsCore::selectedObject> &sele
         case Up:constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(0, 0.05f, 0));
           break;
         case Down:constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(0, -0.05f, 0));
+          break;
+        case Forward:constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(0, 0, 0.05f));
+          break;
+        case Backward:constraints[index]->setPosition(constraints[index]->getPosition() + glm::vec3(0, 0, -0.05f));
           break;
       }
       dynamic_cast<PGRgraphics::SimpleGraphicsModel *>(objects[*res])->setPosition(constraints[index]->getPosition());
@@ -167,6 +168,12 @@ void handleMovement(std::vector<PGRgraphics::GraphicsCore::selectedObject> &sele
 }
 
 int main(int argc, char *argv[]) {
+  /* auto vertex = new PGRsim::SimVertex(1.0f, PGRsim::Active, 1, glm::vec3(0,0,0), nullptr);
+   vertex->setCurrentPosition(glm::vec3(2,0.6,0));
+   auto v1 = glm::vec3(1,0,1);
+   auto v2 = glm::vec3(1,0,-1);
+   auto v3 = glm::vec3(1,1,0);
+   PGRsim::Collision::VertexCollisionChecker::checkIntersection(vertex, v1, v2, v3);*/
   PGRgraphics::GraphicsCore graphicsCore;
 
   StdoutLogger::getInstance().logTime("Init graphics core");
@@ -211,8 +218,6 @@ int main(int argc, char *argv[]) {
   uint32_t time1 = 0;
   uint32_t time2;
 
-  bins.recalculateBins();
-
   bool updatedSim = false;
   while (is_running) {
     while (SDL_PollEvent(&event)) {
@@ -229,9 +234,9 @@ int main(int argc, char *argv[]) {
               break;
             case SDLK_RIGHT:handleMovement(selectedObjects, Right);
               break;
-            case SDLK_UP:handleMovement(selectedObjects, Up);
+            case SDLK_UP:handleMovement(selectedObjects, Forward);
               break;
-            case SDLK_DOWN:handleMovement(selectedObjects, Down);
+            case SDLK_DOWN:handleMovement(selectedObjects, Backward);
               break;
             case SDLK_w:
             case SDLK_s:

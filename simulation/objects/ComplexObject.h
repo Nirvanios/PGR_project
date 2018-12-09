@@ -18,7 +18,7 @@
 
 namespace PGRsim {
 
-class ComplexObject : public SimObjectWithModel, public Collision::CollisionObject {
+class ComplexObject : public SimObjectWithModel/*, public Collision::CollisionObject*/ {
  protected:
   PGRgraphics::ComplexGraphicsModel *model;
   std::vector<SimVertex *> simVertices;
@@ -44,7 +44,7 @@ class ComplexObject : public SimObjectWithModel, public Collision::CollisionObje
 
   void update(SimTime time) override;
 
-  void calcBoundingBox() override;
+  //void calcBoundingBox() override;
 
   void addSpring(float stiffness, float damping, int vertexID1, int vertexID2);
 
@@ -58,7 +58,7 @@ class ComplexObject : public SimObjectWithModel, public Collision::CollisionObje
 
   void removeIndices(int vertexID);
 
-  glm::vec3 getPosition() override;
+  //glm::vec3 getPosition() override;
 };
 }
 

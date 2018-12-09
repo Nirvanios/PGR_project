@@ -27,6 +27,10 @@ class StdoutLogger : public Logger {
   void log(int val) override;
 
   void log(glm::vec3 vector);
+  void log(glm::vec2 vector);
+
+  void log(char *str, float val);
+  void log(char *str, glm::vec3 &vector);
 
   void log(float value);
 };

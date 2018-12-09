@@ -16,6 +16,7 @@ PGRsim::Spring::Spring(float stiffness, float damping, SimObject *simulatedObjec
 void PGRsim::Spring::applyForce(SimObject &object) {
   applyForce();
 }
+
 void PGRsim::Spring::applyForce() {
   direction = simulatedObjectA->getCurrectPosition() - simulatedObjectB->getCurrectPosition();
 

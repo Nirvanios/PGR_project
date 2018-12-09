@@ -3,12 +3,13 @@
 //
 
 #include <StdoutLogger.h>
-#include "CollisionBins.h"
+#include <SimVertex.h>
+#include "VertexCollisionBins.h"
 
-PGRsim::Collision::CollisionBins::CollisionBins(int xResolution,
-                                                int yResolution,
-                                                int zResolution,
-                                                const PGRsim::Collision::BoundingBox &area)
+PGRsim::Collision::VertexCollisionBins::VertexCollisionBins(int xResolution,
+                                                            int yResolution,
+                                                            int zResolution,
+                                                            const PGRsim::Collision::RectArea &area)
     : xResolution(xResolution), yResolution(yResolution), zResolution(zResolution), area(area) {
   binCount = xResolution * yResolution * zResolution;
 
@@ -20,62 +21,60 @@ PGRsim::Collision::CollisionBins::CollisionBins(int xResolution,
       + " z:" + std::to_string(zResolution);
   StdoutLogger::getInstance().logTime(msg);
 
-  bins = new CollisionBin[binCount];
+  bins = new VertexCollisionBin[binCount];
 
-  auto xStep = std::abs(static_cast<int>((area.pointA.x - area.pointB.x) / xResolution));
-  auto yStep = std::abs(static_cast<int>((area.pointA.y - area.pointB.y) / yResolution));
-  auto zStep = std::abs(static_cast<int>((area.pointA.z - area.pointB.z) / zResolution));
+  auto xStep = std::abs((area.pointA.x - area.pointB.x) / xResolution);
+  auto yStep = std::abs((area.pointA.y - area.pointB.y) / yResolution);
+  auto zStep = std::abs((area.pointA.z - area.pointB.z) / zResolution);
 
   for (int z = 0; z < zResolution; z++) {
     for (int y = 0; y < yResolution; y++) {
       auto yCoord = xResolution * y;
       for (int x = 0; x < xResolution; x++) {
-        bins[x + yCoord + xResolution * yResolution * z].box = BoundingBox{
+        bins[x + yCoord + xResolution * yResolution * z].box = RectArea{
             .pointA = area.pointA + glm::vec3(x * xStep, y * yStep, z * zStep),
             .pointB = area.pointA + glm::vec3((x + 1) * xStep, (y + 1) * yStep, (z + 1) * zStep)
         };
       }
     }
   }
-
-  recalculateBins(true);
 }
 
-PGRsim::Collision::CollisionBins::~CollisionBins() {
+PGRsim::Collision::VertexCollisionBins::~VertexCollisionBins() {
   delete[] bins;
 }
 
-void PGRsim::Collision::CollisionBins::addCollisionObject(PGRsim::Collision::CollisionObject *object) {
+void PGRsim::Collision::VertexCollisionBins::addCollisionObject(PGRsim::SimVertex *object) {
   objects.emplace_back(object);
 }
 
-PGRsim::Collision::CollisionBin *PGRsim::Collision::CollisionBins::getBins() {
+PGRsim::Collision::VertexCollisionBin *PGRsim::Collision::VertexCollisionBins::getBins() {
   return bins;
 }
 
-int PGRsim::Collision::CollisionBins::getXResolution() const {
+int PGRsim::Collision::VertexCollisionBins::getXResolution() const {
   return xResolution;
 }
 
-int PGRsim::Collision::CollisionBins::getYResolution() const {
+int PGRsim::Collision::VertexCollisionBins::getYResolution() const {
   return yResolution;
 }
 
-int PGRsim::Collision::CollisionBins::getZResolution() const {
+int PGRsim::Collision::VertexCollisionBins::getZResolution() const {
   return zResolution;
 }
 
-void PGRsim::Collision::CollisionBins::recalculateBins(bool clearCalc) {
+void PGRsim::Collision::VertexCollisionBins::recalculateBins(bool clearCalc) {
   if (true) {
     for (int i = 0; i < binCount; i++) {
       bins[i].objects.clear();
     }
 
     for (auto object : objects) {
-      for (int z = 0; z < zResolution - 1; z++) {
-        for (int y = 0; y < yResolution - 1; y++) {
+      for (int z = 0; z < zResolution; z++) {
+        for (int y = 0; y < yResolution; y++) {
           auto yCoord = xResolution * y;
-          for (int x = 0; x < xResolution - 1; x++) {
+          for (int x = 0; x < xResolution; x++) {
             if (bins[x + yCoord + xResolution * yResolution * z].box.isIn(object->getPosition())) {
               bins[x + yCoord + xResolution * yResolution * z].objects.emplace_back(object);
 
@@ -89,7 +88,7 @@ void PGRsim::Collision::CollisionBins::recalculateBins(bool clearCalc) {
   }
 }
 
-int PGRsim::Collision::CollisionBins::getBinCount() const {
+int PGRsim::Collision::VertexCollisionBins::getBinCount() const {
   return binCount;
 }
 

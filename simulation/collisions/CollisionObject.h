@@ -12,7 +12,7 @@ namespace PGRsim::Collision {
 /**
  * Axis aligned bounding box
  */
-struct BoundingBox {
+struct RectArea {
   glm::vec3 pointA, pointB;
 
   bool isIn(glm::vec3 point) {
@@ -26,15 +26,35 @@ struct BoundingBox {
  */
 class CollisionObject {
  protected:
-  BoundingBox boundingBox;
+  RectArea boundingBox;
+
+  glm::vec3 newPosition;
+
+  bool positionChanged = false;
  public:
   virtual void calcBoundingBox() = 0;
 
-  virtual BoundingBox getBoundingBox() {
+  virtual RectArea getBoundingBox() {
     return boundingBox;
   }
 
   virtual glm::vec3 getPosition() = 0;
+
+  const glm::vec3 &getNewPosition() const {
+    return newPosition;
+  }
+
+  void setNewPosition(const glm::vec3 &newPosition) {
+    CollisionObject::newPosition = newPosition;
+  }
+
+  bool isPositionChanged() const {
+    return positionChanged;
+  }
+
+  void setPositionChanged(bool positionChanged) {
+    CollisionObject::positionChanged = positionChanged;
+  }
 };
 }
 #endif //PGR_PROJECT_COLLISIONOBJECT_H

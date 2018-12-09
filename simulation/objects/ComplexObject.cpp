@@ -10,7 +10,19 @@ PGRsim::ComplexObject::ComplexObject(float mass, PGRsim::SimObjectType type, PGR
   simVertices.reserve(model->getVertices().size());
   float vertexMass = mass / model->getVertices().size();
   for (int i = 0; i < model->getVertices().size(); i++) {
-    simVertices.emplace_back(new SimVertex(vertexMass, type, i, model->getVertices()[i]));
+    auto simVertex = new SimVertex(vertexMass, type, i, model->getVertices()[i], this);
+
+    for (int j = 0; j < model->getVertexIndices().size(); j += 3) {
+      if (model->getVertexIndices()[j] == i
+          || model->getVertexIndices()[j + 1] == i
+          || model->getVertexIndices()[j + 2] == i) {
+        simVertex->addIndex(model->getVertexIndices()[j],
+                            model->getVertexIndices()[j + 1],
+                            model->getVertexIndices()[j + 2]);
+      }
+    }
+
+    simVertices.emplace_back(simVertex);
   }
 }
 
@@ -21,32 +33,8 @@ void PGRsim::ComplexObject::update(PGRsim::SimTime time) {
   model->computeNormals();
 }
 
-void PGRsim::ComplexObject::calcBoundingBox() {
-  boundingBox.pointA = model->getVertices()[0];
-  glm::vec3 max = boundingBox.pointA;
-  for (int i = 0; i < model->getVertices().size(); i ++) {
-    if (boundingBox.pointA.x > model->getVertices()[i].x) {
-      boundingBox.pointA.x = model->getVertices()[i].x;
-    } else if (boundingBox.pointB.x < model->getVertices()[i].x) {
-      boundingBox.pointB.x = model->getVertices()[i].x;
-    }
-
-    if (boundingBox.pointA.y > model->getVertices()[i + 1].y) {
-      boundingBox.pointA.y = model->getVertices()[i + 1].y;
-    } else if (boundingBox.pointB.y < model->getVertices()[i + 1].y) {
-      boundingBox.pointB.y = model->getVertices()[i + 1].y;
-    }
-
-    if (boundingBox.pointA.z > model->getVertices()[i + 2].z) {
-      boundingBox.pointA.z = model->getVertices()[i + 2].z;
-    } else if (boundingBox.pointB.z < model->getVertices()[i + 2].z) {
-      boundingBox.pointB.z = model->getVertices()[i + 2].z;
-    }
-  }
-}
-
 void PGRsim::ComplexObject::addSpring(float stiffness, float damping, int vertexID1, int vertexID2) {
-  springs.emplace_back(new SnappableSpring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2], .8f));
+  springs.emplace_back(new SnappableSpring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2], 10.0f));
 }
 
 void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexID) {
@@ -80,8 +68,9 @@ PGRsim::ComplexObject *PGRsim::ComplexObject::clone(PGRsim::SimObjectType type) 
   return result;
 }
 
+/*
 glm::vec3 PGRsim::ComplexObject::getPosition() {
   return currentPosition;
-}
+}*/
 
 

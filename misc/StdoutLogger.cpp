@@ -39,19 +39,39 @@ void StdoutLogger::logTime(char *str) {
   std::cout << timenow << ":\t" << str << std::endl;
 #endif
 }
+
 void StdoutLogger::log(int val) {
 #ifdef PGR_LOG
   std::cout << "integer" << ":\t" << val << std::endl;
 #endif
 }
+
 void StdoutLogger::log(glm::vec3 vector) {
 #ifdef PGR_LOG
   std::cout << "vec3" << ":\t" << vector.x << " " << vector.y << " " << vector.z << std::endl;
 #endif
 }
+
 void StdoutLogger::log(float value) {
 #ifdef PGR_LOG
   std::cout << "float" << ":\t" << value << std::endl;
+#endif
+}
+void StdoutLogger::log(glm::vec2 vector) {
+#ifdef PGR_LOG
+  std::cout << "vec2" << ":\t" << vector.x << " " << vector.y << std::endl;
+#endif
+}
+
+void StdoutLogger::log(char *str, float val) {
+#ifdef PGR_LOG
+  std::cout << str << val << std::endl;
+#endif
+}
+
+void StdoutLogger::log(char *str, glm::vec3 &vector) {
+#ifdef PGR_LOG
+  std::cout << str << "\t" << vector.x << " " << vector.y << " " << vector.z << std::endl;
 #endif
 }
 

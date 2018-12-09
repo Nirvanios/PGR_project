@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <SimpleObject.h>
+#include <collisions/VertexCollisionChecker.h>
 #include "SimObject.h"
 #include "ForceGenerator.h"
 #include "springs/Spring.h"
@@ -16,6 +17,7 @@
 #include "constraints/Constraint.h"
 
 namespace PGRsim {
+
 class Simulation {
  protected:
   std::vector<SimObject *> objects;
@@ -25,6 +27,7 @@ class Simulation {
   int constraintIterations;
 
   Integrator *integrator;
+  Collision::VertexCollisionChecker collisionChecker;
 
   void threadConstraints(int start, int end);
  public:

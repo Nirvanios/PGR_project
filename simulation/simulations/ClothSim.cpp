@@ -14,9 +14,9 @@ void PGRsim::ClothSim::prepareClothObject(std::string filePath) {
   auto vertexIndices = clothObject->getObjectModel()->getVertexIndices();
   auto vertices = clothObject->getSimVertices();
 
-  if (tmp == 0) {
-    //clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, 1), 0);
-    //clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, -1.000000), 272);
+  if (true || tmp == 0) {
+    clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, 1), 0);
+    clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, -1.000000), 272);
   } else {
     clothObject->addConstraint(glm::vec3(-4.37113, 4.24692, 0), 0);
     clothObject->addConstraint(glm::vec3(4.12272, 4.24692, 0), 4160);
@@ -58,7 +58,7 @@ void PGRsim::ClothSim::prepareClothObject(std::string filePath) {
 
   tmp++;
 
-  float s = 4.0f, d = 2.0f;
+  float s = 8.0f, d = 0.1f;
 
   SnappableSpringGroup *group;
   int index;
@@ -151,7 +151,7 @@ void PGRsim::ClothSim::prepareClothObject(std::string filePath) {
 
   addObject(clothObject);
 
-  width = height = 65;
+  //width = height = 65;
 }
 void PGRsim::ClothSim::update(PGRsim::SimTime time) {
   for (auto group : groups) {

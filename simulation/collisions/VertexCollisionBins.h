@@ -7,34 +7,35 @@
 
 #include <vector>
 #include "CollisionObject.h"
+#include <SimVertex.h>
 
 namespace PGRsim::Collision {
 
-struct CollisionBin {
-  std::vector<CollisionObject *> objects;
+struct VertexCollisionBin {
+  std::vector<SimVertex *> objects;
 
-  BoundingBox box;
+  RectArea box;
 };
 
-class CollisionBins {
+class VertexCollisionBins {
  protected:
   int xResolution, yResolution, zResolution;
 
   int binCount;
 
-  BoundingBox area;
+  RectArea area;
 
-  CollisionBin *bins;
+  VertexCollisionBin *bins;
 
-  std::vector<CollisionObject *> objects;
+  std::vector<SimVertex *> objects;
  public:
-  CollisionBins(int xResolution, int yResolution, int zResolution, const BoundingBox &area);
+  VertexCollisionBins(int xResolution, int yResolution, int zResolution, const RectArea &area);
 
-  void addCollisionObject(CollisionObject *object);
+  void addCollisionObject(SimVertex *object);
 
   void recalculateBins(bool clearCalc = false);
 
-  CollisionBin *getBins();
+  VertexCollisionBin *getBins();
 
   int getXResolution() const;
   int getYResolution() const;
@@ -42,7 +43,7 @@ class CollisionBins {
 
   int getBinCount() const;
 
-  virtual ~CollisionBins();
+  virtual ~VertexCollisionBins();
 };
 }
 
