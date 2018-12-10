@@ -63,22 +63,74 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
   auto v2Pos = v2->getCurrectPosition();
   auto v3Pos = v3->getCurrectPosition();
 
-  auto directionCur = glm::normalize(vertex->getCurrectPosition());
+  const float coef = 0.5f;
+
+  auto lineDir = glm::normalize(vertex->getCurrectPosition() - vertex->getPreviousPosition());
+  auto lineDirReversed = glm::normalize(vertex->getPreviousPosition() - vertex->getCurrectPosition());
+
   float distance;
   glm::vec2 position;
 
   if (glm::intersectRayTriangle(
       vertex->getPreviousPosition(),
-      directionCur,
+      lineDir,
       v1->getCurrectPosition(),
       v2->getCurrectPosition(),
       v3->getCurrectPosition(),
       position,
       distance)) {
-    auto lineLength = glm::length(glm::distance(vertex->getPreviousPosition(), vertex->getCurrectPosition()));
 
+    auto lineLength = glm::length(glm::distance(vertex->getPreviousPosition(), vertex->getCurrectPosition()));
     if (std::abs(distance) > lineLength) {
-      if (vertex->getParent() != v1->getParent()) {
+      if (false && vertex->getParent() != v1->getParent()) {
+        auto prev = vertex->getPreviousPosition();
+        auto cur = vertex->getCurrectPosition();
+        auto inter = PGRutils::baryToCartesian(position, v1Pos, v2Pos, v3Pos);
+        StdoutLogger::getInstance().log("Collision aborted, prev: ", prev);
+        StdoutLogger::getInstance().log("Collision aborted, curr: ", cur);
+        StdoutLogger::getInstance().log("Collision aborted, inter: ", inter);
+        StdoutLogger::getInstance().log("Collision aborted, distance: ", distance);
+        StdoutLogger::getInstance().log("Collision aborted: move length: ", lineLength);
+      }
+      goto back_face_test;
+    }
+    auto pos = PGRutils::baryToCartesian(position, v1Pos, v2Pos, v3Pos);
+
+    auto polyNormal = glm::triangleNormal(v1Pos, v2Pos, v3Pos);
+
+    auto reaction = polyNormal * (lineLength - std::abs(distance)) * coef;
+    vertex->setNewPosition(pos + reaction);
+    vertex->setPositionChanged(true);
+
+    reaction = reaction / 3.0f;
+
+    v1->setNewPosition(v1->getCurrectPosition() - reaction);
+    v1->setPositionChanged(true);
+    v2->setNewPosition(v2->getCurrectPosition() - reaction);
+    v2->setPositionChanged(true);
+    v3->setNewPosition(v3->getCurrectPosition() - reaction);
+    v3->setPositionChanged(true);
+
+    StdoutLogger::getInstance().log("Collision detected, front face");
+    StdoutLogger::getInstance().log("Collision detected, pos: ", pos);
+    StdoutLogger::getInstance().log("Collision detected, distance: ", distance);
+    StdoutLogger::getInstance().log("Collision detected: move length: ", lineLength);
+
+    return true;
+  }
+  back_face_test:
+  if (glm::intersectRayTriangle(
+      vertex->getCurrectPosition(),
+      lineDirReversed,
+      v1->getCurrectPosition(),
+      v2->getCurrectPosition(),
+      v3->getCurrectPosition(),
+      position,
+      distance)) {
+
+    auto lineLength = glm::length(glm::distance(vertex->getPreviousPosition(), vertex->getCurrectPosition()));
+    if (std::abs(distance) > lineLength) {
+      if (false && vertex->getParent() != v1->getParent()) {
         auto prev = vertex->getPreviousPosition();
         auto cur = vertex->getCurrectPosition();
         auto inter = PGRutils::baryToCartesian(position, v1Pos, v2Pos, v3Pos);
@@ -93,13 +145,24 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
     auto pos = PGRutils::baryToCartesian(position, v1Pos, v2Pos, v3Pos);
 
     auto polyNormal = glm::triangleNormal(v1Pos, v2Pos, v3Pos);
-    if (distance < 0) {
-      polyNormal *= -1.0f;
-    }
-    auto reaction = polyNormal * (lineLength - std::abs(distance));
-    vertex->setNewPosition(pos);// - reaction);
 
+    auto reaction = polyNormal * (lineLength - (lineLength - std::abs(distance))) * coef;
+    vertex->setNewPosition(pos - reaction);
     vertex->setPositionChanged(true);
+
+    reaction = reaction / 3.0f;
+
+    v1->setNewPosition(v1->getCurrectPosition() + reaction);
+    v1->setPositionChanged(true);
+    v2->setNewPosition(v2->getCurrectPosition() + reaction);
+    v2->setPositionChanged(true);
+    v3->setNewPosition(v3->getCurrectPosition() + reaction);
+    v3->setPositionChanged(true);
+
+    StdoutLogger::getInstance().log("Collision detected, back face");
+    StdoutLogger::getInstance().log("Collision detected, pos: ", pos);
+    StdoutLogger::getInstance().log("Collision detected, distance: ", distance);
+    StdoutLogger::getInstance().log("Collision detected: move length: ", lineLength);
 
     return true;
   }
