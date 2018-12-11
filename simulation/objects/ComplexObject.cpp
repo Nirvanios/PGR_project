@@ -34,7 +34,7 @@ void PGRsim::ComplexObject::update(PGRsim::SimTime time) {
 }
 
 void PGRsim::ComplexObject::addSpring(float stiffness, float damping, int vertexID1, int vertexID2) {
-  springs.emplace_back(new SnappableSpring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2], 50.0f));
+  springs.emplace_back(new Spring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2]));
 }
 
 void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexID) {
@@ -44,6 +44,7 @@ void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexI
 void PGRsim::ComplexObject::addConstraint(float length, int vertexID1, int vertexID2) {
   constraints.emplace_back(new LengthConstraint(simVertices[vertexID1], simVertices[vertexID2], length));
 }
+
 void PGRsim::ComplexObject::removeIndices(int vertexID) {
   std::vector<int> newIndices;
   auto oldIndices = model->getVertexIndices();
@@ -66,5 +67,12 @@ void PGRsim::ComplexObject::removeIndices(int vertexID) {
 PGRsim::ComplexObject *PGRsim::ComplexObject::clone(PGRsim::SimObjectType type) {
   auto result = new ComplexObject(getMass(), type, model->clone());
   return result;
+}
+void PGRsim::ComplexObject::addSnappableSpring(float stiffness,
+                                               float damping,
+                                               int vertexID1,
+                                               int vertexID2,
+                                               float limit) {
+  springs.emplace_back(new SnappableSpring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2], limit));
 }
 

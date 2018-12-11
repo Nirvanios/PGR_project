@@ -52,6 +52,8 @@ class ComplexObject : public SimObjectWithModel {
 
   void addSpring(float stiffness, float damping, int vertexID1, int vertexID2);
 
+  void addSnappableSpring(float stiffness, float damping, int vertexID1, int vertexID2, float limit);
+
   void addConstraint(const glm::vec3 &position, int vertexID);
 
   void addConstraint(float length, int vertexID1, int vertexID2);

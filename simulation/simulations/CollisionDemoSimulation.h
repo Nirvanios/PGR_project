@@ -18,7 +18,7 @@ namespace PGRsim {
  *
  * Adds collision detection.
  */
-class ClothSim : public Simulation {
+class CollisionDemoSimulation : public Simulation {
  private:
   std::vector<SnappableSpringGroup *> groups;
 

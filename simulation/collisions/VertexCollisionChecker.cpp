@@ -68,7 +68,7 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
   auto v3Pos = v3->getCurrectPosition();
 
   // "bounce" coefficient
-  const float coef = 0.8f;
+  const float coef = 1.0f;
 
   auto movementDirection = glm::normalize(vertex->getCurrectPosition() - vertex->getPreviousPosition());
 

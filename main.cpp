@@ -15,7 +15,7 @@
 #include <objects/SimpleGraphicsModel.h>
 #include <StdoutLogger.h>
 #include <objects/ComplexGraphicsModel.h>
-#include <ClothSim.h>
+#include <CollisionDemoSimulation.h>
 #include <ComplexObject.h>
 #include <LocationLimit.h>
 #include <ShapedComplexObject.h>
@@ -26,7 +26,7 @@ auto air = new PGRsim::DragForce();
 
 bool tearDemo = false;
 
-PGRsim::ClothSim simulation;
+PGRsim::CollisionDemoSimulation simulation;
 
 std::vector<PGRsim::PointConstraint *> constraints;
 std::vector<int> constraintModelIDs;
@@ -247,7 +247,7 @@ int main(int argc, char *argv[]) {
             case SDLK_SPACE: is_simRunning = !is_simRunning;
               break;
             case SDLK_t:
-              if (tearDemo == true) {
+              if (tearDemo) {
                 simulation.stopTearDemo();
                 simulation.deleteDemoConstraints();
               }
