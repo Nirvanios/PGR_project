@@ -11,6 +11,14 @@
 #include "SnappableSpring.h"
 
 namespace PGRsim {
+
+/**
+ * Group of constraints and snappable spring.
+ * When any of the springs is snapped all constraints in the group are deactivated
+ * and all springs are snapped.
+ *
+ * @author Petr Flajšingr
+ */
 class SnappableSpringGroup {
  private:
   std::vector<SnappableSpring *> springs;
@@ -23,6 +31,9 @@ class SnappableSpringGroup {
   bool snapped = false;
 
  protected:
+  /**
+   * Snap all springs and disable all constraints.
+   */
   void snapAll();
 
  public:
@@ -30,6 +41,10 @@ class SnappableSpringGroup {
 
   void addConstraint(Constraint *constraint);
 
+  /**
+   * Check for snaps.
+   * @return true if springs snapped, false otherwise
+   */
   virtual bool check();
 
   void setVertexID(int id);
@@ -37,6 +52,7 @@ class SnappableSpringGroup {
   int getVertexID();
 
   ComplexObject *getOwner() const;
+
   void setOwner(ComplexObject *owner);
 };
 }

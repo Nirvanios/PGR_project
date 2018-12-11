@@ -15,6 +15,8 @@ namespace PGRsim {
  * when a force above set value is applied by the string.
  *
  * @see PGRsim::Spring
+ *
+ * @author Petr Flajšingr
  */
 class SnappableSpring : public Spring {
   friend class SnappableSpringGroup;
@@ -24,6 +26,14 @@ class SnappableSpring : public Spring {
   bool snapped = false;
  protected:
  public:
+  /**
+   *
+   * @param stiffness
+   * @param damping
+   * @param simulatedObjectA
+   * @param simulatedObjectB
+   * @param snapLimit value at which the spring snaps
+   */
   SnappableSpring(float stiffness,
                   float damping,
                   SimObject *simulatedObjectA,

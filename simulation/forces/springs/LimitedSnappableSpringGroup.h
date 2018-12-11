@@ -9,6 +9,10 @@
 
 namespace PGRsim {
 
+/**
+ * Works the same as as SnappableSpringGroup but only snaps others springs when main spring is snapped.
+ * @see SnappableSpringGroup
+ */
 class LimitedSnappableSpringGroup : public SnappableSpringGroup {
  private:
   SnappableSpring *mainSpring;
