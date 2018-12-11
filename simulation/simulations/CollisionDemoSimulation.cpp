@@ -3,6 +3,7 @@
 //
 
 #include <ComplexObject.h>
+#include <thread>
 #include "CollisionDemoSimulation.h"
 
 int width = 17, height = 17;
@@ -98,7 +99,48 @@ void PGRsim::CollisionDemoSimulation::update(PGRsim::SimTime time) {
     }
   }
 
-  PGRsim::Simulation::update(time);
+  for (auto spring : springs) {
+    spring->applyForce();
+  }
+
+  glm::vec3 acceleration;
+  for (auto object : objects) {
+    if (object->getSimulatedObjectType() == Active || object->getSimulatedObjectType() == Shape) {
+      for (auto forceGenerator : forces) {
+        forceGenerator->applyForce(*object);
+      }
+    }
+  }
+
+  for (auto object : objects) {
+    if (object->getSimulatedObjectType() == Active || object->getSimulatedObjectType() == Shape) {
+      acceleration = object->getResultantForce() / object->getMass();
+
+      integrator->integrate(acceleration, *object);
+    }
+  }
+
+  std::thread thread(
+      &CollisionDemoSimulation::threadConstraints,
+      this,
+      0,
+      constraints.size() / 2);
+
+  threadConstraints(static_cast<int>(constraints.size() / 2), static_cast<int>(constraints.size()));
+
+  thread.join();
+
+  collisionChecker.checkCollisions();
+
+  collisionChecker.applyChanges();
+
+  for (auto object : objects) {
+    object->update(time);
+
+    if (object->getSimulatedObjectType() == Active || object->getSimulatedObjectType() == Shape) {
+      object->resetForces();
+    }
+  }
 }
 
 void PGRsim::CollisionDemoSimulation::tear() {

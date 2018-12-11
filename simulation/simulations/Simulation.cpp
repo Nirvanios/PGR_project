@@ -57,10 +57,6 @@ void PGRsim::Simulation::update(SimTime time) {
 
   thread.join();
 
-  collisionChecker.checkCollisions();
-
-  collisionChecker.applyChanges();
-
   for (auto object : objects) {
     object->update(time);
 
