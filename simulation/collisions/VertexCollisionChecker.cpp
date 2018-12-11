@@ -72,7 +72,7 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
   auto lineDirReversed = glm::normalize(vertex->getPreviousPosition() - vertex->getCurrectPosition());
 
   float distance;
-  glm::vec2 position;
+  glm::vec2 baryPosition;
 
   if (glm::intersectRayTriangle(
       vertex->getPreviousPosition(),
@@ -80,39 +80,35 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
       v1->getCurrectPosition(),
       v2->getCurrectPosition(),
       v3->getCurrectPosition(),
-      position,
+      baryPosition,
       distance)) {
 
-    auto lineLength = glm::distance(vertex->getPreviousPosition(), vertex->getCurrectPosition());
-    if (std::abs(distance) > lineLength) {
+    auto moveLength = glm::distance(vertex->getPreviousPosition(), vertex->getCurrectPosition());
+    if (std::abs(distance) > moveLength) {
       return false;
     }
-    auto pos = PGRutils::baryToCartesian(position, v1Pos, v2Pos, v3Pos);
 
-    auto polyNormal = glm::triangleNormal(v1Pos, v2Pos, v3Pos);
+    auto intersection = PGRutils::baryToCartesian(baryPosition, v1Pos, v2Pos, v3Pos);
 
-    glm::vec3 reaction;
-    reaction = polyNormal * lineLength * coef;
+    auto triangleNormal = glm::triangleNormal(v1Pos, v2Pos, v3Pos);
 
-    auto planeVec = vertex->getPreviousPosition() - pos;
-    auto dot = glm::dot(planeVec, polyNormal);
+    auto reaction = triangleNormal * ((moveLength - std::abs(distance)) + (std::abs(distance) * coef));
 
-    if (dot > 0) {
-      vertex->setNewPosition(vertex->getNewPosition() + reaction);
-    } else {
-      vertex->setNewPosition(vertex->getNewPosition() - reaction);
+    auto planeVec = vertex->getPreviousPosition() - intersection;
+    auto angle = glm::dot(planeVec, triangleNormal);
+    if (angle < 0) {
+      reaction = -reaction;
     }
 
+    vertex->setNewPosition(vertex->getNewPosition() + reaction);
     vertex->setPositionChanged(true);
 
-    reaction = reaction / 3.0f;
-
-    /*v1->setNewPosition(v1->getNewPosition() - reaction);
+    v1->setNewPosition(v1->getNewPosition() - reaction * (1 - baryPosition.x - baryPosition.y));
     v1->setPositionChanged(true);
-    v2->setNewPosition(v2->getNewPosition() - reaction);
+    v2->setNewPosition(v2->getNewPosition() - reaction * baryPosition.x);
     v2->setPositionChanged(true);
-    v3->setNewPosition(v3->getNewPosition() - reaction);
-    v3->setPositionChanged(true);*/
+    v3->setNewPosition(v3->getNewPosition() - reaction * baryPosition.y);
+    v3->setPositionChanged(true);
     return true;
   }
   return false;
