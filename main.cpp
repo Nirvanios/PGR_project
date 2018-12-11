@@ -88,7 +88,7 @@ void updateSimulation() {
   static PGRsim::SimTime simTime = 0.0f;
   simTime += 1 / 60.0f;
   if (tearDemo) {
-    simulation.tear();
+    //simulation.tear();
   }
   simulation.update(simTime);
 }
@@ -248,8 +248,8 @@ int main(int argc, char *argv[]) {
               break;
             case SDLK_t:
               if (tearDemo) {
-                simulation.stopTearDemo();
-                simulation.deleteDemoConstraints();
+                //simulation.stopTearDemo();
+                //simulation.deleteDemoConstraints();
               }
               tearDemo = true;
               break;

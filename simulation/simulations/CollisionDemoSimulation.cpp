@@ -90,15 +90,6 @@ void PGRsim::CollisionDemoSimulation::prepareClothObject(std::string filePath) {
 }
 
 void PGRsim::CollisionDemoSimulation::update(PGRsim::SimTime time) {
-  for (auto group : groups) {
-    if (group->check()) {
-      group->getOwner()->removeIndices(group->getVertexID());
-      objects.erase(std::find(objects.begin(),
-                              objects.end(),
-                              group->getOwner()->getSimVertices()[group->getVertexID()]));
-    }
-  }
-
   for (auto spring : springs) {
     spring->applyForce();
   }
@@ -141,28 +132,4 @@ void PGRsim::CollisionDemoSimulation::update(PGRsim::SimTime time) {
       object->resetForces();
     }
   }
-}
-
-void PGRsim::CollisionDemoSimulation::tear() {
-  for (auto constraint : tearDemoLeft) {
-    constraint->setPosition(constraint->getPosition() - glm::vec3(0.01f));
-  }
-
-  for (auto constraint : tearDemoRight) {
-    constraint->setPosition(constraint->getPosition() + glm::vec3(0.01f));
-  }
-}
-
-void PGRsim::CollisionDemoSimulation::stopTearDemo() {
-  for (auto constraint : tearDemoLeft) {
-    constraint->disable();
-  }
-
-  for (auto constraint : tearDemoRight) {
-    constraint->disable();
-  }
-}
-
-void PGRsim::CollisionDemoSimulation::deleteDemoConstraints() {
-
 }

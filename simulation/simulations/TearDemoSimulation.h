@@ -6,11 +6,22 @@
 #define PGR_PROJECT_TEARDEMOSIMULATION_H
 
 #include "Simulation.h"
+#include <springs/SnappableSpringGroup.h>
 
 namespace PGRsim {
 
 class TearDemoSimulation : public Simulation {
+ private:
+  std::vector<PointConstraint *> tearDemoLeft;
+  std::vector<PointConstraint *> tearDemoRight;
 
+  std::vector<SnappableSpringGroup *> groups;
+ public:
+  void prepareClothObject(std::string filePath);
+
+  void tear();
+
+  void stopTearDemo();
 };
 }
 
