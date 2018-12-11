@@ -50,7 +50,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
         tearDemoRight.emplace_back(dynamic_cast<PointConstraint *>(constraint));
       });
 
-  float s = 8.0f, d = 0.1f;
+  float s = 8.0f, d = 0.1f, snapLimit = 2.0f;
 
   SnappableSpringGroup *group;
   int index;
@@ -59,8 +59,10 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
       index = x * height + y;
 
       if (y < height - 1) {
-        clothObject->addSpring(s, d, index, index + 1);
+        clothObject->addSnappableSpring(s, d, index, index + 1, snapLimit);
         group = new SnappableSpringGroup();
+        group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
+            - 1]));
         clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
                                                  vertices[index + 1]->getCurrectPosition()),
                                    index,
@@ -68,7 +70,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
         group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
 
         if (x < width - 1) {
-          clothObject->addSpring(s, d, index, index + 1);
+          clothObject->addSnappableSpring(s, d, index, index + 1, snapLimit);
           group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
               - 1]));
           clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
@@ -78,7 +80,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
           group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
 
           if (y > 0) {
-            clothObject->addSpring(s, d, index, index + 1);
+            clothObject->addSnappableSpring(s, d, index, index + 1, snapLimit);
             group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[
                 clothObject->getSprings().size()
                     - 1]));
@@ -92,7 +94,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
       }
 
       if (x < width - 1) {
-        clothObject->addSpring(s, d, index, index + width);
+        clothObject->addSnappableSpring(s, d, index, index + width, snapLimit);
         group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
             - 1]));
         clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
@@ -103,7 +105,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
       }
 
       if (y < height - 2) {
-        clothObject->addSpring(s, d, index, index + 2);
+        clothObject->addSnappableSpring(s, d, index, index + 2, snapLimit);
         group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
             - 1]));
         clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
@@ -114,7 +116,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
       }
 
       if (x < width - 2) {
-        clothObject->addSpring(s, d, index, index + 2 * width);
+        clothObject->addSnappableSpring(s, d, index, index + 2 * width, snapLimit);
         group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
             - 1]));
         clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
@@ -163,4 +165,16 @@ void PGRsim::TearDemoSimulation::stopTearDemo() {
   for (auto constraint : tearDemoRight) {
     constraint->disable();
   }
+}
+void PGRsim::TearDemoSimulation::update(PGRsim::SimTime time) {
+  for (auto group : groups) {
+    if (group->check()) {
+      group->getOwner()->removeIndices(group->getVertexID());
+      objects.erase(std::find(objects.begin(),
+                              objects.end(),
+                              group->getOwner()->getSimVertices()[group->getVertexID()]));
+    }
+  }
+
+  Simulation::update(time);
 }

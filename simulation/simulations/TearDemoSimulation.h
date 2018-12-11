@@ -22,6 +22,8 @@ class TearDemoSimulation : public Simulation {
   void tear();
 
   void stopTearDemo();
+
+  void update(SimTime time) override;
 };
 }
 

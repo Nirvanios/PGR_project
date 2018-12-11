@@ -19,7 +19,7 @@
 #include <objects/SimpleGraphicsModel.h>
 #include <StdoutLogger.h>
 #include <objects/ComplexGraphicsModel.h>
-#include <CollisionDemoSimulation.h>
+#include <TearDemoSimulation.h>
 #include <ComplexObject.h>
 #include <LocationLimit.h>
 #include <ShapedComplexObject.h>
@@ -222,8 +222,7 @@ int main(int argc, char *argv[]) {
               break;
             case SDLK_t:
               if (tearDemo) {
-                //simulation.stopTearDemo();
-                //simulation.deleteDemoConstraints();
+                simulation.stopTearDemo();
               }
               tearDemo = true;
               break;
