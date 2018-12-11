@@ -7,6 +7,11 @@
 
 #include <string>
 
+/**
+ * Logger interface for basic debugging.
+ *
+ * @author Petr Flajšingr
+ */
 class Logger {
  public:
   virtual void log(std::string &str) = 0;
