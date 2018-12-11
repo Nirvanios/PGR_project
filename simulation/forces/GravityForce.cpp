@@ -11,8 +11,8 @@ void PGRsim::GravityForce::applyForce(SimObject &object) {
 PGRsim::GravityForce::GravityForce() : acceleration(glm::vec3(0, -9.8f, 0)) {}
 
 void PGRsim::GravityForce::disable() {
-    acceleration = glm::vec3(0, 0, 0);
+  acceleration = glm::vec3(0, 0, 0);
 }
 void PGRsim::GravityForce::enable() {
-    acceleration = glm::vec3(0, -9.8f, 0);
+  acceleration = glm::vec3(0, -9.8f, 0);
 }

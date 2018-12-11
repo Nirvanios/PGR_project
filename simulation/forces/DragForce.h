@@ -12,10 +12,13 @@ namespace PGRsim {
 
 /**
  * Drag force of an environment. Applied to the entire area.
+ *
+ * @author Petr Flajšingr
  */
 class DragForce : public ForceGenerator {
  private:
-  float dragCoefficient;
+  float dragCoefficient = 0.0f;
+
  public:
   float getDragCoefficient() {
     return dragCoefficient;

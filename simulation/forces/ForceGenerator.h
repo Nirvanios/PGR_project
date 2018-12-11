@@ -12,14 +12,14 @@ namespace PGRsim {
 
 /**
  * Interface for forces acting in the simulation.
+ *
+ * @author Petr Flajšingr
  */
 class ForceGenerator {
- private:
- protected:
  public:
   /**
    * Apply effects to a simulated object
-   * @param object
+   * @param object object to apply force to
    */
   virtual void applyForce(SimObject &object) = 0;
 };

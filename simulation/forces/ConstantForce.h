@@ -11,6 +11,8 @@ namespace PGRsim {
 
 /**
  * Apply constant force in the entire area.
+ *
+ * @author Petr Flajšingr
  */
 class ConstantForce : public ForceGenerator {
  private:
@@ -19,7 +21,6 @@ class ConstantForce : public ForceGenerator {
   explicit ConstantForce(const glm::vec3 &force);
 
   void applyForce(SimObject &object) override;
-
 };
 }
 

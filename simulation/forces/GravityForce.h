@@ -15,6 +15,8 @@ namespace PGRsim {
  * Gravity force applied to the entire are based on real gravity.
  *
  * Acceleration: 0, -9.8f, 0
+ *
+ * @author Petr Flajšingr
  */
 class GravityForce final : public ForceGenerator {
  private:
