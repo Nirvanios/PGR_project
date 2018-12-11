@@ -18,6 +18,20 @@
 
 namespace PGRsim {
 
+/**
+ * Base simulation class.
+ *
+ * Takes care of constraint checking, spring force application and object movement.
+ *
+ * Also applies forces.
+ *
+ * Constraint checking is applied in iterations, more iterations mean higher accuracy
+ * but worse performance.
+ *
+ * Subclass this class in order to add more functions.
+ *
+ * @author Petr Flajšingr
+ */
 class Simulation {
  protected:
   std::vector<SimObject *> objects;
@@ -29,6 +43,11 @@ class Simulation {
   Integrator *integrator;
   Collision::VertexCollisionChecker collisionChecker;
 
+  /**
+   * Constraint checking in a thread.
+   * @param start start index
+   * @param end end index
+   */
   void threadConstraints(int start, int end);
  public:
   Simulation();
