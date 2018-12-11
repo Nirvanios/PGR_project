@@ -6,6 +6,7 @@
 #define PGR_PROJECT_SIMULATEDVERTEX_H
 
 #include "SimpleObject.h"
+#include <vector>
 #include <array>
 
 
@@ -14,11 +15,16 @@ class ComplexObject;
 
 /**
  * Simulation of a single vertex which may be a part of a more complicated object.
+ *
+ * @author Petr Flajšingr
  */
 class SimVertex : public SimObject, public Collision::CollisionObject {
  private:
   int vertexId;
 
+  /**
+   * Indices in which the vertex is used.
+   */
   std::vector<std::array<int, 3>> indices;
 
   ComplexObject *parent;

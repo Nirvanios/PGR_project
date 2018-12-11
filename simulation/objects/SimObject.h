@@ -22,6 +22,8 @@ enum SimObjectType {
 
 /**
  * Base class for simulated objects.
+ *
+ * @author Petr Flajšingr
  */
 class SimObject {
  private:
@@ -33,6 +35,7 @@ class SimObject {
   glm::vec3 previousPosition;
   glm::vec3 velocity;
   glm::vec3 resultantForce;
+
  public:
   /**
    * Initialize object in coords = 0, 0, 0 with no forces acting on it.

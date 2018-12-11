@@ -18,13 +18,19 @@
 
 namespace PGRsim {
 
-class ComplexObject : public SimObjectWithModel/*, public Collision::CollisionObject*/ {
+/**
+ * Simulation object consisting of vertices whose movement is simulated.
+ *
+ * @author Petr Flajšingr
+ */
+class ComplexObject : public SimObjectWithModel {
  protected:
   PGRgraphics::ComplexGraphicsModel *model;
   std::vector<SimVertex *> simVertices;
 
   std::vector<Constraint*> constraints;
   std::vector<Spring*> springs;
+
  public:
   ComplexObject(float mass, SimObjectType type, PGRgraphics::ComplexGraphicsModel *model);
 
@@ -44,8 +50,6 @@ class ComplexObject : public SimObjectWithModel/*, public Collision::CollisionOb
 
   void update(SimTime time) override;
 
-  //void calcBoundingBox() override;
-
   void addSpring(float stiffness, float damping, int vertexID1, int vertexID2);
 
   void addConstraint(const glm::vec3 &position, int vertexID);
@@ -57,8 +61,6 @@ class ComplexObject : public SimObjectWithModel/*, public Collision::CollisionOb
   }
 
   void removeIndices(int vertexID);
-
-  //glm::vec3 getPosition() override;
 };
 }
 

@@ -3,9 +3,6 @@
 //
 
 #include "SimpleObject.h"
-#include <iostream>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/vec4.hpp>
 
 PGRsim::SimpleObject::SimpleObject(float mass,
                                    PGRsim::SimObjectType objectType,
@@ -18,5 +15,5 @@ PGRsim::SimpleObject::SimpleObject(float mass,
 }
 
 void PGRsim::SimpleObject::update(PGRsim::SimTime time) {
-    model->setPosition(currentPosition);
+  model->setPosition(currentPosition);
 }

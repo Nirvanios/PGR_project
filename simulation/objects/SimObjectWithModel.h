@@ -10,6 +10,11 @@
 
 namespace PGRsim {
 
+/**
+ * Simulated object with a graphics model that can be rendered on screen.
+ *
+ * @author Petr Flajšingr
+ */
 class SimObjectWithModel : public SimObject {
  public:
   SimObjectWithModel(float mass, SimObjectType type) : SimObject(mass, type) {}

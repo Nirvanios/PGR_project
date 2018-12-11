@@ -17,14 +17,16 @@ namespace PGRsim {
  * Simulated object with unchangeable shape.
  *
  * Position may be used to create translation matrix for model's vertices.
+ *
+ * @author Petr Flajšingr
  */
-class SimpleObject : public SimObjectWithModel/*, public Collision::CollisionObject*/ {
-  protected:
-   PGRgraphics::SimpleGraphicsModel *model;
+class SimpleObject : public SimObjectWithModel {
+ protected:
+  PGRgraphics::SimpleGraphicsModel *model;
  public:
-   SimpleObject(float mass, SimObjectType objectType, PGRgraphics::SimpleGraphicsModel *model);
+  SimpleObject(float mass, SimObjectType objectType, PGRgraphics::SimpleGraphicsModel *model);
 
-   void setObjectModel(PGRgraphics::SimpleGraphicsModel *model) {
+  void setObjectModel(PGRgraphics::SimpleGraphicsModel *model) {
     this->model = model;
   }
 
@@ -33,12 +35,6 @@ class SimpleObject : public SimObjectWithModel/*, public Collision::CollisionObj
   }
 
   void update(SimTime time) override;
-
-//  void calcBoundingBox() override;
-
-  // Collision::RectArea getBoundingBox() override;
-
-  // glm::vec3 getPosition() override;
 };
 }
 

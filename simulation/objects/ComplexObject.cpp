@@ -68,9 +68,3 @@ PGRsim::ComplexObject *PGRsim::ComplexObject::clone(PGRsim::SimObjectType type) 
   return result;
 }
 
-/*
-glm::vec3 PGRsim::ComplexObject::getPosition() {
-  return currentPosition;
-}*/
-
-
