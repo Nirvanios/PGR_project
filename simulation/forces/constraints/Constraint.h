@@ -8,12 +8,10 @@
 
 namespace PGRsim {
 
-enum ConstraintType {
-  Point, Length
-};
-
 /**
  * Interface for constraints that are checked at the end of each time step.
+ *
+ * @author Petr Flajšingr
  */
 class Constraint {
  private:
@@ -21,10 +19,16 @@ class Constraint {
  public:
   virtual void satisfyConstraint() = 0;
 
+  /**
+   * Enable constraint checking.
+   */
   void enable() {
     enabled = true;
   }
 
+  /**
+   * Disable constraint checking.
+   */
   void disable() {
     enabled = false;
   }

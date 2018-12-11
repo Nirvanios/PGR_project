@@ -12,6 +12,8 @@ namespace PGRsim {
 
 /**
  * Maintains distance between two objects.
+ *
+ * @author Petr Flajšingr
  */
 class LengthConstraint : public Constraint {
  private:
@@ -25,6 +27,12 @@ class LengthConstraint : public Constraint {
   float currentLength;
  protected:
  public:
+  /**
+   *
+   * @param objectA
+   * @param objectB
+   * @param length desired length
+   */
   LengthConstraint(SimObject *objectA, SimObject *objectB, float length);
 
   void satisfyConstraint() override;
