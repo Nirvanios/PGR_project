@@ -20,7 +20,7 @@ namespace PGRsim::Collision {
 class VertexCollisionChecker {
  private:
   VertexCollisionBins bins =
-      VertexCollisionBins(10, 10, 10, Collision::RectArea{
+      VertexCollisionBins(10, 10, 3, Collision::RectArea{
           .pointA = glm::vec3(-3, -3, -3),
           .pointB = glm::vec3(3, 3, 3)
       });

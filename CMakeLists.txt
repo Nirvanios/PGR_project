@@ -4,7 +4,7 @@ project(PGR_project)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-#set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra")
 
 add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 #add_compile_definitions(PGR_LOG)

@@ -82,32 +82,6 @@ void prepareSimulation() {
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
           - 1])->getConstraints()[3]);*/
-
-  /*auto testObject = new PGRsim::ShapedComplexObject(10.0f, PGRsim::Active, PGRgraphics::ComplexGraphicsModel::LoadFromOBJ("small_ball.obj"));
-
-  simulation.addObject(testObject);
-  simulation.addObject(testObject->getShape());
-
-  for (auto vertex : testObject->getSimVertices()) {
-    simulation.addObject(vertex);
-  }
-
-  for (auto vertex : testObject->getShape()->getSimVertices()) {
-    simulation.addObject(vertex);
-  }
-
-  for (auto spring : testObject->getShapeSprings()) {
-    simulation.addSpring(spring);
-  }
-
-  for (auto spring : testObject->getSprings()) {
-    simulation.addSpring(spring);
-  }
-
-  for (auto constraint : testObject->getShapeConstraints()) {
-    simulation.addConstraint(constraint);
-  }*/
-
 }
 
 void updateSimulation() {
