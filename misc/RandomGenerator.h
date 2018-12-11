@@ -21,7 +21,8 @@ private:
   RandomGenerator(){
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
   };
-public:
+
+ public:
   static RandomGenerator& getInstance(){
     static RandomGenerator instance;
     return instance;

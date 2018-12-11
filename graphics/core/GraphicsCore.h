@@ -12,90 +12,87 @@
 namespace PGRgraphics {
 
 class GraphicsCore {
-private:
+ private:
 
-    GLint projGLUniform;
-    GLint modelViewGLUniform;
-    GLint lightPosUniform;
-    GLuint inputColorUniform;
-    GLuint selectUniform;
-    GLuint cameraPosUniform;
+  GLint projGLUniform;
+  GLint modelViewGLUniform;
+  GLint lightPosUniform;
+  GLuint inputColorUniform;
+  GLuint selectUniform;
+  GLuint cameraPosUniform;
 
-    std::string programName;
-    SDL_Window *mainWindow;
-    SDL_GLContext mainContext;
-    int width = 1200, height = 700;
-    Camera camera;
-    Shader shader;
+  std::string programName;
+  SDL_Window *mainWindow;
+  SDL_GLContext mainContext;
+  int width = 1200, height = 700;
+  Camera camera;
+  Shader shader;
 
-public:
-    struct selectedObject {
-        int objectId;
-        glm::vec3 previousColor;
-    };
+ public:
+  struct selectedObject {
+    int objectId;
+    glm::vec3 previousColor;
+  };
 
-    const std::vector<selectedObject> &getSelectedObjects() const;
+  const std::vector<selectedObject> &getSelectedObjects() const;
 
-private:
-    std::vector<selectedObject> selectedObjects;
+ private:
+  std::vector<selectedObject> selectedObjects;
 
-    const GLuint positionAttributeIndex = 0, normalAttributeIndex = 1;
+  const GLuint positionAttributeIndex = 0, normalAttributeIndex = 1;
 
-    GLuint vao[1];
-    std::vector<GLuint> vbo;
-    std::vector<glm::vec3> vboC;
-    std::vector<GLuint> ebo;
-    std::vector<GLuint> nbo;
-    std::vector<glm::vec3> colorIDs;
+  GLuint vao[1];
+  std::vector<GLuint> vbo;
+  std::vector<glm::vec3> vboC;
+  std::vector<GLuint> ebo;
+  std::vector<GLuint> nbo;
+  std::vector<glm::vec3> colorIDs;
 
   glm::vec3 lightPos = glm::vec3(-2.0f, 0.0f, 3.0f);
-public:
-    virtual ~GraphicsCore();
-private:
-    void cleanup();
+ public:
+  virtual ~GraphicsCore();
+ private:
+  void cleanup();
 
-    void checkSDLError(int);
+  void checkSDLError(int);
 
-    bool setOpenGLAttributes();
+  bool setOpenGLAttributes();
 
-    void deleteBuffers(std::vector<GLuint> &);
+  void deleteBuffers(std::vector<GLuint> &);
 
-    glm::vec3 getIDColor(GLuint ID);
+  glm::vec3 getIDColor(GLuint ID);
 
+ public:
+  GraphicsCore() {};
 
+ public:
+  bool init();
 
-public:
-    GraphicsCore() {};
+  bool setupBufferObjects(std::vector<GraphicsModel *> &);
 
-public:
-    bool init();
+  void render(std::vector<GraphicsModel *> &, bool selectRender = false);
 
-    bool setupBufferObjects(std::vector<GraphicsModel *> &);
+  void handleResize();
 
-    void render(std::vector<GraphicsModel *> &, bool selectRender = false);
+  void handleCameraMove(SDL_Keycode);
 
-    void handleResize();
+  void handleMouseMove(float, float);
 
-    void handleCameraMove(SDL_Keycode);
+  void handleMouseWheel(float yOffset);
 
-    void handleMouseMove(float, float);
+  void handleModelFill();
 
-    void handleMouseWheel(float yOffset);
+  void handleModelWireframe();
 
-    void handleModelFill();
+  void mainLoop();
 
-    void handleModelWireframe();
+  const glm::vec3 &getLightPos() const;
 
-    void mainLoop();
+  void setLightPos(const glm::vec3 &lightPos);
 
-    const glm::vec3 &getLightPos() const;
+  void handleSelectObject(int x, int y, std::vector<GraphicsModel *> &objects);
 
-    void setLightPos(const glm::vec3 &lightPos);
-
-    void handleSelectObject(int x, int y, std::vector<GraphicsModel *> &objects);
-
-    void clearSelectedObjects(std::vector<GraphicsModel*> &objects);
-
+  void clearSelectedObjects(std::vector<GraphicsModel *> &objects);
 
 };
 }

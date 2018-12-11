@@ -31,18 +31,18 @@ void PGRgraphics::ComplexGraphicsModel::computeNormals() {
 
 }
 
-PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(std::string path){
-    auto model = LoadFromFile(path);
-    model->color = glm::vec3(RandomGenerator::getInstance().getRandomNumber(),
-            RandomGenerator::getInstance().getRandomNumber(),
-            RandomGenerator::getInstance().getRandomNumber());
-    return model;
+PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(std::string path) {
+  auto model = LoadFromFile(path);
+  model->color = glm::vec3(RandomGenerator::getInstance().getRandomNumber(),
+                           RandomGenerator::getInstance().getRandomNumber(),
+                           RandomGenerator::getInstance().getRandomNumber());
+  return model;
 }
 
-PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(std::string path, glm::vec3 color){
-    auto model = LoadFromFile(path);
-    model->color = color;
-    return model;
+PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(std::string path, glm::vec3 color) {
+  auto model = LoadFromFile(path);
+  model->color = color;
+  return model;
 }
 
 PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromFile(std::string path) {

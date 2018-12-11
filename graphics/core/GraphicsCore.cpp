@@ -263,7 +263,7 @@ void PGRgraphics::GraphicsCore::deleteBuffers(std::vector<GLuint> &buff) {
 }
 
 void PGRgraphics::GraphicsCore::handleResize() {
-    SDL_GL_GetDrawableSize(mainWindow, &width, &height);
+  SDL_GL_GetDrawableSize(mainWindow, &width, &height);
   glViewport(0, 0, width, height);
 }
 
@@ -324,17 +324,18 @@ void PGRgraphics::GraphicsCore::handleSelectObject(int x, int y, std::vector<Gra
 
   int id = data[0] + (data[1] >> 8) + (data[2] >> 16);
 
-  if (id <= objects.size()) {
-    auto foundObject = std::find_if(selectedObjects.begin(), selectedObjects.end(), [id](selectedObject i)-> bool {return i.objectId == id;});
-      if(foundObject == selectedObjects.end()){
-        selectedObjects.emplace_back(selectedObject{.objectId = id,
-                                                    .previousColor = objects[id]->getColor()});
-        objects[id]->setColor(glm::vec3(1, 0, 0));
-      }
-      else{
-        objects[id]->setColor(foundObject.base()->previousColor);
-        selectedObjects.erase(foundObject);
-      }
+  if (id < objects.size()) {
+    auto foundObject = std::find_if(selectedObjects.begin(),
+                                    selectedObjects.end(),
+                                    [id](selectedObject i) -> bool { return i.objectId == id; });
+    if (foundObject == selectedObjects.end()) {
+      selectedObjects.emplace_back(selectedObject{.objectId = id,
+          .previousColor = objects[id]->getColor()});
+      objects[id]->setColor(glm::vec3(1, 0, 0));
+    } else {
+      objects[id]->setColor(foundObject.base()->previousColor);
+      selectedObjects.erase(foundObject);
+    }
   }
 }
 
@@ -349,7 +350,7 @@ const std::vector<PGRgraphics::GraphicsCore::selectedObject> &PGRgraphics::Graph
 }
 
 void PGRgraphics::GraphicsCore::clearSelectedObjects(std::vector<PGRgraphics::GraphicsModel *> &objects) {
-  for(auto item : selectedObjects){
+  for (auto item : selectedObjects) {
     objects[item.objectId]->setColor(item.previousColor);
   }
   selectedObjects.clear();
