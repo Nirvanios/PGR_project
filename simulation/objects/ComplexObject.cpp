@@ -34,7 +34,7 @@ void PGRsim::ComplexObject::update(PGRsim::SimTime time) {
 }
 
 void PGRsim::ComplexObject::addSpring(float stiffness, float damping, int vertexID1, int vertexID2) {
-  springs.emplace_back(new SnappableSpring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2], 10.0f));
+  springs.emplace_back(new SnappableSpring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2], 50.0f));
 }
 
 void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexID) {

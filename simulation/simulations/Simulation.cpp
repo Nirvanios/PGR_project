@@ -47,26 +47,19 @@ void PGRsim::Simulation::update(SimTime time) {
     }
   }
 
-  for (int i = 0; i < constraintIterations; i++) {
-    for (auto &constraint : constraints) {
-      constraint->satisfyConstraint();
-    }
-  }
+  std::thread thread(
+      &Simulation::threadConstraints,
+      this,
+      0,
+      constraints.size() / 2);
+
+  threadConstraints(static_cast<int>(constraints.size() / 2), static_cast<int>(constraints.size()));
+
+  thread.join();
 
   collisionChecker.checkCollisions();
 
   collisionChecker.applyChanges();
-
-  /*std::thread thread(&Simulation::threadConstraints, this, 0, constraints.size() / 2);
-
-  threadConstraints(constraints.size() / 2, constraints.size());
-
-  thread.join();*/
-
-
-
-
-
 
   for (auto object : objects) {
     object->update(time);

@@ -70,6 +70,7 @@ void PGRsim::Collision::VertexCollisionBins::recalculateBins(bool clearCalc) {
   }
 
   for (auto object : objects) {
+    object->setNewPosition(object->getCurrectPosition());
     for (int z = 0; z < zResolution; z++) {
       for (int y = 0; y < yResolution; y++) {
         auto yCoord = xResolution * y;

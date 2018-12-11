@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 #set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra")
 
 add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
-add_compile_definitions(PGR_LOG)
+#add_compile_definitions(PGR_LOG)
 
 find_package( Threads )
 
