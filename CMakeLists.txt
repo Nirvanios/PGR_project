@@ -30,7 +30,7 @@ include_directories(simulation/simulations simulation/base
 FILE(GLOB_RECURSE SOURCE_FILES graphics/*.cpp misc/*.cpp simulation/*.cpp third_party/*.cpp)
 FILE(GLOB_RECURSE HEADER_FILES graphics/*.h misc/*.h simulation/*.h third_party/*.h)
 
-add_executable(Render_test main.cpp
+add_executable(Render_test main_collision_demo.cpp
         ${SOURCE_FILES} ${HEADER_FILES} misc/RandomGenerator.h)
 
 
