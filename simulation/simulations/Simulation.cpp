@@ -6,7 +6,7 @@
 #include "Simulation.h"
 
 PGRsim::Simulation::Simulation() {
-  integrator = new EulerIntegrator(1.0f / 60.0f);
+  integrator = new VerletIntegrator(1.0f / 60.0f);
 }
 
 void PGRsim::Simulation::addSpring(float stiffness, float damping, SimObject *objectA, SimObject *objectB) {
@@ -84,4 +84,16 @@ void PGRsim::Simulation::threadConstraints(int start, int end) {
       constraints[j]->satisfyConstraint();
     }
   }
+}
+
+const std::vector<PGRsim::SimObject *> &PGRsim::Simulation::getObjects() {
+  return objects;
+}
+
+void PGRsim::Simulation::setConstraintIterations(int value) {
+  constraintIterations = value;
+}
+
+void PGRsim::Simulation::setIntegrator(PGRsim::Integrator *integrator) {
+  this->integrator = integrator;
 }

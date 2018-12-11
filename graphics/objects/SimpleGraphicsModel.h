@@ -13,6 +13,11 @@
 
 namespace PGRgraphics {
 
+/**
+ * Basic model whose translation is gaine via getTranslationMatrix() method.
+ *
+ * @author Petr Flajšingr, Igor Frank
+ */
 class SimpleGraphicsModel : public GraphicsModel {
  private:
   const glm::mat4 model = glm::mat4(1.f);

@@ -38,7 +38,7 @@ class Simulation {
   std::vector<ForceGenerator *> forces;
   std::vector<Spring *> springs;
   std::vector<Constraint *> constraints;
-  int constraintIterations;
+  int constraintIterations = 0;
 
   Integrator *integrator;
   Collision::VertexCollisionChecker collisionChecker;
@@ -49,6 +49,7 @@ class Simulation {
    * @param end end index
    */
   void threadConstraints(int start, int end);
+
  public:
   Simulation();
 
@@ -58,25 +59,19 @@ class Simulation {
 
   virtual void addObject(SimObject *object);
 
-  const std::vector<SimObject *> &getObjects() {
-    return objects;
-  }
+  const std::vector<SimObject *> &getObjects();
 
   void addGlobalForce(ForceGenerator *force);
 
   void addConstraint(Constraint *constraint);
 
-  void setConstraintIterations(int value) {
-    constraintIterations = value;
-  }
+  void setConstraintIterations(int value);
 
   int getConstraintIterations() {
     return constraintIterations;
   }
 
-  void setIntegrator(Integrator *integrator) {
-    this->integrator = integrator;
-  }
+  void setIntegrator(Integrator *integrator);
 
   virtual void update(SimTime time);
 };

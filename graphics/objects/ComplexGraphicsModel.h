@@ -11,10 +11,14 @@
 
 namespace PGRgraphics {
 
+/**
+ * Model consisting of possibly changing vertex locations and triangle count.
+ * @author Petr Flajšingr, Igor Frank
+ */
 class ComplexGraphicsModel : public GraphicsModel {
  private:
   static ComplexGraphicsModel *LoadFromFile(std::string path);
- protected:
+
  public:
   static ComplexGraphicsModel *LoadFromOBJ(std::string path);
   static ComplexGraphicsModel *LoadFromOBJ(std::string path, glm::vec3 color);

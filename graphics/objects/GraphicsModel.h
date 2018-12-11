@@ -16,6 +16,8 @@ namespace PGRgraphics {
 
 /**
  * Base graphics model for rendering. Is build from OBJ file.
+ *
+ * @author Petr Flajšingr, Igor Frank
  */
 class GraphicsModel {
  protected:
@@ -26,14 +28,6 @@ class GraphicsModel {
   std::vector<glm::vec2> texCoords;
 
   std::vector<int> vertexIndices;
-
-  static glm::vec3 floatsToVec3(float x, float y, float z) {
-    return glm::vec3(x, y, z);
-  }
-
-  static glm::vec2 floatsToVec2(float x, float y) {
-    return glm::vec2(x, y);
-  }
 
  public:
 
@@ -103,7 +97,7 @@ class GraphicsModel {
   }
 
  private:
-  static GraphicsModel *LoadFromFile(std::string path) {
+  static GraphicsModel *LoadFromFile(const std::string &path) {
     std::string msg = "Loading object from: " + path;
     StdoutLogger::getInstance().logTime(msg);
     auto model = new GraphicsModel();
@@ -126,7 +120,7 @@ class GraphicsModel {
 
     for (int i = 0; i < attribs.vertices.size(); i += 3) {
       model->vertices.emplace_back(
-          floatsToVec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
+          glm::vec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
     }
     return model;
   }

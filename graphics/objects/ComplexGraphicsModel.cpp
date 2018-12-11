@@ -82,7 +82,7 @@ PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromFi
                 });
 
   for (int i = 0; i < attribs.vertices.size(); i += 3) {
-    model->vertices.emplace_back(floatsToVec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
+    model->vertices.emplace_back(glm::vec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
   }
 
   return model;
