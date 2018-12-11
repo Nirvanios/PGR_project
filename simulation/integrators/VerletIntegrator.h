@@ -8,6 +8,12 @@
 #include "Integrator.h"
 
 namespace PGRsim {
+
+/**
+ * Main integrator for simulations.
+ *
+ * @author Petr Flajšingr
+ */
 class VerletIntegrator : public Integrator {
  private:
   glm::vec3 newPosition;

@@ -12,16 +12,15 @@ namespace PGRsim {
 
 /**
  * Interface for an integrator applying changes to simulated objects.
+ *
+ * @author Petr Flajšingr
  */
 class Integrator {
  private:
- protected:
   float timeStep;
+
  public:
-  Integrator(float timeStep) : timeStep(timeStep) {}
-  virtual ~Integrator() {
-    std::cout << "Integrator deleted" << std::endl;
-  }
+  explicit Integrator(float timeStep) : timeStep(timeStep) {}
 
   void setTimeStep(float step) {
     this->timeStep = step;
