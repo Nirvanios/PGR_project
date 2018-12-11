@@ -18,10 +18,6 @@ PGRsim::SimVertex::SimVertex(
 void PGRsim::SimVertex::update(SimTime time) {
 }
 
-void PGRsim::SimVertex::calcBoundingBox() {
-
-}
-
 glm::vec3 PGRsim::SimVertex::getPosition() {
   return currentPosition;
 }

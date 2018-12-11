@@ -10,51 +10,53 @@
 namespace PGRsim::Collision {
 
 /**
- * Axis aligned bounding box
+ * Axis aligned rectangular area.
+ *
+ * @author Petr Flajšingr
  */
 struct RectArea {
   glm::vec3 pointA, pointB;
 
-  bool isIn(glm::vec3 point) {
-    return pointA.x < point.x && pointA.y < point.y && pointA.z < point.z
-        && pointB.x > point.x && pointB.y > point.y && pointB.z > point.z;
-  }
+  /**
+   * Check if a point is inside the rectangle.
+   * @param point point to check
+   * @return true if point is inside rectangle, false otherwise
+   */
+  bool isIn(glm::vec3 point);
 };
 
 /**
  * Interface for objects detected in collisions.
+ *
+ * @author Petr Flajšingr
  */
 class CollisionObject {
- protected:
-  RectArea boundingBox;
-
+ private:
+  /**
+   * Changed position after collision detection.
+   */
   glm::vec3 newPosition;
 
   bool positionChanged = false;
+
  public:
-  virtual void calcBoundingBox() = 0;
-
-  virtual RectArea getBoundingBox() {
-    return boundingBox;
-  }
-
+  /**
+   *
+   * @return current position of an object
+   */
   virtual glm::vec3 getPosition() = 0;
 
-  const glm::vec3 &getNewPosition() const {
-    return newPosition;
-  }
+  /**
+   *
+   * @return position of an object after collision
+   */
+  const glm::vec3 &getNewPosition() const;
 
-  void setNewPosition(const glm::vec3 &newPosition) {
-    CollisionObject::newPosition = newPosition;
-  }
+  void setNewPosition(const glm::vec3 &newPosition);
 
-  bool isPositionChanged() const {
-    return positionChanged;
-  }
+  bool isPositionChanged() const;
 
-  void setPositionChanged(bool positionChanged) {
-    CollisionObject::positionChanged = positionChanged;
-  }
+  void setPositionChanged(bool positionChanged);
 };
 }
 #endif //PGR_PROJECT_COLLISIONOBJECT_H

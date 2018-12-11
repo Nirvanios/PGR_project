@@ -35,8 +35,6 @@ class SimVertex : public SimObject, public Collision::CollisionObject {
   }
   void update(SimTime time) override;
 
-  void calcBoundingBox() override;
-
   glm::vec3 getPosition() override;
 
   void addIndex(int indexA, int indexB, int indexC);

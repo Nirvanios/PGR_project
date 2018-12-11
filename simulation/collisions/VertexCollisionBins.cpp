@@ -65,26 +65,24 @@ int PGRsim::Collision::VertexCollisionBins::getZResolution() const {
 }
 
 void PGRsim::Collision::VertexCollisionBins::recalculateBins(bool clearCalc) {
-  if (true) {
-    for (int i = 0; i < binCount; i++) {
-      bins[i].objects.clear();
-    }
+  for (int i = 0; i < binCount; i++) {
+    bins[i].objects.clear();
+  }
 
-    for (auto object : objects) {
-      for (int z = 0; z < zResolution; z++) {
-        for (int y = 0; y < yResolution; y++) {
-          auto yCoord = xResolution * y;
-          for (int x = 0; x < xResolution; x++) {
-            if (bins[x + yCoord + xResolution * yResolution * z].box.isIn(object->getPosition())) {
-              bins[x + yCoord + xResolution * yResolution * z].objects.emplace_back(object);
+  for (auto object : objects) {
+    for (int z = 0; z < zResolution; z++) {
+      for (int y = 0; y < yResolution; y++) {
+        auto yCoord = xResolution * y;
+        for (int x = 0; x < xResolution; x++) {
+          if (bins[x + yCoord + xResolution * yResolution * z].box.isIn(object->getPosition())) {
+            bins[x + yCoord + xResolution * yResolution * z].objects.emplace_back(object);
 
-              goto object_skip;
-            }
+            goto object_skip;
           }
         }
       }
-      object_skip:;
     }
+    object_skip:;
   }
 }
 

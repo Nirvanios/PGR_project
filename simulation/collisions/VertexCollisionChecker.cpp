@@ -30,7 +30,7 @@ void PGRsim::Collision::VertexCollisionChecker::checkCollisions() {
   }
 }
 
-void PGRsim::Collision::VertexCollisionChecker::accurateCheck(std::vector<PGRsim::SimVertex *> &objects) {
+void PGRsim::Collision::VertexCollisionChecker::accurateCheck(const std::vector<PGRsim::SimVertex *> &objects) {
   glm::vec3 previousPosition, currentPosition;
   for (auto collidingVertex : objects) {
     for (auto toCheckVertex : objects) {
