@@ -1,4 +1,5 @@
 #pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-msc30-c"
 #pragma ide diagnostic ignored "cert-msc32-c"
 //
 // Created by kuro on 7.12.18.

@@ -9,6 +9,13 @@
 #include <iostream>
 #include <glm/glm.hpp>
 
+/**
+ * Logger for standard output.
+ *
+ * Logging is enabled when the project is compiled with macro "PGR_LOG"
+ *
+ * @author Petr Flajšingr
+ */
 class StdoutLogger : public Logger {
  private:
   StdoutLogger() = default;
