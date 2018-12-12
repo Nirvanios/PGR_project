@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_FLOORFORCE_H
 #define PGR_PROJECT_FLOORFORCE_H
 
-#include <ForceGenerator.h>
+#include <ForceBase.h>
 
 namespace PGRsim {
 
@@ -18,7 +18,7 @@ enum Direction {
  *
  * @author Petr Flajšingr
  */
-class LocationLimit : public ForceGenerator {
+class LocationLimit : public ForceBase {
  private:
   float coordLimit;
   Direction dir;

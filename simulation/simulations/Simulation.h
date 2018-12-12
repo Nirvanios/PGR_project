@@ -9,7 +9,7 @@
 #include <SimpleObject.h>
 #include <collisions/VertexCollisionChecker.h>
 #include "SimObject.h"
-#include "ForceGenerator.h"
+#include "ForceBase.h"
 #include "springs/Spring.h"
 #include "Integrator.h"
 #include "EulerIntegrator.h"
@@ -35,7 +35,7 @@ namespace PGRsim {
 class Simulation {
  protected:
   std::vector<SimObject *> objects;
-  std::vector<ForceGenerator *> forces;
+  std::vector<ForceBase *> forces;
   std::vector<Spring *> springs;
   std::vector<Constraint *> constraints;
   int constraintIterations = 0;
@@ -61,7 +61,7 @@ class Simulation {
 
   const std::vector<SimObject *> &getObjects();
 
-  void addGlobalForce(ForceGenerator *force);
+  void addGlobalForce(ForceBase *force);
 
   void addConstraint(Constraint *constraint);
 

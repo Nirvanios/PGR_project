@@ -103,3 +103,9 @@ PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::clone() {
   result->setVertices(getVertices());
   return result;
 }
+
+int PGRgraphics::ComplexGraphicsModel::addVertex(glm::vec3 &value) {
+  vertices.emplace_back(value);
+
+  return vertices.size() - 1;
+}

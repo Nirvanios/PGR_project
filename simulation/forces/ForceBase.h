@@ -15,7 +15,7 @@ namespace PGRsim {
  *
  * @author Petr Flajšingr
  */
-class ForceGenerator {
+class ForceBase {
  public:
   /**
    * Apply effects to a simulated object

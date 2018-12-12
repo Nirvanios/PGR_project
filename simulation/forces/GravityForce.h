@@ -7,7 +7,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/scalar_multiplication.hpp>
-#include "ForceGenerator.h"
+#include "ForceBase.h"
 
 namespace PGRsim {
 
@@ -18,7 +18,7 @@ namespace PGRsim {
  *
  * @author Petr Flajšingr
  */
-class GravityForce final : public ForceGenerator {
+class GravityForce final : public ForceBase {
  private:
   glm::vec3 acceleration;
  public:

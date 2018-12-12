@@ -6,7 +6,7 @@
 #define PGR_PROJECT_SPRING_H
 
 #include <glm/geometric.hpp>
-#include "ForceGenerator.h"
+#include "ForceBase.h"
 
 namespace PGRsim {
 
@@ -19,7 +19,7 @@ namespace PGRsim {
  *
  * @author Petr Flajšingr
  */
-class Spring : public ForceGenerator {
+class Spring : public ForceBase {
  protected:
   float stiffness;
   float damping;

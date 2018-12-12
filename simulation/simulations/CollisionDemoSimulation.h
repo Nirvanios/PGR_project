@@ -6,7 +6,7 @@
 #define PGR_PROJECT_CLOTHSIM_H
 
 #include <Simulation.h>
-#include <springs/LimitedSnappableSpringGroup.h>
+#include <springs/groups/LimitedSnappableSpringGroup.h>
 #include <constraints/PointConstraint.h>
 #include <vector>
 

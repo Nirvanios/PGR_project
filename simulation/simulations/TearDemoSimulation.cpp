@@ -47,83 +47,58 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
 
   float s = 8.0f, d = 0.1f, snapLimit = 3.0f;
 
-  SnappableSpringGroup *group;
   int index;
+  TearGroup *group;
   for (int x = 0; x < width; x++) {
     for (int y = 0; y < height; y++) {
       index = x * height + y;
 
       if (y < height - 1) {
         clothObject->addSnappableSpring(s, d, index, index + 1, snapLimit);
-        group = new SnappableSpringGroup();
-        group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
-            - 1]));
         clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
                                                  vertices[index + 1]->getCurrectPosition()),
                                    index,
                                    index + 1);
-        group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
-
         if (x < width - 1) {
-          clothObject->addSnappableSpring(s, d, index, index + 1, snapLimit);
-          group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
-              - 1]));
+          clothObject->addSnappableSpring(s, d, index, index + width + 1, snapLimit);
           clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
                                                    vertices[index + width + 1]->getCurrectPosition()),
                                      index,
                                      index + width + 1);
-          group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
 
           if (y > 0) {
-            clothObject->addSnappableSpring(s, d, index, index + 1, snapLimit);
-            group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[
-                clothObject->getSprings().size()
-                    - 1]));
+            clothObject->addSnappableSpring(s, d, index, index + width - 1, snapLimit);
             clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
-                                                     vertices[index + width + 1]->getCurrectPosition()),
+                                                     vertices[index + width - 1]->getCurrectPosition()),
                                        index,
                                        index + width - 1);
-            group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
           }
         }
       }
 
       if (x < width - 1) {
         clothObject->addSnappableSpring(s, d, index, index + width, snapLimit);
-        group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
-            - 1]));
         clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
                                                  vertices[index + width]->getCurrectPosition()),
                                    index,
                                    index + width);
-        group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
       }
 
       if (y < height - 2) {
         clothObject->addSnappableSpring(s, d, index, index + 2, snapLimit);
-        group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
-            - 1]));
         clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
                                                  vertices[index + 2]->getCurrectPosition()),
                                    index,
                                    index + 2);
-        group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
       }
 
       if (x < width - 2) {
         clothObject->addSnappableSpring(s, d, index, index + 2 * width, snapLimit);
-        group->addSpring(dynamic_cast<SnappableSpring *>(clothObject->getSprings()[clothObject->getSprings().size()
-            - 1]));
         clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
                                                  vertices[index + 2 * width]->getCurrectPosition()),
                                    index,
                                    index + 2 * width);
-        group->addConstraint(clothObject->getConstraints()[clothObject->getConstraints().size() - 1]);
       }
-
-      group->setVertexID(index);
-      group->setOwner(clothObject);
-      groups.emplace_back(group);
     }
   }
 
@@ -169,10 +144,12 @@ void PGRsim::TearDemoSimulation::stopTearDemo() {
 void PGRsim::TearDemoSimulation::update(PGRsim::SimTime time) {
   for (auto group : groups) {
     if (group->check()) {
-      group->getOwner()->removeIndices(group->getVertexID());
-      objects.erase(std::find(objects.begin(),
-                              objects.end(),
-                              group->getOwner()->getSimVertices()[group->getVertexID()]));
+      auto vertex = group->check();
+      if (vertex != nullptr) {
+        addObject(vertex);
+      }
+
+      groups.erase(std::find(groups.begin(), groups.end(), group));
     }
   }
 

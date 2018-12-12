@@ -5,8 +5,7 @@
 #ifndef PGR_PROJECT_DRAGFORCE_H
 #define PGR_PROJECT_DRAGFORCE_H
 
-
-#include "ForceGenerator.h"
+#include "ForceBase.h"
 
 namespace PGRsim {
 
@@ -15,7 +14,7 @@ namespace PGRsim {
  *
  * @author Petr Flajšingr
  */
-class DragForce : public ForceGenerator {
+class DragForce : public ForceBase {
  private:
   float dragCoefficient = 0.0f;
 

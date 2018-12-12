@@ -36,6 +36,10 @@ class LengthConstraint : public Constraint {
   LengthConstraint(SimObject *objectA, SimObject *objectB, float length);
 
   void satisfyConstraint() override;
+
+  void setSimulatedObjectA(SimObject *object);
+
+  void setSimulatedObjectB(SimObject *object);
 };
 }
 

@@ -39,9 +39,9 @@ void PGRsim::CollisionDemoSimulation::prepareClothObject(std::string filePath, s
                                      index + width + 1);
 
           if (y > 0) {
-            clothObject->addSpring(s, d, index, index + 1);
+            clothObject->addSpring(s, d, index, index + width - 1);
             clothObject->addConstraint(glm::distance(vertices[index]->getCurrectPosition(),
-                                                     vertices[index + width + 1]->getCurrectPosition()),
+                                                     vertices[index + width - 1]->getCurrectPosition()),
                                        index,
                                        index + width - 1);
           }

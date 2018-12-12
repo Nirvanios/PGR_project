@@ -27,6 +27,13 @@ class ComplexGraphicsModel : public GraphicsModel {
 
   void setVertex(int index, glm::vec3 value);
 
+  /**
+   * Add new vertex and return its index
+   * @param value vertex position
+   * @return vertex index
+   */
+  int addVertex(glm::vec3 &value);
+
   ComplexGraphicsModel *clone();
 };
 }

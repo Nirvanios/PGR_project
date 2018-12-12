@@ -223,6 +223,7 @@ int main(int argc, char *argv[]) {
               }
               tearDemo = true;
               break;
+            default:break;
           }
           break;
         case SDL_MOUSEWHEEL:graphicsCore.handleMouseWheel(event.wheel.y);
@@ -249,6 +250,7 @@ int main(int argc, char *argv[]) {
             handleMovement(selectedObjects, event.motion.xrel / 100.0f, -event.motion.yrel / 100.0f);
           }
           break;
+        default:break;
       }
     }
 

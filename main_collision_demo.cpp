@@ -24,8 +24,6 @@
 auto gravity = new PGRsim::GravityForce;
 auto air = new PGRsim::DragForce();
 
-bool tearDemo = false;
-
 PGRsim::CollisionDemoSimulation simulation;
 
 std::vector<PGRsim::PointConstraint *> constraints;
@@ -47,49 +45,34 @@ void prepareSimulation() {
 
   simulation.prepareClothObject("medium_cloth_textured.obj", "medium_texture.bmp");
 
-  constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[0]);
+  auto obj = ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+      - 1]);
+
+  auto constraintSize = obj->getConstraints().size();
 
   constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[1]);
-
-  simulation.prepareClothObject("medium_cloth.obj");
+      (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 2]);
 
   constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[0]);
+      (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 1]);
+
+  simulation.prepareClothObject("medium_cloth_textured.obj", "medium_texture.bmp");
+
+  obj = ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+      - 1]);
+
+  constraintSize = obj->getConstraints().size();
 
   constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[1]);
-
-  /*simulation.prepareClothObject("big_cloth.obj");
+      (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 2]);
 
   constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[0]);
-
-  constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[1]);
-
-  constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[2]);
-
-  constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[3]);*/
+      (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 1]);
 }
 
 void updateSimulation() {
   static PGRsim::SimTime simTime = 0.0f;
   simTime += 1 / 60.0f;
-  if (tearDemo) {
-    //simulation.tear();
-  }
   simulation.update(simTime);
 }
 
@@ -247,11 +230,6 @@ int main(int argc, char *argv[]) {
             case SDLK_SPACE: is_simRunning = !is_simRunning;
               break;
             case SDLK_t:
-              if (tearDemo) {
-                //simulation.stopTearDemo();
-                //simulation.deleteDemoConstraints();
-              }
-              tearDemo = true;
               break;
           }
           break;

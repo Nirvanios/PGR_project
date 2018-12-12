@@ -8,7 +8,7 @@
 #include <vector>
 #include <constraints/Constraint.h>
 #include <ComplexObject.h>
-#include "SnappableSpring.h"
+#include "springs/SnappableSpring.h"
 
 namespace PGRsim {
 

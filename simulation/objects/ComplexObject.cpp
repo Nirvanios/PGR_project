@@ -76,3 +76,7 @@ void PGRsim::ComplexObject::addSnappableSpring(float stiffness,
   springs.emplace_back(new SnappableSpring(stiffness, damping, simVertices[vertexID1], simVertices[vertexID2], limit));
 }
 
+void PGRsim::ComplexObject::addVertex(PGRsim::SimVertex *vertex) {
+  simVertices.emplace_back(vertex);
+}
+

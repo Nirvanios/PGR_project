@@ -25,3 +25,11 @@ void PGRsim::LengthConstraint::satisfyConstraint() {
   }
 }
 
+void PGRsim::LengthConstraint::setSimulatedObjectA(PGRsim::SimObject *object) {
+  objectA = object;
+}
+
+void PGRsim::LengthConstraint::setSimulatedObjectB(PGRsim::SimObject *object) {
+  objectB = object;
+}
+

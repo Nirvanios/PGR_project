@@ -83,7 +83,7 @@ namespace PGRgraphics {
           GraphicsModel::texCoords = texCoords;
         }
 
-        const std::vector<int> &getVertexIndices() const {
+      std::vector<int> &getVertexIndices() {
           return vertexIndices;
         }
 

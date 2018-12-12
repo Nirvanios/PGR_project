@@ -5,7 +5,7 @@
 #ifndef PGR_PROJECT_CONSTANTFORCE_H
 #define PGR_PROJECT_CONSTANTFORCE_H
 
-#include "ForceGenerator.h"
+#include "ForceBase.h"
 
 namespace PGRsim {
 
@@ -14,7 +14,7 @@ namespace PGRsim {
  *
  * @author Petr Flajšingr
  */
-class ConstantForce : public ForceGenerator {
+class ConstantForce : public ForceBase {
  private:
   glm::vec3 force;
  public:

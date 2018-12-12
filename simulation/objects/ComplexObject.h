@@ -63,6 +63,8 @@ class ComplexObject : public SimObjectWithModel {
   }
 
   void removeIndices(int vertexID);
+
+  void addVertex(SimVertex *vertex);
 };
 }
 
