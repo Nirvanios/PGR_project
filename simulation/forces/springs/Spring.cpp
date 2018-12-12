@@ -26,7 +26,8 @@ void PGRsim::Spring::applyForce() {
 
     force = -stiffness * ((currentLength - restLength) * direction);
     force +=
-        -damping * glm::dot(simulatedObjectA->getVelocity() - simulatedObjectB->getVelocity(), direction) * direction;
+        -damping * glm::dot(simulatedObjectA->getResultantForce() - simulatedObjectB->getResultantForce(), direction)
+            * direction;
 
     if (simulatedObjectA->getSimulatedObjectType() != Shape) {
       simulatedObjectA->setResultantForce(simulatedObjectA->getResultantForce() + force);

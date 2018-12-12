@@ -33,7 +33,6 @@ class SimObject {
  protected:
   glm::vec3 currentPosition;
   glm::vec3 previousPosition;
-  glm::vec3 velocity;
   glm::vec3 resultantForce;
 
  public:
@@ -45,7 +44,6 @@ class SimObject {
   SimObject(float mass, SimObjectType objectType) : mass(mass),
                                                     objectType(objectType),
                                                     currentPosition(glm::vec3(0, 0, 0)),
-                                                    velocity(glm::vec3(0, 0, 0)),
                                                     resultantForce(glm::vec3(0, 0, 0)),
                                                     previousPosition(currentPosition) {}
 
@@ -79,14 +77,6 @@ class SimObject {
 
   glm::vec3 getPreviousPosition() {
     return previousPosition;
-  }
-
-  void setVelocity(glm::vec3 velocity) {
-    this->velocity = velocity;
-  }
-
-  glm::vec3 getVelocity() {
-    return velocity;
   }
 
   void setResultantForce(glm::vec3 force) {

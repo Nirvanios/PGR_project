@@ -5,5 +5,5 @@
 #include "DragForce.h"
 
 void PGRsim::DragForce::applyForce(SimObject &object) {
-  object.setResultantForce(object.getResultantForce() - dragCoefficient * object.getVelocity());
+  object.setResultantForce(object.getResultantForce() - dragCoefficient * object.getResultantForce());
 }
