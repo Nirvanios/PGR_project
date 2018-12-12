@@ -51,7 +51,7 @@ class GraphicsCore {
   std::vector<GLuint> textures;
   std::vector<glm::vec3> colorIDs;
 
-  glm::vec3 lightPos = glm::vec3(-2.0f, 0.0f, 3.0f);
+  glm::vec3 lightPos = glm::vec3(3.0f, 5.0f, 0.0f);
  public:
   virtual ~GraphicsCore();
  private:

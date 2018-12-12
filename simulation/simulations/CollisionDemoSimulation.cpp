@@ -17,9 +17,6 @@ void PGRsim::CollisionDemoSimulation::prepareClothObject(std::string filePath, s
   auto vertexIndices = clothObject->getObjectModel()->getVertexIndices();
   auto vertices = clothObject->getSimVertices();
 
-  clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, 1), 0);
-  clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, -1.000000), 272);
-
   float s = 8.0f, d = 0.1f;
 
   int index;
@@ -76,6 +73,9 @@ void PGRsim::CollisionDemoSimulation::prepareClothObject(std::string filePath, s
       }
     }
   }
+
+  clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, 1), 0);
+  clothObject->addConstraint(glm::vec3(-0.034899, 0.999391, -1.000000), 272);
 
   for (auto constr : clothObject->getConstraints()) {
     addConstraint(constr);

@@ -13,11 +13,6 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
   auto vertexIndices = clothObject->getObjectModel()->getVertexIndices();
   auto vertices = clothObject->getSimVertices();
 
-  clothObject->addConstraint(glm::vec3(-4.37113, 4.24692, 0), 0);
-  clothObject->addConstraint(glm::vec3(4.12272, 4.24692, 0), 4160);
-  clothObject->addConstraint(glm::vec3(-1.8437, 4.42987, 0.000000), 1300);
-  clothObject->addConstraint(glm::vec3(2.04713, 4.47515, 0.000000), 3120);
-
   clothObject->addConstraint(glm::vec3(-0.381002, -1.810754, 0.012077), 1995);
   clothObject->addConstraint(glm::vec3(-0.379377, -1.949793, 0.012272), 1996);
   clothObject->addConstraint(glm::vec3(-0.377752, -2.088834, 0.012466), 1997);
@@ -28,7 +23,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
   clothObject->addConstraint(glm::vec3(-0.369629, -2.784033, 0.013440), 2002);
 
   std::for_each(
-      clothObject->getConstraints().begin() + 4,
+      clothObject->getConstraints().begin(),
       clothObject->getConstraints().end(),
       [this](Constraint *constraint) {
         tearDemoLeft.emplace_back(dynamic_cast<PointConstraint *>(constraint));
@@ -44,13 +39,13 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
   clothObject->addConstraint(glm::vec3(0.192704, -3.333724, -0.004871), 2266);
 
   std::for_each(
-      clothObject->getConstraints().begin() + 12,
+      clothObject->getConstraints().begin() + 8,
       clothObject->getConstraints().end(),
       [this](Constraint *constraint) {
         tearDemoRight.emplace_back(dynamic_cast<PointConstraint *>(constraint));
       });
 
-  float s = 8.0f, d = 0.1f, snapLimit = 2.0f;
+  float s = 8.0f, d = 0.1f, snapLimit = 3.0f;
 
   SnappableSpringGroup *group;
   int index;
@@ -131,6 +126,11 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
       groups.emplace_back(group);
     }
   }
+
+  clothObject->addConstraint(glm::vec3(-4.37113, 4.24692, 0), 0);
+  clothObject->addConstraint(glm::vec3(4.12272, 4.24692, 0), 4160);
+  clothObject->addConstraint(glm::vec3(-1.8437, 4.42987, 0.000000), 1300);
+  clothObject->addConstraint(glm::vec3(2.04713, 4.47515, 0.000000), 3120);
 
   for (auto constr : clothObject->getConstraints()) {
     addConstraint(constr);

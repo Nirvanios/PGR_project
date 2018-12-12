@@ -51,21 +51,18 @@ void prepareSimulation() {
 
   simulation.prepareClothObject("big_cloth.obj");
 
-  constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[0]);
+  auto obj = ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+      - 1]);
 
-  constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[1]);
+  auto constraintSize = obj->getConstraints().size();
 
-  constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[2]);
+  constraints.emplace_back((PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 4]);
 
-  constraints.emplace_back(
-      (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
-          - 1])->getConstraints()[3]);
+  constraints.emplace_back((PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 3]);
+
+  constraints.emplace_back((PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 2]);
+
+  constraints.emplace_back((PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 1]);
 }
 
 void updateSimulation() {

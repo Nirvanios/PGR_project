@@ -8,6 +8,11 @@
 #include "ComplexObject.h"
 namespace PGRsim {
 
+/**
+ * Object which is trying to hold its shape by being connected to an unchanging invisible shape.
+ *
+ * _____ NOT FINISHED _____
+ */
 class ShapedComplexObject : public ComplexObject {
  protected:
   ComplexObject *shape;
