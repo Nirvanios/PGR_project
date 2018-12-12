@@ -32,6 +32,9 @@ PGRgraphics::SimpleGraphicsModel *PGRgraphics::SimpleGraphicsModel::LoadFromFile
     model->normals[indice.vertex_index] += glm::vec3(attribs.normals[indice.normal_index * 3],
                                                      attribs.normals[indice.normal_index * 3 + 1],
                                                      attribs.normals[indice.normal_index * 3 + 2]);
+    if(indice.texcoord_index != -1) {
+      model->texCoords[indice.vertex_index] = glm::vec2(attribs.texcoords[indice.texcoord_index * 2], attribs.texcoords[indice.texcoord_index * 2 + 1]);
+    }
   }
 
   std::for_each(model->normals.begin(), model->normals.end(),

@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 #include <StdoutLogger.h>
+#include <SDL_opengl.h>
 #include "SimpleGraphicsModel.h"
 #include "GraphicsCore.h"
 
@@ -20,7 +21,7 @@ bool PGRgraphics::GraphicsCore::init() {
     return false;
   }
 
-  StdoutLogger::getInstance().logTime("SDL: set attributes");
+  StdoutLogger::getInstance().logTime(const_cast<char *>("SDL: set attributes"));
 
   SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
   SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
@@ -43,7 +44,7 @@ bool PGRgraphics::GraphicsCore::init() {
     checkSDLError(__LINE__);
     return false;
   }
-  StdoutLogger::getInstance().logTime("SDL: window created");
+  StdoutLogger::getInstance().logTime(const_cast<char *>("SDL: window created"));
 
   setOpenGLAttributes();
 
@@ -52,11 +53,11 @@ bool PGRgraphics::GraphicsCore::init() {
 
   SDL_GL_SetSwapInterval(1);
 
-  StdoutLogger::getInstance().logTime("Init glew");
+  StdoutLogger::getInstance().logTime(const_cast<char *>("Init glew"));
   glewExperimental = GL_TRUE;
   glewInit();
 
-  StdoutLogger::getInstance().logTime("Set camera to 0, 0, 10");
+  StdoutLogger::getInstance().logTime(const_cast<char *>("Set camera to 0, 0, 10"));
   camera.Position = glm::vec3(0, 0, 10);
   camera.MovementSpeed = 1.0f;
 
@@ -148,6 +149,45 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
     nbo.push_back(tempNBO);
   }
 
+  GLuint tempTBO;
+  for (auto item : objects) {
+    if(item->getTextureFile() != nullptr) {
+      glGenBuffers(1, &tempTBO);
+      glBindBuffer(GL_ARRAY_BUFFER, tempTBO);
+      glBufferData(GL_ARRAY_BUFFER,
+                   item->getTexCoords().size() * sizeof(float),
+                   item->getTexCoords().data(),
+                   GL_STATIC_DRAW);
+      tbo.push_back(tempTBO);
+    }
+  }
+
+  GLuint tempETBO;
+  for (auto item : objects) {
+    if(item->getTextureFile() != nullptr) {
+      /*glGenBuffers(1, &tempTBO);
+      glBindBuffer(GL_ARRAY_BUFFER, tempTBO);
+      glBufferData(GL_ARRAY_BUFFER,
+                   item->getTextureIndices().size() * sizeof(int),
+                   item->getTextureIndices().data(),
+                   GL_STATIC_DRAW);
+      etbo.push_back(tempETBO);
+       */
+
+      glGenTextures(1, &tempETBO);
+      glBindTexture(GL_TEXTURE_2D, tempETBO);
+      glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, item->getTextureFile()->w, item->getTextureFile()->h, 0, GL_RGB, GL_UNSIGNED_BYTE, item->getTextureFile()->pixels);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+      glGenerateMipmap(GL_TEXTURE_2D);
+      textures.emplace_back(tempETBO);
+
+    }
+  }
+
+
+
   // Set up shader ( will be covered in the next part )
   // ===================
   if (!shader.Init())
@@ -161,11 +201,14 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
   inputColorUniform = shader.getUniformLocation("inputColor");
   selectUniform = shader.getUniformLocation("select");
   cameraPosUniform = shader.getUniformLocation("cameraPos");
+  textureUniform = shader.getUniformLocation("tex");
 
   return true;
 }
 
 void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bool selectRender) {
+    glm::vec3 noColor =  glm::vec3(-1, -1, -1);
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float) width / (float) height, 0.1f, 100.0f);
@@ -183,6 +226,7 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
 
   // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
   int i = 0;
+  int t = 0;
   for (auto item : objects) {
     glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
     if (dynamic_cast<SimpleGraphicsModel *>(item) != nullptr) {
@@ -210,8 +254,21 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
     glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     if (!selectRender) {
-      glUniform3fv(inputColorUniform, 1, glm::value_ptr(item->getColor()));
-      glUniform1i(selectUniform, 0);
+      if(item->getTextureFile() == 0) {
+        glUniform3fv(inputColorUniform, 1, glm::value_ptr(item->getColor()));
+        glUniform1i(selectUniform, 0);
+      }
+      else{
+          //glActiveTexture(GL_TEXTURE0);
+        glBindBuffer(GL_ARRAY_BUFFER, tbo[t]);
+        glUniform1i(textureUniform, 0);
+        glEnableVertexAttribArray(textureCoordAttributeIndex);
+        glVertexAttribPointer(textureCoordAttributeIndex, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+        glBindTexture(GL_TEXTURE_2D, textures[t]);
+          glUniform3fv(inputColorUniform, 1, glm::value_ptr(noColor));
+          glUniform1i(selectUniform, 0);
+        t++;
+      }
     } else {
       glUniform3fv(inputColorUniform, 1, glm::value_ptr(colorIDs[i]));
       glUniform1i(selectUniform, 1);

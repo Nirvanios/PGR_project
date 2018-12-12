@@ -8,8 +8,11 @@
 
 int width = 17, height = 17;
 
-void PGRsim::CollisionDemoSimulation::prepareClothObject(std::string filePath) {
+void PGRsim::CollisionDemoSimulation::prepareClothObject(std::string filePath, std::string texPath) {
   auto clothObject = new ComplexObject(10.0f, Active, PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(filePath));
+  if(texPath != "") {
+      clothObject->getObjectModel()->loadBMPTextureFile(texPath);
+  }
 
   auto vertexIndices = clothObject->getObjectModel()->getVertexIndices();
   auto vertices = clothObject->getSimVertices();

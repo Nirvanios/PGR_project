@@ -20,6 +20,7 @@ class GraphicsCore {
   GLuint inputColorUniform;
   GLuint selectUniform;
   GLuint cameraPosUniform;
+  GLuint textureUniform;
 
   std::string programName;
   SDL_Window *mainWindow;
@@ -39,13 +40,15 @@ class GraphicsCore {
  private:
   std::vector<selectedObject> selectedObjects;
 
-  const GLuint positionAttributeIndex = 0, normalAttributeIndex = 1;
+  const GLuint positionAttributeIndex = 0, normalAttributeIndex = 1, textureCoordAttributeIndex = 2;
 
   GLuint vao[1];
   std::vector<GLuint> vbo;
-  std::vector<glm::vec3> vboC;
+  std::vector<GLuint> tbo;
+  std::vector<GLuint> etbo;
   std::vector<GLuint> ebo;
   std::vector<GLuint> nbo;
+  std::vector<GLuint> textures;
   std::vector<glm::vec3> colorIDs;
 
   glm::vec3 lightPos = glm::vec3(-2.0f, 0.0f, 3.0f);

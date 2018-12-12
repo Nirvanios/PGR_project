@@ -2,13 +2,16 @@
 
 in vec3 inputPosition;
 in vec3 inputNormal;
+in vec2 inputTexCoord;
 
 uniform vec3 inputColor;
 uniform mat4 projection, modelview;
 uniform vec3 lightPos;
 uniform vec3 cameraPos;
 
-out vec4 forFragColor;
+out vec3 forFragColor;
+out vec3 light;
+out vec2 texCoord;
 
 const vec3 lightColor = vec3(1, 1, 1);
 
@@ -32,10 +35,15 @@ void main(){
   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
   vec3 specular = specularStrength * spec * lightColor;
 
+  texCoord = inputTexCoord;
+  forFragColor = inputColor;
   if(select == 0){
-    forFragColor = vec4(((ambient + diffuse + specular) * inputColor), 1);
+    //forFragColor = vec4(((ambient + diffuse + specular) * inputColor), 1);
+    light = ambient + diffuse + specular;
+
   }
   else {
-    forFragColor = vec4(inputColor, 1.0);
+    //forFragColor = vec4(inputColor, 1.0);
+    light = vec3(1, 1, 1);
   }
 }

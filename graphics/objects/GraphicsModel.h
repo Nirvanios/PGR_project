@@ -11,6 +11,7 @@
 #include "../../third_party/tiny_obj_loader.h"
 #include <iostream>
 #include <RandomGenerator.h>
+#include <SDL_surface.h>
 
 namespace PGRgraphics {
 
@@ -19,112 +20,130 @@ namespace PGRgraphics {
  *
  * @author Petr Flajšingr, Igor Frank
  */
-class GraphicsModel {
- protected:
-  glm::vec3 color;
-  std::vector<glm::vec3> vertices;
-  std::vector<tinyobj::index_t> indices;
-  std::vector<glm::vec3> normals;
-  std::vector<glm::vec2> texCoords;
+    class GraphicsModel {
+    protected:
+        glm::vec3 color;
+        std::vector<glm::vec3> vertices;
+        std::vector<tinyobj::index_t> indices;
+        std::vector<glm::vec3> normals;
+        std::vector<glm::vec2> texCoords;
 
-  std::vector<int> vertexIndices;
+        std::vector<int> vertexIndices;
 
- public:
+        SDL_Surface *textureFile = nullptr;
 
-  static GraphicsModel *LoadFromOBJ(std::string path, glm::vec3 color) {
-    auto model = LoadFromFile(path);
-    model->color = color;
-    return model;
+    public:
 
-  }
+        static GraphicsModel *LoadFromOBJ(std::string path, glm::vec3 color) {
+          auto model = LoadFromFile(path);
+          model->color = color;
+          return model;
 
-  static GraphicsModel *LoadFromOBJ(std::string path) {
-    auto model = LoadFromFile(path);
-    model->color = glm::vec3(RandomGenerator::getInstance().getRandomNumber(),
-                             RandomGenerator::getInstance().getRandomNumber(),
-                             RandomGenerator::getInstance().getRandomNumber());
-    return model;
-  }
+        }
 
-  virtual ~GraphicsModel() = default;
+        static GraphicsModel *LoadFromOBJ(std::string path) {
+          auto model = LoadFromFile(path);
+          model->color = glm::vec3(RandomGenerator::getInstance().getRandomNumber(),
+                                   RandomGenerator::getInstance().getRandomNumber(),
+                                   RandomGenerator::getInstance().getRandomNumber());
+          return model;
+        }
 
-  const std::vector<glm::vec3> &getVertices() const {
-    return vertices;
-  }
+        virtual ~GraphicsModel() = default;
 
-  void setVertices(const std::vector<glm::vec3> &vertices) {
-    GraphicsModel::vertices = vertices;
-  }
+        const std::vector<glm::vec3> &getVertices() const {
+          return vertices;
+        }
 
-  const std::vector<tinyobj::index_t> &getIndices() const {
-    return indices;
-  }
+        void setVertices(const std::vector<glm::vec3> &vertices) {
+          GraphicsModel::vertices = vertices;
+        }
 
-  void setIndices(const std::vector<tinyobj::index_t> &indices) {
-    GraphicsModel::indices = indices;
-  }
+        const std::vector<tinyobj::index_t> &getIndices() const {
+          return indices;
+        }
 
-  const std::vector<glm::vec3> &getNormals() const {
-    return normals;
-  }
+        void setIndices(const std::vector<tinyobj::index_t> &indices) {
+          GraphicsModel::indices = indices;
+        }
 
-  void setNormals(const std::vector<glm::vec3> &normals) {
-    GraphicsModel::normals = normals;
-  }
+        const std::vector<glm::vec3> &getNormals() const {
+          return normals;
+        }
 
-  const std::vector<glm::vec2> &getTexCoords() const {
-    return texCoords;
-  }
+        void setNormals(const std::vector<glm::vec3> &normals) {
+          GraphicsModel::normals = normals;
+        }
 
-  void setTexCoords(const std::vector<glm::vec2> &texCoords) {
-    GraphicsModel::texCoords = texCoords;
-  }
+        const std::vector<glm::vec2> &getTexCoords() const {
+          return texCoords;
+        }
 
-  const std::vector<int> &getVertexIndices() const {
-    return vertexIndices;
-  }
+        void setTexCoords(const std::vector<glm::vec2> &texCoords) {
+          GraphicsModel::texCoords = texCoords;
+        }
 
-  void setVertexIndices(const std::vector<int> &vertexIndices) {
-    GraphicsModel::vertexIndices = vertexIndices;
-  }
+        const std::vector<int> &getVertexIndices() const {
+          return vertexIndices;
+        }
 
-  const glm::vec3 &getColor() const {
-    return color;
-  }
+        void setVertexIndices(const std::vector<int> &vertexIndices) {
+          GraphicsModel::vertexIndices = vertexIndices;
+        }
 
-  void setColor(const glm::vec3 &color) {
-    GraphicsModel::color = color;
-  }
+        const glm::vec3 &getColor() const {
+          return color;
+        }
 
- private:
-  static GraphicsModel *LoadFromFile(const std::string &path) {
-    std::string msg = "Loading object from: " + path;
-    StdoutLogger::getInstance().logTime(msg);
-    auto model = new GraphicsModel();
+        void setColor(const glm::vec3 &color) {
+          GraphicsModel::color = color;
+        }
 
-    tinyobj::attrib_t attribs;
-    std::vector<tinyobj::shape_t> shapes;
-    std::vector<tinyobj::material_t> materials;
+        const std::vector<int> &getTextureIndices() const {
+          return vertexIndices;
+        }
 
-    if (!tinyobj::LoadObj(&attribs, &shapes, &materials, nullptr, nullptr, path.c_str())) {
-      std::cerr << "Loading object failed" << std::endl;
-      return nullptr;
-    }
+        void loadBMPTextureFile(std::string path){
+          textureFile = SDL_LoadBMP(path.c_str());
+        }
 
-    model->indices = shapes[0].mesh.indices;
+        SDL_Surface* getTextureFile(){
+          return textureFile;
+        }
 
-    for (auto indice : model->indices) {
-      model->vertexIndices.emplace_back(indice.vertex_index);
-      model->normals.emplace_back(attribs.normals[indice.normal_index]);
-    }
+    private:
+        static GraphicsModel *LoadFromFile(std::string path) {
+          std::string msg = "Loading object from: " + path;
+          StdoutLogger::getInstance().logTime(msg);
+          auto model = new GraphicsModel();
 
-    for (int i = 0; i < attribs.vertices.size(); i += 3) {
-      model->vertices.emplace_back(
-          glm::vec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
-    }
-    return model;
-  }
-};
+          tinyobj::attrib_t attribs;
+          std::vector<tinyobj::shape_t> shapes;
+          std::vector<tinyobj::material_t> materials;
+
+          if (!tinyobj::LoadObj(&attribs, &shapes, &materials, nullptr, nullptr, path.c_str())) {
+            std::cerr << "Loading object failed" << std::endl;
+            return nullptr;
+          }
+
+          model->indices = shapes[0].mesh.indices;
+
+          for (auto indice : model->indices) {
+            model->vertexIndices.emplace_back(indice.vertex_index);
+            model->normals.emplace_back(attribs.normals[indice.normal_index]);
+            if(indice.texcoord_index != -1) {
+              model->texCoords[indice.vertex_index] = glm::vec2(attribs.texcoords[indice.texcoord_index * 2], attribs.texcoords[indice.texcoord_index * 2 + 1]);
+            }
+          }
+
+          for (int i = 0; i < attribs.vertices.size(); i += 3) {
+            model->vertices.emplace_back(
+                    glm::vec3(attribs.vertices[i], attribs.vertices[i + 1], attribs.vertices[i + 2]));
+          }
+          return model;
+        }
+
+    };
 
 }
 

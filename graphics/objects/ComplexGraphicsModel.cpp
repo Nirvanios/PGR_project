@@ -63,10 +63,12 @@ PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromFi
   model->indices = shapes[0].mesh.indices;
 
   model->normals.resize(attribs.vertices.size());
+  model->texCoords.resize(attribs.texcoords.size());
+
 
   std::for_each(model->normals.begin(), model->normals.end(),
                 [](glm::vec3 &value) {
-                  value = glm::vec3(0.0f);
+                    value = glm::vec3(0.0f);
                 });
 
   for (auto indice : model->indices) {
@@ -74,11 +76,15 @@ PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromFi
     model->normals[indice.vertex_index] += glm::vec3(attribs.normals[indice.normal_index * 3],
                                                      attribs.normals[indice.normal_index * 3 + 1],
                                                      attribs.normals[indice.normal_index * 3 + 2]);
+    if (indice.texcoord_index != -1) {
+      model->texCoords[indice.vertex_index] = glm::vec2(attribs.texcoords[indice.texcoord_index * 2],
+                                                        attribs.texcoords[indice.texcoord_index * 2 + 1]);
+    }
   }
 
   std::for_each(model->normals.begin(), model->normals.end(),
                 [](glm::vec3 &value) {
-                  value = glm::normalize(value);
+                    value = glm::normalize(value);
                 });
 
   for (int i = 0; i < attribs.vertices.size(); i += 3) {
@@ -87,6 +93,7 @@ PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::LoadFromFi
 
   return model;
 }
+
 PGRgraphics::ComplexGraphicsModel *PGRgraphics::ComplexGraphicsModel::clone() {
   auto result = new PGRgraphics::ComplexGraphicsModel();
   result->setVertexIndices(getVertexIndices());

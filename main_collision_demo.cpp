@@ -45,7 +45,7 @@ void prepareSimulation() {
 
   simulation.setConstraintIterations(8);
 
-  simulation.prepareClothObject("medium_cloth.obj");
+  simulation.prepareClothObject("medium_cloth_textured.obj", "medium_texture.bmp");
 
   constraints.emplace_back(
       (PGRsim::PointConstraint *) ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
@@ -150,14 +150,14 @@ int main(int argc, char *argv[]) {
    PGRsim::Collision::VertexCollisionChecker::checkIntersection(vertex, v1, v2, v3);*/
   PGRgraphics::GraphicsCore graphicsCore;
 
-  StdoutLogger::getInstance().logTime("Init graphics core");
+  StdoutLogger::getInstance().logTime(const_cast<char *>("Init graphics core"));
   if (!graphicsCore.init())
     return -1;
 
-  StdoutLogger::getInstance().logTime("Prepare simulation");
+  StdoutLogger::getInstance().logTime(const_cast<char *>("Prepare simulation"));
   prepareSimulation();
 
-  StdoutLogger::getInstance().logTime("Add objects");
+  StdoutLogger::getInstance().logTime(const_cast<char *>("Add objects"));
   auto simObjects = simulation.getObjects();
   objects.reserve(simObjects.size());
   for (auto object : simObjects) {
@@ -174,12 +174,12 @@ int main(int argc, char *argv[]) {
     objects.emplace_back(model);
   }
 
-  objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("floor.obj", glm::vec3(0, 0.2, 0)));
+  //objects.emplace_back(PGRgraphics::SimpleGraphicsModel::LoadFromOBJ("floor.obj", glm::vec3(0, 0.2, 0)));
 
   if (!graphicsCore.setupBufferObjects(objects))
     return -1;
 
-  StdoutLogger::getInstance().logTime("Start main loop");
+  StdoutLogger::getInstance().logTime(const_cast<char *>("Start main loop"));
 
   bool is_running = true;
   bool is_simRunning = false;
