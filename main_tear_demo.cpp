@@ -227,6 +227,13 @@ int main(int argc, char *argv[]) {
           }
           break;
         case SDL_MOUSEWHEEL:graphicsCore.handleMouseWheel(event.wheel.y);
+              if(moveWithCamera) {
+                if (event.wheel.y > 0) {
+                  handleMovement(selectedObjects, Backward);
+                } else {
+                  handleMovement(selectedObjects, Forward);
+                }
+              }
           break;
         case SDL_MOUSEBUTTONDOWN:
           if (event.button.button == SDL_BUTTON_LEFT) {
