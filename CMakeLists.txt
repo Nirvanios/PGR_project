@@ -6,6 +6,11 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra")
 
+if (FALSE AND APPLE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+endif ()
+
 add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 add_compile_definitions(PGR_LOG)
 
