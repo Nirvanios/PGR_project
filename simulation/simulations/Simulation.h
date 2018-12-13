@@ -61,7 +61,7 @@ class Simulation {
 
   const std::vector<SimObject *> &getObjects();
 
-  void addGlobalForce(ForceBase *force);
+  void addForce(ForceBase *force);
 
   void addConstraint(Constraint *constraint);
 

@@ -68,7 +68,7 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
   auto v3Pos = v3->getCurrectPosition();
 
   // "bounce" coefficient
-  const float coef = 1.0f;
+  const float coef = 1.2f;
 
   auto movementDirection = glm::normalize(vertex->getCurrectPosition() - vertex->getPreviousPosition());
 
@@ -107,15 +107,14 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
     // accumulate position change
     vertex->setNewPosition(vertex->getNewPosition() + reaction);
     vertex->setPositionChanged(true);
-
     reaction /= 3.0f;
 
     // apply position change to the triangle
-    v1->setNewPosition(v1->getNewPosition() - reaction * (1 - baryPosition.x - baryPosition.y));
+    v1->setNewPosition(v1->getNewPosition() - reaction);// * (1 - baryPosition.x - baryPosition.y));
     v1->setPositionChanged(true);
-    v2->setNewPosition(v2->getNewPosition() - reaction * baryPosition.x);
+    v2->setNewPosition(v2->getNewPosition() - reaction);// * baryPosition.x);
     v2->setPositionChanged(true);
-    v3->setNewPosition(v3->getNewPosition() - reaction * baryPosition.y);
+    v3->setNewPosition(v3->getNewPosition() - reaction);// * baryPosition.y);
     v3->setPositionChanged(true);
     return true;
   }

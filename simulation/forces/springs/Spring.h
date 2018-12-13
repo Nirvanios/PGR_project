@@ -55,16 +55,16 @@ class Spring : public ForceBase {
     this->simulatedObjectA = object;
   }
 
-  float getSimulatedObjectA() {
-    return stiffness;
+  SimObject *getSimulatedObjectA() {
+    return simulatedObjectA;
   }
 
   void setSimulatedObjectB(SimObject *object) {
     this->simulatedObjectB = object;
   }
 
-  float getSimulatedObjectB() {
-    return stiffness;
+  SimObject *getSimulatedObjectB() {
+    return simulatedObjectB;
   }
 
   void applyForce(SimObject &object) override;

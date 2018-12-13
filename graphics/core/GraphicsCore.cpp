@@ -120,7 +120,7 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
     vbo.push_back(tempVBO);
     // Copy the vertex data from diamond to our buffer
     glBufferData(GL_ARRAY_BUFFER,
-                 (item->getVertices().size() * 3 * sizeof(float)),
+                 item->getVertices().size() * 3 * sizeof(float),
                  item->getVertices().data(),
                  GL_DYNAMIC_DRAW);
     colorIDs.emplace_back(getIDColor(i));
@@ -235,9 +235,10 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
               reinterpret_cast<SimpleGraphicsModel *>(item)->getTranslationMatrix();
     } else {
       modelView = camera.GetViewMatrix() * Model;
-      glBufferSubData(GL_ARRAY_BUFFER, 0,
-                      (item->getVertices().size() * 3 * sizeof(float)),
-                      item->getVertices().data());
+      glBufferData(GL_ARRAY_BUFFER,
+                   item->getVertices().size() * 3 * sizeof(float),
+                   item->getVertices().data(),
+                   GL_DYNAMIC_DRAW);
     }
 
     glUniformMatrix4fv(modelViewGLUniform, 1, GL_FALSE, glm::value_ptr(modelView));

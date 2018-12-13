@@ -40,11 +40,11 @@ class ComplexObject : public SimObjectWithModel {
     return model;
   }
 
-  const std::vector<Constraint*> &getConstraints() {
+  std::vector<Constraint *> &getConstraints() {
     return constraints;
   }
 
-  const std::vector<Spring*> &getSprings() {
+  std::vector<Spring *> &getSprings() {
     return springs;
   }
 

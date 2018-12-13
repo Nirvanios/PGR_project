@@ -33,13 +33,13 @@ std::vector<PGRgraphics::GraphicsModel *> objects;
 
 void prepareSimulation() {
   auto floorLimit = new PGRsim::LocationLimit(-9.98f, PGRsim::Yplus);
-  simulation.addGlobalForce(floorLimit);
+  simulation.addForce(floorLimit);
   simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
 
-  simulation.addGlobalForce(gravity);
+  simulation.addForce(gravity);
 
   air->setDragCoefficient(0.5f);
-  simulation.addGlobalForce(air);
+  simulation.addForce(air);
 
   simulation.setConstraintIterations(8);
 
@@ -56,7 +56,7 @@ void prepareSimulation() {
   constraints.emplace_back(
       (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 1]);
 
-  simulation.prepareClothObject("medium_cloth_textured.obj", "medium_texture.bmp");
+  simulation.prepareClothObject("medium_cloth_textured.obj");
 
   obj = ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
       - 1]);

@@ -21,7 +21,7 @@ void PGRsim::Simulation::addObject(SimObject *object) {
   objects.emplace_back(object);
 }
 
-void PGRsim::Simulation::addGlobalForce(ForceBase *force) {
+void PGRsim::Simulation::addForce(ForceBase *force) {
   forces.emplace_back(force);
 }
 

@@ -21,8 +21,6 @@ class TearGroup {
  private:
   SimVertex *vertex;
 
-  ComplexObject *parent;
-
   SnappableSpring *mainSpring;
 
   std::vector<Spring *> springs;
@@ -33,15 +31,12 @@ class TearGroup {
 
   TearOrientation orientation;
 
-  int width, height;
+  bool torn = false;
 
  public:
   TearGroup(SimVertex *vertex,
-            ComplexObject *parent,
             SnappableSpring *mainSpring,
-            TearOrientation orientation,
-            int width,
-            int height);
+            TearOrientation orientation);
 
   /**
    * Add springs which are supposed to be remapped onto the newly created vertex

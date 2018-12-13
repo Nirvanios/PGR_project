@@ -39,13 +39,13 @@ std::vector<PGRgraphics::GraphicsModel *> objects;
 
 void prepareSimulation() {
   auto floorLimit = new PGRsim::LocationLimit(-9.98f, PGRsim::Yplus);
-  simulation.addGlobalForce(floorLimit);
+  simulation.addForce(floorLimit);
   simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
 
-  simulation.addGlobalForce(gravity);
+  simulation.addForce(gravity);
 
   air->setDragCoefficient(0.5f);
-  simulation.addGlobalForce(air);
+  simulation.addForce(air);
 
   simulation.setConstraintIterations(8);
 

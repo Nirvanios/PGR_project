@@ -40,6 +40,9 @@ class LengthConstraint : public Constraint {
   void setSimulatedObjectA(SimObject *object);
 
   void setSimulatedObjectB(SimObject *object);
+
+  SimObject *getObjectA() const;
+  SimObject *getObjectB() const;
 };
 }
 

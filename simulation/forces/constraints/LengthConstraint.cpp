@@ -32,4 +32,10 @@ void PGRsim::LengthConstraint::setSimulatedObjectA(PGRsim::SimObject *object) {
 void PGRsim::LengthConstraint::setSimulatedObjectB(PGRsim::SimObject *object) {
   objectB = object;
 }
+PGRsim::SimObject *PGRsim::LengthConstraint::getObjectA() const {
+  return objectA;
+}
+PGRsim::SimObject *PGRsim::LengthConstraint::getObjectB() const {
+  return objectB;
+}
 
