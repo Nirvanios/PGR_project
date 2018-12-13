@@ -53,6 +53,8 @@ class Simulation {
  public:
   Simulation();
 
+  virtual ~Simulation();
+
   void addSpring(float stiffness, float damping, SimObject *objectA, SimObject *objectB);
 
   void addSpring(Spring *spring);

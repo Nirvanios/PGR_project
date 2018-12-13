@@ -47,6 +47,8 @@ class SimObject {
                                                     resultantForce(glm::vec3(0, 0, 0)),
                                                     previousPosition(currentPosition) {}
 
+  virtual ~SimObject() {}
+
   void setMass(float newMass) {
     mass = newMass;
   }

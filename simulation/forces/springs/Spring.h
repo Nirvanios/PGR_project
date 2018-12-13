@@ -35,6 +35,8 @@ class Spring : public ForceBase {
   Spring(float stiffness, float damping, SimObject *simulatedObjectA,
          SimObject *simulatedObjectB);
 
+  virtual ~Spring();
+
   void setStiffness(float stiffness) {
     this->stiffness = stiffness;
   }

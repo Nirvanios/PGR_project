@@ -179,3 +179,10 @@ void PGRsim::TearDemoSimulation::update(PGRsim::SimTime time) {
 
   Simulation::update(time);
 }
+PGRsim::TearDemoSimulation::~TearDemoSimulation() {
+  for (auto it : groups) {
+    delete it;
+  }
+
+  Simulation::~Simulation();
+}

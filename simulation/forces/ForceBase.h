@@ -22,6 +22,8 @@ class ForceBase {
    * @param object object to apply force to
    */
   virtual void applyForce(SimObject &object) = 0;
+
+  virtual ~ForceBase() = default;
 };
 }
 

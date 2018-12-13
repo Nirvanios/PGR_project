@@ -35,7 +35,6 @@ add_executable(collision_demo main_collision_demo.cpp
 
 add_executable(tear_demo main_tear_demo.cpp
         ${SOURCE_FILES} ${HEADER_FILES})
-d
 
 target_link_libraries(collision_demo ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLM_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(tear_demo ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLM_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

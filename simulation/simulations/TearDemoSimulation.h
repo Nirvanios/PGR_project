@@ -17,6 +17,8 @@ class TearDemoSimulation : public Simulation {
 
   std::vector<SnappableSpringGroup *> groups;
  public:
+  ~TearDemoSimulation() override;
+
   void prepareClothObject(std::string filePath);
 
   void tear();
