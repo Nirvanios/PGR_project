@@ -37,6 +37,8 @@ class SnappableSpringGroup {
   void snapAll();
 
  public:
+  virtual ~SnappableSpringGroup();
+
   void addSpring(SnappableSpring *spring);
 
   void addConstraint(Constraint *constraint);

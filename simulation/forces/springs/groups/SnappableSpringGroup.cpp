@@ -49,3 +49,5 @@ void PGRsim::SnappableSpringGroup::setVertexID(int id) {
 int PGRsim::SnappableSpringGroup::getVertexID() {
   return vertexID;
 }
+
+PGRsim::SnappableSpringGroup::~SnappableSpringGroup() = default;

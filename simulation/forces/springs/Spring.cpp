@@ -37,3 +37,5 @@ void PGRsim::Spring::applyForce() {
     }
   }
 }
+
+PGRsim::Spring::~Spring() = default;

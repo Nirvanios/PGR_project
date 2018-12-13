@@ -19,6 +19,8 @@ class Constraint {
  public:
   virtual void satisfyConstraint() = 0;
 
+  virtual ~Constraint() = default;
+
   /**
    * Enable constraint checking.
    */

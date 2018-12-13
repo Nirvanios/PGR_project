@@ -21,6 +21,7 @@ namespace PGRsim {
 class CollisionDemoSimulation : public Simulation {
  private:
  public:
+
   void prepareClothObject(std::string filePath, std::string texPath = "");
 
   void update(SimTime time) override;

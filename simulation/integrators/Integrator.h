@@ -22,6 +22,8 @@ class Integrator {
  public:
   explicit Integrator(float timeStep) : timeStep(timeStep) {}
 
+  virtual ~Integrator() = default;
+
   void setTimeStep(float step) {
     this->timeStep = step;
   }

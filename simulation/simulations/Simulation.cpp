@@ -93,3 +93,21 @@ void PGRsim::Simulation::setConstraintIterations(int value) {
 void PGRsim::Simulation::setIntegrator(PGRsim::Integrator *integrator) {
   this->integrator = integrator;
 }
+
+PGRsim::Simulation::~Simulation() {
+  for (auto it : objects) {
+    delete it;
+  }
+  for (auto it : springs) {
+    delete it;
+  }
+  for (auto it : constraints) {
+    delete it;
+  }
+  for (auto it : forces) {
+    delete it;
+  }
+
+  delete integrator;
+
+}
