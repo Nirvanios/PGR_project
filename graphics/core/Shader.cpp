@@ -15,7 +15,7 @@ std::string PGRgraphics::Shader::ReadFile(std::string *file) {
     std::string fileContent = buffer.str();
 
     return fileContent;
-  }
+}
 
 GLuint PGRgraphics::Shader::getUniformLocation(const std::string uniform) {
     return glGetUniformLocation(shaderProgram, uniform.c_str());
@@ -52,7 +52,7 @@ bool PGRgraphics::Shader::LoadVertexShader(std::string filename) {
     std::string str = ReadFile(&filename);
 
     char *src = const_cast<char *>( str.c_str());
-    int  size = static_cast<int>(str.length());
+    int size = static_cast<int>(str.length());
 
     vertexshader = glCreateShader(GL_VERTEX_SHADER);
 

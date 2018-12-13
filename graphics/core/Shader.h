@@ -14,35 +14,82 @@ namespace PGRgraphics {
  *
  * @author Igor Frank
  */
-class Shader {
-private:
+    class Shader {
+    private:
 
-    GLuint shaderProgram;
-    GLuint vertexshader, fragmentShader;
+        GLuint shaderProgram;
+        GLuint vertexshader, fragmentShader;
 
-    std::string ReadFile(std::string *file);
+        /**
+         * Reads file as string
+         * @param file file to read
+         * @return content of file
+         */
+        std::string ReadFile(std::string *file);
 
-    bool LoadVertexShader(std::string filename);
+        /**
+         * Loads vertex shader
+         * @param filename vertex shader file to load
+         * @return true if no error else false
+         */
+        bool LoadVertexShader(std::string filename);
 
-    bool LoadFragmentShader(std::string filename);
+        /**
+         * Loads fragment shader
+         * @param filename fragment shader file to load
+         * @return true if no error else false
+         */
+        bool LoadFragmentShader(std::string filename);
 
-    void PrintShaderLinkingError(int32_t shaderId);
+        /**
+         * Prints error during shader linking
+         * @param shaderId shader program ID
+         */
+        void PrintShaderLinkingError(int32_t shaderId);
 
-    void PrintShaderCompilationErrorInfo(int32_t shaderId);
+        /**
+         * Prints error during shader compilation
+         * @param shaderId shader program ID
+         */
+        void PrintShaderCompilationErrorInfo(int32_t shaderId);
 
-    bool LinkShaders();
+        /**
+         * Link shaders and checks for error
+         * @return true if no error else false
+         */
+        bool LinkShaders();
 
- public:
+    public:
 
-  GLuint getUniformLocation(const std::string uniform);
+        /**
+         * Returns uniform location id inside shader
+         * @param uniform name of uniform parametr in shader
+         * @return uniform location id
+         */
+        GLuint getUniformLocation(const std::string uniform);
 
-  void BindAttributeLocation(int index, const std::string &attribute);
+        /**
+         * Bind attribute location to index
+         * @param index index of attribute
+         * @param attribute Name of attribute in shader
+         */
+        void BindAttributeLocation(int index, const std::string &attribute);
 
-  void UseProgram();
+        /**
+         * Selects created program
+         */
+        void UseProgram();
 
-  bool Init();
+        /**
+         * Initialize shaders - loads files, bind attributes and link shaders
+         * @return true if no error else false
+         */
+        bool Init();
 
-  void CleanUp();
+        /**
+         * Free resources
+         */
+        void CleanUp();
 
-};
+    };
 }
