@@ -183,6 +183,4 @@ PGRsim::TearDemoSimulation::~TearDemoSimulation() {
   for (auto it : groups) {
     delete it;
   }
-
-  Simulation::~Simulation();
 }

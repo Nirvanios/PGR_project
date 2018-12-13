@@ -30,7 +30,7 @@ auto air = new PGRsim::DragForce();
 
 bool tearDemo = false;
 
-PGRsim::TearDemoSimulation simulation;
+auto simulation = new PGRsim::TearDemoSimulation();
 
 std::vector<PGRsim::PointConstraint *> constraints;
 std::vector<int> constraintModelIDs;
@@ -39,19 +39,19 @@ std::vector<PGRgraphics::GraphicsModel *> objects;
 
 void prepareSimulation() {
   auto floorLimit = new PGRsim::LocationLimit(-9.98f, PGRsim::Yplus);
-  simulation.addForce(floorLimit);
-  simulation.setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
+  simulation->addForce(floorLimit);
+  simulation->setIntegrator(new PGRsim::VerletIntegrator(1 / 60.0f));
 
-  simulation.addForce(gravity);
+  simulation->addForce(gravity);
 
   air->setDragCoefficient(0.5f);
-  simulation.addForce(air);
+  simulation->addForce(air);
 
-  simulation.setConstraintIterations(8);
+  simulation->setConstraintIterations(8);
 
-  simulation.prepareClothObject("big_cloth.obj");
+  simulation->prepareClothObject("big_cloth.obj");
 
-  auto obj = ((PGRsim::ComplexObject *) simulation.getObjects()[simulation.getObjects().size()
+  auto obj = ((PGRsim::ComplexObject *) simulation->getObjects()[simulation->getObjects().size()
       - 1]);
 
   auto constraintSize = obj->getConstraints().size();
@@ -69,9 +69,9 @@ void updateSimulation() {
   static PGRsim::SimTime simTime = 0.0f;
   simTime += 1 / 60.0f;
   if (tearDemo) {
-    simulation.tear();
+    simulation->tear();
   }
-  simulation.update(simTime);
+  simulation->update(simTime);
 }
 
 enum Dir {
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
   prepareSimulation();
 
   StdoutLogger::getInstance().logTime("Add objects");
-  auto simObjects = simulation.getObjects();
+  auto simObjects = simulation->getObjects();
   objects.reserve(simObjects.size());
   for (auto object : simObjects) {
     auto tempObject = dynamic_cast<PGRsim::SimObjectWithModel *>(object);
@@ -219,7 +219,7 @@ int main(int argc, char *argv[]) {
               break;
             case SDLK_t:
               if (tearDemo) {
-                simulation.stopTearDemo();
+                simulation->stopTearDemo();
               }
               tearDemo = true;
               break;
