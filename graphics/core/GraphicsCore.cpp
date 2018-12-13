@@ -1,5 +1,5 @@
 //
-// Created by kuro on 2.12.18.
+// Created by Igor Frank on 2.12.18.
 //
 
 
@@ -15,7 +15,7 @@
 #include "GraphicsCore.h"
 
 bool PGRgraphics::GraphicsCore::init() {
-  // Initialize SDL's Video subsystem
+  // Initialize SDL
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0) {
     std::cout << "Failed to init SDL\n";
     return false;
@@ -48,7 +48,7 @@ bool PGRgraphics::GraphicsCore::init() {
 
   setOpenGLAttributes();
 
-  // Create our opengl context and attach it to our window
+  // Create our openGL context
   mainContext = SDL_GL_CreateContext(mainWindow);
 
   SDL_GL_SetSwapInterval(1);
@@ -65,6 +65,7 @@ bool PGRgraphics::GraphicsCore::init() {
   glClearColor(0.5, 0.5, 0.5, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
+  // Setup GL rendering properties
   /*glEnable(GL_CULL_FACE);
   glCullFace(GL_FRONT);
   glFrontFace(GL_CW);*/
@@ -103,93 +104,88 @@ void PGRgraphics::GraphicsCore::checkSDLError(int line = -1) {
 
 bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> &objects) {
 
-  GLuint tempVBO;
+  GLuint tempVBO; //Vertex Buffer Objects
+  GLuint tempEBO; //Element Buffer Objects
+  GLuint tempNBO; //Normals Buffer Objects
+  GLuint tempTBO; //Texture coordinates Buffer Objects
+  GLuint tempETBO; //Unifrom Texture Files
 
   glGenVertexArrays(1, vao);
 
   glBindVertexArray(vao[0]);
 
-  // Positions
-  // ===================
-  // Bind our first VBO as being the active buffer and storing vertex attributes (coordinates)
+
+
+
   int i = 0;
   for (auto item : objects) {
-    glGenBuffers(1, &tempVBO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-    vbo.push_back(tempVBO);
-    // Copy the vertex data from diamond to our buffer
-    glBufferData(GL_ARRAY_BUFFER,
-                 item->getVertices().size() * 3 * sizeof(float),
-                 item->getVertices().data(),
-                 GL_DYNAMIC_DRAW);
-    colorIDs.emplace_back(getIDColor(i));
-    i++;
-  }
-
-  GLuint tempEBO;
-  for (auto item : objects) {
-    glGenBuffers(1, &tempEBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 item->getVertexIndices().size() * sizeof(int),
-                 item->getVertexIndices().data(),
-                 GL_DYNAMIC_DRAW);
-    ebo.push_back(tempEBO);
-  }
-
-  GLuint tempNBO;
-  for (auto item : objects) {
-    glGenBuffers(1, &tempNBO);
-    glBindBuffer(GL_ARRAY_BUFFER, tempNBO);
-    glBufferData(GL_ARRAY_BUFFER,
-                 item->getNormals().size() * sizeof(float),
-                 item->getNormals().data(),
-                 GL_DYNAMIC_DRAW);
-    nbo.push_back(tempNBO);
-  }
-
-  GLuint tempTBO;
-  for (auto item : objects) {
-    if(item->getTextureFile() != nullptr) {
-      glGenBuffers(1, &tempTBO);
-      glBindBuffer(GL_ARRAY_BUFFER, tempTBO);
+      /*
+       * Positions buffer
+       * */
+      glGenBuffers(1, &tempVBO);
+      glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
+      vbo.push_back(tempVBO);
       glBufferData(GL_ARRAY_BUFFER,
-                   item->getTexCoords().size() * sizeof(float),
-                   item->getTexCoords().data(),
-                   GL_STATIC_DRAW);
-      tbo.push_back(tempTBO);
-    }
-  }
+                   item->getVertices().size() * 3 * sizeof(float),
+                   item->getVertices().data(),
+                   GL_DYNAMIC_DRAW);
+      colorIDs.emplace_back(getIDColor(i));
 
-  GLuint tempETBO;
-  for (auto item : objects) {
-    if(item->getTextureFile() != nullptr) {
-      /*glGenBuffers(1, &tempTBO);
-      glBindBuffer(GL_ARRAY_BUFFER, tempTBO);
+      /*
+       * Indices (element) buffer
+       * */
+      glGenBuffers(1, &tempEBO);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempEBO);
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                   item->getVertexIndices().size() * sizeof(int),
+                   item->getVertexIndices().data(),
+                   GL_DYNAMIC_DRAW);
+      ebo.push_back(tempEBO);
+
+      /*
+       * Normals buffer
+       * */
+      glGenBuffers(1, &tempNBO);
+      glBindBuffer(GL_ARRAY_BUFFER, tempNBO);
       glBufferData(GL_ARRAY_BUFFER,
-                   item->getTextureIndices().size() * sizeof(int),
-                   item->getTextureIndices().data(),
-                   GL_STATIC_DRAW);
-      etbo.push_back(tempETBO);
-       */
+                   item->getNormals().size() * sizeof(float),
+                   item->getNormals().data(),
+                   GL_DYNAMIC_DRAW);
+      nbo.push_back(tempNBO);
 
-      glGenTextures(1, &tempETBO);
-      glBindTexture(GL_TEXTURE_2D, tempETBO);
-      glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, item->getTextureFile()->w, item->getTextureFile()->h, 0, GL_RGB, GL_UNSIGNED_BYTE, item->getTextureFile()->pixels);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-      glGenerateMipmap(GL_TEXTURE_2D);
-      textures.emplace_back(tempETBO);
+      /*
+       * Texture coordinates buffer
+       * */
+      if (item->getTextureFile() != nullptr) {
+          glGenBuffers(1, &tempTBO);
+          glBindBuffer(GL_ARRAY_BUFFER, tempTBO);
+          glBufferData(GL_ARRAY_BUFFER,
+                       item->getTexCoords().size() * sizeof(float),
+                       item->getTexCoords().data(),
+                       GL_STATIC_DRAW);
+          tbo.push_back(tempTBO);
+      }
 
-    }
+      /*
+       * Uniform texture file
+       * */
+      if (item->getTextureFile() != nullptr) {
+          glGenTextures(1, &tempETBO);
+          glBindTexture(GL_TEXTURE_2D, tempETBO);
+          glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+          glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, item->getTextureFile()->w, item->getTextureFile()->h, 0, GL_RGB,
+                       GL_UNSIGNED_BYTE, item->getTextureFile()->pixels);
+          glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+          glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+          glGenerateMipmap(GL_TEXTURE_2D);
+          textures.emplace_back(tempETBO);
+      }
+      i++;
   }
 
 
 
-  // Set up shader ( will be covered in the next part )
-  // ===================
+  // Set up shader
   if (!shader.Init())
     return false;
 
@@ -207,9 +203,10 @@ bool PGRgraphics::GraphicsCore::setupBufferObjects(std::vector<GraphicsModel *> 
 }
 
 void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bool selectRender) {
+    // No color indicates usage of texture
     glm::vec3 noColor =  glm::vec3(-1, -1, -1);
 
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float) width / (float) height, 0.1f, 100.0f);
 
@@ -224,29 +221,39 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
 
 
 
-  // Invoke glDrawArrays telling that our data is a line loop and we want to draw 2-4 vertexes
-  int i = 0;
-  int t = 0;
+  // Render loop over all models
+  int i = 0; //model index
+  int t = 0; //texture objects index
   for (auto item : objects) {
+      //bind position buffer
     glBindBuffer(GL_ARRAY_BUFFER, vbo[i]);
+
+      //if simple model (not cloth) use translation
     if (dynamic_cast<SimpleGraphicsModel *>(item) != nullptr) {
       modelView =
           camera.GetViewMatrix() * Model *
               reinterpret_cast<SimpleGraphicsModel *>(item)->getTranslationMatrix();
-    } else {
+    }
+    //Else reload vertices, after simulation changes them
+    else {
       modelView = camera.GetViewMatrix() * Model;
       glBufferData(GL_ARRAY_BUFFER,
                    item->getVertices().size() * 3 * sizeof(float),
                    item->getVertices().data(),
                    GL_DYNAMIC_DRAW);
     }
+        //Position attribute
+      glEnableVertexAttribArray(positionAttributeIndex);
+      glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+      //bind uniform MV matrix
     glUniformMatrix4fv(modelViewGLUniform, 1, GL_FALSE, glm::value_ptr(modelView));
 
-    glEnableVertexAttribArray(positionAttributeIndex);
-    glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+    //Bind normals buffer
     glBindBuffer(GL_ARRAY_BUFFER, nbo[i]);
+
+    //if not simple object (is cloth) reload normals
     if (dynamic_cast<SimpleGraphicsModel *>(item) == nullptr) {
       glBufferSubData(GL_ARRAY_BUFFER, 0, (item->getNormals().size() * 3 * sizeof(float)),
                       item->getNormals().data());
@@ -254,13 +261,16 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
     glEnableVertexAttribArray(normalAttributeIndex);
     glVertexAttribPointer(normalAttributeIndex, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+    //if classic rendering to SDL window
     if (!selectRender) {
+        //Bind uiform cloor if no texture
       if(item->getTextureFile() == 0) {
         glUniform3fv(inputColorUniform, 1, glm::value_ptr(item->getColor()));
         glUniform1i(selectUniform, 0);
       }
+      //else bind texture
       else{
-          //glActiveTexture(GL_TEXTURE0);
+          glActiveTexture(GL_TEXTURE0);
         glBindBuffer(GL_ARRAY_BUFFER, tbo[t]);
         glUniform1i(textureUniform, 0);
         glEnableVertexAttribArray(textureCoordAttributeIndex);
@@ -270,17 +280,17 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
           glUniform1i(selectUniform, 0);
         t++;
       }
-    } else {
+    } else { //if selecting model render each object with different color
       glUniform3fv(inputColorUniform, 1, glm::value_ptr(colorIDs[i]));
       glUniform1i(selectUniform, 1);
     }
 
+    //Bind buffer with indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[i]);
-    if (dynamic_cast<SimpleGraphicsModel *>(item) == nullptr) {
+    if (dynamic_cast<SimpleGraphicsModel *>(item) == nullptr) { // reloading indices because of tearing
       glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, item->getVertexIndices().size() * sizeof(int),
                       item->getVertexIndices().data());
     }
-    // Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
 
     glDrawElements(GL_TRIANGLES, item->getVertexIndices().size() * sizeof(int), GL_UNSIGNED_INT, nullptr);
     i++;
@@ -292,32 +302,25 @@ void PGRgraphics::GraphicsCore::render(std::vector<GraphicsModel *> &objects, bo
 }
 
 void PGRgraphics::GraphicsCore::cleanup() {
-  // Cleanup all the things we bound and allocated
   shader.CleanUp();
 
   glDisableVertexAttribArray(0);
 
-  deleteBuffers(vbo);
-  deleteBuffers(ebo);
+  glDeleteBuffers(vbo.size(), vbo.data());
+  glDeleteBuffers(ebo.size(), ebo.data());
+glDeleteBuffers(nbo.size(), nbo.data());
+ glDeleteBuffers(tbo.size(), tbo.data());
+  glDeleteTextures(textures.size(), textures.data());
 
   glDeleteVertexArrays(1, vao);
 
-  // Delete our OpengL context
+  shader.CleanUp();
+
   SDL_GL_DeleteContext(mainContext);
 
-  // Destroy our window
   SDL_DestroyWindow(mainWindow);
 
-  // Shutdown SDL 2
   SDL_Quit();
-}
-
-void PGRgraphics::GraphicsCore::deleteBuffers(std::vector<GLuint> &buff) {
-  int i = 0;
-  for (auto item : buff) {
-    glDeleteBuffers(i, &item);
-    i++;
-  }
 }
 
 void PGRgraphics::GraphicsCore::handleResize() {
@@ -368,10 +371,12 @@ void PGRgraphics::GraphicsCore::handleModelWireframe() {
 }
 
 void PGRgraphics::GraphicsCore::handleSelectObject(int x, int y, std::vector<GraphicsModel *> &objects) {
+    //Render each object with specific color
   glDisable(GL_MULTISAMPLE);
   render(objects, true);
   glEnable(GL_MULTISAMPLE);
 
+  //wait for GPU to process all work
   glFlush();
   glFinish();
 
@@ -382,21 +387,22 @@ void PGRgraphics::GraphicsCore::handleSelectObject(int x, int y, std::vector<Gra
 
   int id = data[0] + (data[1] >> 8) + (data[2] >> 16);
 
-  if (id < objects.size()) {
+  if (id < objects.size()) { // if not background
     auto foundObject = std::find_if(selectedObjects.begin(),
                                     selectedObjects.end(),
                                     [id](selectedObject i) -> bool { return i.objectId == id; });
-    if (foundObject == selectedObjects.end()) {
+    if (foundObject == selectedObjects.end()) { //if already selected restore color and remove from selected
       selectedObjects.emplace_back(selectedObject{.objectId = id,
           .previousColor = objects[id]->getColor()});
       objects[id]->setColor(glm::vec3(1, 0, 0));
-    } else {
+    } else { // else color it red and add to selected objects
       objects[id]->setColor(foundObject.base()->previousColor);
       selectedObjects.erase(foundObject);
     }
   }
 }
 
+//encode ID as color
 glm::vec3 PGRgraphics::GraphicsCore::getIDColor(GLuint ID) {
   return glm::vec3(static_cast<float>(((ID & 0x000000FF)) / 255.0),
                    static_cast<float>(((ID & 0x0000FF00) >> 8) / 255.0),

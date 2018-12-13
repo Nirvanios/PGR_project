@@ -1,5 +1,5 @@
 //
-// Created by kuro on 2.12.18.
+// Created by Igor Frank on 2.12.18.
 //
 
 #ifndef PGR_PROJECT_GRAPHICSCORE_H
@@ -10,7 +10,11 @@
 #include "Shader.h"
 
 namespace PGRgraphics {
-
+/**
+ * Class for setting up openGL and rendering models
+ *
+ * @author Igor Frank
+ */
 class GraphicsCore {
  private:
 
@@ -45,7 +49,6 @@ class GraphicsCore {
   GLuint vao[1];
   std::vector<GLuint> vbo;
   std::vector<GLuint> tbo;
-  std::vector<GLuint> etbo;
   std::vector<GLuint> ebo;
   std::vector<GLuint> nbo;
   std::vector<GLuint> textures;
@@ -61,9 +64,7 @@ class GraphicsCore {
 
   bool setOpenGLAttributes();
 
-  void deleteBuffers(std::vector<GLuint> &);
-
-  glm::vec3 getIDColor(GLuint ID);
+    glm::vec3 getIDColor(GLuint ID);
 
  public:
   GraphicsCore() {};
