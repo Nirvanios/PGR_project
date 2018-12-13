@@ -77,7 +77,7 @@ bool PGRgraphics::GraphicsCore::init() {
     return true;
 }
 
-PGRgraphics::GraphicsCore::setOpenGLAttributes() {
+void PGRgraphics::GraphicsCore::setOpenGLAttributes() {
     // Set our OpenGL version.
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
