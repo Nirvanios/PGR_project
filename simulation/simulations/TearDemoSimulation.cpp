@@ -5,11 +5,14 @@
 #include <springs/groups/SnappableSpringGroup.h>
 #include "TearDemoSimulation.h"
 
-void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
+void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath, std::string texPath) {
 
   const int width = 65, height = 65;
 
   auto clothObject = new ComplexObject(10.0f, Active, PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(filePath));
+  if (texPath != "") {
+    clothObject->getObjectModel()->loadBMPTextureFile(texPath);
+  }
 
   auto vertexIndices = clothObject->getObjectModel()->getVertexIndices();
   auto vertices = clothObject->getSimVertices();
@@ -46,7 +49,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
         tearDemoRight.emplace_back(dynamic_cast<PositionConstraint *>(constraint));
       });
 
-  float s = 8.0f, d = 0.1f, snapLimit = 2.0f;
+  float s = 8.0f, d = 0.1f, snapLimit = 4.0f;
 
   SnappableSpringGroup *group;
   int index;

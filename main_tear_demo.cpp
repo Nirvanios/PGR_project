@@ -49,7 +49,7 @@ void prepareSimulation() {
 
   simulation->setConstraintIterations(8);
 
-  simulation->prepareClothObject("big_cloth.obj");
+  simulation->prepareClothObject("big_cloth_textured.obj", "big_texture.bmp");
 
   auto obj = ((PGRsim::ComplexObject *) simulation->getObjects()[simulation->getObjects().size()
       - 1]);
@@ -124,6 +124,9 @@ void handleMovement(std::vector<PGRgraphics::GraphicsCore::selectedObject> &sele
 
 int main(int argc, char *argv[]) {
   PGRgraphics::GraphicsCore graphicsCore;
+
+  auto lightPos = glm::vec3(1.0f, 4.6f, -1.0f);
+  graphicsCore.setLightPos(lightPos);
 
   StdoutLogger::getInstance().logTime("Init graphics core");
   if (!graphicsCore.init())
@@ -275,9 +278,8 @@ int main(int argc, char *argv[]) {
       graphicsCore.render(objects);
       updatedSim = false;
     }
-    t SDL_Delay(1);
+    SDL_Delay(1);
   }
 
-  delete simulation;
   return 0;
 }

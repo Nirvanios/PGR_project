@@ -351,7 +351,7 @@ const glm::vec3 &PGRgraphics::GraphicsCore::getLightPos() const {
 }
 
 void PGRgraphics::GraphicsCore::setLightPos(const glm::vec3 &lightPos) {
-    GraphicsCore::lightPos = lightPos;
+  this->lightPos = lightPos;
 }
 
 void PGRgraphics::GraphicsCore::handleMouseWheel(float yOffset) {

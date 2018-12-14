@@ -10,6 +10,11 @@
 
 namespace PGRsim {
 
+/**
+ * Demo cloth tearing simulation.
+ *
+ * @author Petr Flajšingr
+ */
 class TearDemoSimulation : public Simulation {
  private:
   std::vector<PositionConstraint *> tearDemoLeft;
@@ -19,7 +24,7 @@ class TearDemoSimulation : public Simulation {
  public:
   virtual ~TearDemoSimulation();
 
-  void prepareClothObject(std::string filePath);
+  void prepareClothObject(std::string filePath, std::string texPath = "");
 
   void tear();
 

@@ -10,7 +10,7 @@ int width = 17, height = 17;
 
 void PGRsim::CollisionDemoSimulation::prepareClothObject(std::string filePath, std::string texPath) {
   auto clothObject = new ComplexObject(10.0f, Active, PGRgraphics::ComplexGraphicsModel::LoadFromOBJ(filePath));
-  if(texPath != "") {
+  if (texPath != "") {
       clothObject->getObjectModel()->loadBMPTextureFile(texPath);
   }
 
