@@ -12,8 +12,8 @@ namespace PGRsim {
 
 class TearDemoSimulation : public Simulation {
  private:
-  std::vector<PointConstraint *> tearDemoLeft;
-  std::vector<PointConstraint *> tearDemoRight;
+  std::vector<PositionConstraint *> tearDemoLeft;
+  std::vector<PositionConstraint *> tearDemoRight;
 
   std::vector<SnappableSpringGroup *> groups;
  public:

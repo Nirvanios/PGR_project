@@ -38,11 +38,11 @@ void PGRsim::ComplexObject::addSpring(float stiffness, float damping, int vertex
 }
 
 void PGRsim::ComplexObject::addConstraint(const glm::vec3 &position, int vertexID) {
-  constraints.emplace_back(new PointConstraint(position, simVertices[vertexID]));
+  constraints.emplace_back(new PositionConstraint(position, simVertices[vertexID]));
 }
 
 void PGRsim::ComplexObject::addConstraint(float length, int vertexID1, int vertexID2) {
-  constraints.emplace_back(new LengthConstraint(simVertices[vertexID1], simVertices[vertexID2], length));
+  constraints.emplace_back(new DistanceConstraint(simVertices[vertexID1], simVertices[vertexID2], length));
 }
 
 void PGRsim::ComplexObject::removeIndices(int vertexID) {

@@ -7,7 +7,7 @@
 
 #include <Simulation.h>
 #include <springs/groups/LimitedSnappableSpringGroup.h>
-#include <constraints/PointConstraint.h>
+#include <constraints/PositionConstraint.h>
 #include <vector>
 
 
@@ -20,11 +20,14 @@ namespace PGRsim {
  */
 class CollisionDemoSimulation : public Simulation {
  private:
+  Collision::VertexCollisionChecker collisionChecker;
  public:
 
   void prepareClothObject(std::string filePath, std::string texPath = "");
 
   void update(SimTime time) override;
+
+  void addObject(SimObject *object) override;
 };
 }
 

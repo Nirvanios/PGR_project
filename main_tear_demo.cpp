@@ -32,7 +32,7 @@ bool tearDemo = false;
 
 auto simulation = new PGRsim::TearDemoSimulation();
 
-std::vector<PGRsim::PointConstraint *> constraints;
+std::vector<PGRsim::PositionConstraint *> constraints;
 std::vector<int> constraintModelIDs;
 
 std::vector<PGRgraphics::GraphicsModel *> objects;
@@ -56,13 +56,13 @@ void prepareSimulation() {
 
   auto constraintSize = obj->getConstraints().size();
 
-  constraints.emplace_back((PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 4]);
+  constraints.emplace_back((PGRsim::PositionConstraint *) obj->getConstraints()[constraintSize - 4]);
 
-  constraints.emplace_back((PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 3]);
+  constraints.emplace_back((PGRsim::PositionConstraint *) obj->getConstraints()[constraintSize - 3]);
 
-  constraints.emplace_back((PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 2]);
+  constraints.emplace_back((PGRsim::PositionConstraint *) obj->getConstraints()[constraintSize - 2]);
 
-  constraints.emplace_back((PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 1]);
+  constraints.emplace_back((PGRsim::PositionConstraint *) obj->getConstraints()[constraintSize - 1]);
 }
 
 void updateSimulation() {
@@ -275,8 +275,9 @@ int main(int argc, char *argv[]) {
       graphicsCore.render(objects);
       updatedSim = false;
     }
-    SDL_Delay(1);
+    t SDL_Delay(1);
   }
 
+  delete simulation;
   return 0;
 }

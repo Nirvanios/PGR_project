@@ -26,7 +26,7 @@ auto air = new PGRsim::DragForce();
 
 PGRsim::CollisionDemoSimulation simulation;
 
-std::vector<PGRsim::PointConstraint *> constraints;
+std::vector<PGRsim::PositionConstraint *> constraints;
 std::vector<int> constraintModelIDs;
 
 std::vector<PGRgraphics::GraphicsModel *> objects;
@@ -51,10 +51,10 @@ void prepareSimulation() {
   auto constraintSize = obj->getConstraints().size();
 
   constraints.emplace_back(
-      (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 2]);
+      (PGRsim::PositionConstraint *) obj->getConstraints()[constraintSize - 2]);
 
   constraints.emplace_back(
-      (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 1]);
+      (PGRsim::PositionConstraint *) obj->getConstraints()[constraintSize - 1]);
 
   simulation.prepareClothObject("medium_cloth_textured.obj");
 
@@ -64,10 +64,10 @@ void prepareSimulation() {
   constraintSize = obj->getConstraints().size();
 
   constraints.emplace_back(
-      (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 2]);
+      (PGRsim::PositionConstraint *) obj->getConstraints()[constraintSize - 2]);
 
   constraints.emplace_back(
-      (PGRsim::PointConstraint *) obj->getConstraints()[constraintSize - 1]);
+      (PGRsim::PositionConstraint *) obj->getConstraints()[constraintSize - 1]);
 }
 
 void updateSimulation() {

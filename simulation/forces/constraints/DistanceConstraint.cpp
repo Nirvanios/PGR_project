@@ -3,12 +3,12 @@
 //
 
 #include <glm/glm.hpp>
-#include "LengthConstraint.h"
+#include "DistanceConstraint.h"
 
-PGRsim::LengthConstraint::LengthConstraint(PGRsim::SimObject *objectA, PGRsim::SimObject *objectB, float length)
+PGRsim::DistanceConstraint::DistanceConstraint(PGRsim::SimObject *objectA, PGRsim::SimObject *objectB, float length)
     : objectA(objectA), objectB(objectB), length(length), currentLength(length) {}
 
-void PGRsim::LengthConstraint::satisfyConstraint() {
+void PGRsim::DistanceConstraint::satisfyConstraint() {
   if (!isEnabled()) {
     return;
   }
@@ -25,17 +25,17 @@ void PGRsim::LengthConstraint::satisfyConstraint() {
   }
 }
 
-void PGRsim::LengthConstraint::setSimulatedObjectA(PGRsim::SimObject *object) {
+void PGRsim::DistanceConstraint::setSimulatedObjectA(PGRsim::SimObject *object) {
   objectA = object;
 }
 
-void PGRsim::LengthConstraint::setSimulatedObjectB(PGRsim::SimObject *object) {
+void PGRsim::DistanceConstraint::setSimulatedObjectB(PGRsim::SimObject *object) {
   objectB = object;
 }
-PGRsim::SimObject *PGRsim::LengthConstraint::getObjectA() const {
+PGRsim::SimObject *PGRsim::DistanceConstraint::getObjectA() const {
   return objectA;
 }
-PGRsim::SimObject *PGRsim::LengthConstraint::getObjectB() const {
+PGRsim::SimObject *PGRsim::DistanceConstraint::getObjectB() const {
   return objectB;
 }
 

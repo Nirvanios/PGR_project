@@ -15,7 +15,7 @@ namespace PGRsim {
  *
  * @author Petr Flajšingr
  */
-class LengthConstraint : public Constraint {
+class DistanceConstraint : public Constraint {
  private:
   SimObject *objectA;
   SimObject *objectB;
@@ -33,7 +33,7 @@ class LengthConstraint : public Constraint {
    * @param objectB
    * @param length desired length
    */
-  LengthConstraint(SimObject *objectA, SimObject *objectB, float length);
+  DistanceConstraint(SimObject *objectA, SimObject *objectB, float length);
 
   void satisfyConstraint() override;
 

@@ -41,7 +41,6 @@ class Simulation {
   int constraintIterations = 0;
 
   Integrator *integrator;
-  Collision::VertexCollisionChecker collisionChecker;
 
   /**
    * Constraint checking in a thread.

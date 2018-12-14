@@ -25,9 +25,9 @@ class TearGroup {
 
   std::vector<Spring *> springs;
 
-  std::vector<LengthConstraint *> constraints;
+  std::vector<DistanceConstraint *> constraints;
 
-  std::vector<LengthConstraint *> constraintsToDestroy;
+  std::vector<DistanceConstraint *> constraintsToDestroy;
 
   TearOrientation orientation;
 
@@ -48,9 +48,9 @@ class TearGroup {
    * Add constraints which are supposed to be remapped onto the newly created vertex.
    * @param constraint
    */
-  void addConstraint(LengthConstraint *constraint);
+  void addConstraint(DistanceConstraint *constraint);
 
-  void addConstraintToDestroy(LengthConstraint *constraint);
+  void addConstraintToDestroy(DistanceConstraint *constraint);
 
   /**
    * Check if the main spring has been torn. If yes, create new vertex, add it to ComplexObject,

@@ -14,10 +14,6 @@ void PGRsim::Simulation::addSpring(float stiffness, float damping, SimObject *ob
 }
 
 void PGRsim::Simulation::addObject(SimObject *object) {
-  auto vertex = dynamic_cast<SimVertex *>(object);
-  if (vertex != nullptr) {
-    collisionChecker.addObject(vertex);
-  }
   objects.emplace_back(object);
 }
 

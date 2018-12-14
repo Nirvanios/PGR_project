@@ -93,6 +93,10 @@ void PGRsim::CollisionDemoSimulation::prepareClothObject(std::string filePath, s
 }
 
 void PGRsim::CollisionDemoSimulation::update(PGRsim::SimTime time) {
+  collisionChecker.checkCollisions();
+
+  collisionChecker.applyChanges();
+
   for (auto spring : springs) {
     spring->applyForce();
   }
@@ -124,15 +128,21 @@ void PGRsim::CollisionDemoSimulation::update(PGRsim::SimTime time) {
 
   thread.join();
 
-  collisionChecker.checkCollisions();
-
-  collisionChecker.applyChanges();
-
   for (auto object : objects) {
-    object->update(time);
-
     if (object->getSimulatedObjectType() == Active || object->getSimulatedObjectType() == Shape) {
       object->resetForces();
     }
   }
+
+  for (auto object : objects) {
+    object->update(time);
+  }
+}
+void PGRsim::CollisionDemoSimulation::addObject(PGRsim::SimObject *object) {
+  auto vertex = dynamic_cast<SimVertex *>(object);
+  if (vertex != nullptr) {
+    collisionChecker.addObject(vertex);
+  }
+
+  Simulation::addObject(object);
 }

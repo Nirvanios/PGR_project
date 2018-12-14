@@ -13,7 +13,7 @@ void PGRsim::TearGroup::addSpring(PGRsim::Spring *spring) {
   springs.emplace_back(spring);
 }
 
-void PGRsim::TearGroup::addConstraint(PGRsim::LengthConstraint *constraint) {
+void PGRsim::TearGroup::addConstraint(PGRsim::DistanceConstraint *constraint) {
   constraints.emplace_back(constraint);
 }
 
@@ -119,6 +119,6 @@ PGRsim::SimVertex *PGRsim::TearGroup::check() {
   return nullptr;
 }
 
-void PGRsim::TearGroup::addConstraintToDestroy(PGRsim::LengthConstraint *constraint) {
+void PGRsim::TearGroup::addConstraintToDestroy(PGRsim::DistanceConstraint *constraint) {
   constraintsToDestroy.emplace_back(constraint);
 }

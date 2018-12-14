@@ -16,7 +16,7 @@ namespace PGRsim {
  *
  * @author Petr Flajšingr
  */
-class PointConstraint : public Constraint {
+class PositionConstraint : public Constraint {
  private:
   glm::vec3 position;
   SimObject *object;
@@ -27,7 +27,7 @@ class PointConstraint : public Constraint {
    * @param position desired location
    * @param object
    */
-  PointConstraint(const glm::vec3 &position, SimObject *object);
+  PositionConstraint(const glm::vec3 &position, SimObject *object);
 
   void setPosition(glm::vec3 pos) {
     this->position = pos;

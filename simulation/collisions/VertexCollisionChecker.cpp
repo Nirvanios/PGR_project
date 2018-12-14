@@ -53,7 +53,7 @@ void PGRsim::Collision::VertexCollisionChecker::accurateCheck(const std::vector<
         }
       }
     }
-    next:
+    next:  // vertex collision found, skip
     {}
   }
 }
@@ -110,11 +110,11 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
     reaction /= 3.0f;
 
     // apply position change to the triangle
-    v1->setNewPosition(v1->getNewPosition() - reaction);// * (1 - baryPosition.x - baryPosition.y));
+    v1->setNewPosition(v1->getNewPosition() - reaction * (1 - baryPosition.x - baryPosition.y));
     v1->setPositionChanged(true);
-    v2->setNewPosition(v2->getNewPosition() - reaction);// * baryPosition.x);
+    v2->setNewPosition(v2->getNewPosition() - reaction * baryPosition.x);
     v2->setPositionChanged(true);
-    v3->setNewPosition(v3->getNewPosition() - reaction);// * baryPosition.y);
+    v3->setNewPosition(v3->getNewPosition() - reaction * baryPosition.y);
     v3->setPositionChanged(true);
     return true;
   }

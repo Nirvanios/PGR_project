@@ -9,8 +9,8 @@
 #include <ComplexObject.h>
 #include "SimVertex.h"
 #include "constraints/Constraint.h"
-#include "constraints/PointConstraint.h"
-#include "constraints/LengthConstraint.h"
+#include "constraints/PositionConstraint.h"
+#include "constraints/DistanceConstraint.h"
 #include <vector>
 #include <springs/Spring.h>
 #include <ComplexGraphicsModel.h>

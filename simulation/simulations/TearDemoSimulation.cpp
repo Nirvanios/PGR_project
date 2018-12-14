@@ -27,7 +27,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
       clothObject->getConstraints().begin(),
       clothObject->getConstraints().end(),
       [this](Constraint *constraint) {
-        tearDemoLeft.emplace_back(dynamic_cast<PointConstraint *>(constraint));
+        tearDemoLeft.emplace_back(dynamic_cast<PositionConstraint *>(constraint));
       });
 
   clothObject->addConstraint(glm::vec3(0.181331, -2.360444, -0.006234), 2259);
@@ -43,7 +43,7 @@ void PGRsim::TearDemoSimulation::prepareClothObject(std::string filePath) {
       clothObject->getConstraints().begin() + 8,
       clothObject->getConstraints().end(),
       [this](Constraint *constraint) {
-        tearDemoRight.emplace_back(dynamic_cast<PointConstraint *>(constraint));
+        tearDemoRight.emplace_back(dynamic_cast<PositionConstraint *>(constraint));
       });
 
   float s = 8.0f, d = 0.1f, snapLimit = 2.0f;
@@ -167,6 +167,7 @@ void PGRsim::TearDemoSimulation::stopTearDemo() {
     constraint->disable();
   }
 }
+
 void PGRsim::TearDemoSimulation::update(PGRsim::SimTime time) {
   for (auto group : groups) {
     if (group->check()) {
@@ -179,6 +180,7 @@ void PGRsim::TearDemoSimulation::update(PGRsim::SimTime time) {
 
   Simulation::update(time);
 }
+
 PGRsim::TearDemoSimulation::~TearDemoSimulation() {
   for (auto it : groups) {
     delete it;
