@@ -110,6 +110,7 @@ bool PGRsim::Collision::VertexCollisionChecker::checkIntersection(SimVertex *ver
     reaction /= 3.0f;
 
     // apply position change to the triangle
+
     v1->setNewPosition(v1->getNewPosition() - reaction * (1 - baryPosition.x - baryPosition.y));
     v1->setPositionChanged(true);
     v2->setNewPosition(v2->getNewPosition() - reaction * baryPosition.x);

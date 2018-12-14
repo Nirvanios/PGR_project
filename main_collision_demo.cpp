@@ -41,7 +41,7 @@ void prepareSimulation() {
   air->setDragCoefficient(0.5f);
   simulation.addForce(air);
 
-  simulation.setConstraintIterations(8);
+  simulation.setConstraintIterations(10);
 
   simulation.prepareClothObject("medium_cloth_textured.obj", "medium_texture.bmp");
 

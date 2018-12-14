@@ -47,7 +47,7 @@ void prepareSimulation() {
   air->setDragCoefficient(0.5f);
   simulation->addForce(air);
 
-  simulation->setConstraintIterations(8);
+  simulation->setConstraintIterations(10);
 
   simulation->prepareClothObject("big_cloth_textured.obj", "big_texture.bmp");
 

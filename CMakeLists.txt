@@ -36,7 +36,7 @@ FILE(GLOB_RECURSE SOURCE_FILES misc/*.cpp graphics/*.cpp misc/*.cpp simulation/*
 FILE(GLOB_RECURSE HEADER_FILES misc/*.h graphics/*.h misc/*.h simulation/*.h third_party/*.h)
 
 add_executable(collision_demo main_collision_demo.cpp
-        ${SOURCE_FILES} ${HEADER_FILES} graphics/core/Shader.cpp)
+        ${SOURCE_FILES} ${HEADER_FILES})
 
 add_executable(tear_demo main_tear_demo.cpp
         ${SOURCE_FILES} ${HEADER_FILES})
@@ -44,6 +44,7 @@ add_executable(tear_demo main_tear_demo.cpp
 target_link_libraries(collision_demo ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLM_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(tear_demo ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLM_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
+#copy resource files to bin location
 file(GLOB RESOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/*)
 
